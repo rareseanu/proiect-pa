@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <libpq-fe.h>
+#include "Question.h"
 class DatabaseHandler
 {
 public:
