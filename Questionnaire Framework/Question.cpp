@@ -28,3 +28,8 @@ void Question::setAnswers(const std::vector<Answer> &answers)
 {
 	m_answers = answers;
 }
+
+void Question::readUserAnswer()
+{
+	std::cin >> m_userAnswer;
+}

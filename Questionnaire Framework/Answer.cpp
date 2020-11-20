@@ -28,3 +28,13 @@ const std::string& Answer::getAnswer() const
 {
 	return m_text;
 }
+
+std::istream& operator>>(std::istream& in, Answer& answer)
+{
+	int answerNumber;
+
+	in >> answerNumber;
+	answer.setId(answerNumber);
+
+	return in;
+}

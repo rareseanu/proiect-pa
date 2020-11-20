@@ -10,6 +10,9 @@ public:
 	const float getPercent() const;
 	void setAnswer(const std::string&);
 	const std::string& getAnswer() const;
+	void setId(const int&);
+	const int& getId();
+	friend std::istream& operator >>(std::istream&, Answer&);
 private:
 	int m_id;
 	std::string m_text;

@@ -12,6 +12,7 @@ public:
     void setText(const std::string& question);
     const std::vector<Answer>& getAnswers() const;
     void setAnswers(const std::vector<Answer>& answers);
+    void readUserAnswer();
     
 private:
     int m_id;
@@ -19,5 +20,6 @@ private:
     std::vector<Answer> m_answers;
     int m_points;
     std::string m_category;
+    Answer m_userAnswer;
 };
 

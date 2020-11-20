@@ -146,6 +146,7 @@
   <ItemGroup>
     <ClCompile Include="Answer.cpp" />
     <ClCompile Include="DatabaseHandler.cpp" />
+    <ClCompile Include="Mark.cpp" />
     <ClCompile Include="Question.cpp" />
     <ClCompile Include="QuestionnaireFramework.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Answer.h" />
     <ClInclude Include="DatabaseHandler.h" />
+    <ClInclude Include="Mark.h" />
     <ClInclude Include="Question.h" />
     <ClInclude Include="QuestionnaireFramework.h" />
   </ItemGroup>
