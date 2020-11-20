@@ -141,11 +141,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Answer.cpp" />
     <ClCompile Include="DatabaseHandler.cpp" />
     <ClCompile Include="Question.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Answer.h" />
     <ClInclude Include="DatabaseHandler.h" />
     <ClInclude Include="Question.h" />
   </ItemGroup>
