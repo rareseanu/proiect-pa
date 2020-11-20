@@ -1,21 +1,23 @@
 #pragma once
 #include<iostream>
 #include<vector>
+#include "Answer.h"
 
 class Question
 {
 public:
     Question();
-    Question(const std::string& question, const std::vector<std::string>& answers,bool multichoice);
-    const std::string& getQuestion();
-    void setQuestion(const std::string& question);
-    const std::vector<std::string>& getAnswers();
-    void setAnswers(const std::vector<std::string> &answers);
-    bool isMultichoice();
-    bool setMultichoice(bool multichoice);
+    Question(int id, const std::string& text, int points, const std::string& category, const std::vector<Answer>& answers);
+    const std::string& getText() const;
+    void setText(const std::string& question);
+    const std::vector<Answer>& getAnswers() const;
+    void setAnswers(const std::vector<Answer>& answers);
+    
 private:
-    bool multichoice;
-    std::string question;
-    std::vector<std::string> answers;
+    int m_id;
+    std::string m_text;
+    std::vector<Answer> m_answers;
+    int m_points;
+    std::string m_category;
 };
 

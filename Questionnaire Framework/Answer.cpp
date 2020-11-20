@@ -4,43 +4,27 @@ Answer::Answer()
 {
 }
 
-Answer::Answer(const std::string answer, float percent)
+Answer::Answer(int id, const std::string& text, float percent)
+	:m_id(id), m_text(text), m_percentage(percent)
 {
-	this->answer = answer;
-	this->percent = percent;
 }
 
-void Answer::setPercent(const float& percent)
+void Answer::setPercent(const float& percentage)
 {
-	this->percent = percent;
+	this->m_percentage = percentage;
 }
 
-const float Answer::getPercent()
+const float Answer::getPercent() const
 {
-	return percent;
+	return m_percentage;
 }
 
-void Answer::makeCorrect()
+void Answer::setAnswer(const std::string& text)
 {
-	correct = true;
+	m_text = text;
 }
 
-void Answer::makeIncorrect()
+const std::string& Answer::getAnswer() const
 {
-	correct = false;
-}
-
-bool Answer::isCorrect()
-{
-	return correct;
-}
-
-void Answer::setAnswer(const std::string& answer)
-{
-	this->answer = answer;
-}
-
-const std::string Answer::getAnswer()
-{
-	return answer;
+	return m_text;
 }

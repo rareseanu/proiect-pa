@@ -4,39 +4,27 @@ Question::Question()
 {
 }
 
-Question::Question(const std::string& question, const std::vector<std::string>& answers, bool multichoice)
+Question::Question(int id, const std::string& text, int points, const std::string& category, const std::vector<Answer>& answers)
+	: m_id(id), m_text(text), m_points(points), m_category(category), m_answers(answers)
 {
-	this->question = question;
-	this->answers = answers;
-	this->multichoice = multichoice;
 }
 
-const std::string& Question::getQuestion()
+const std::string& Question::getText() const
 {
-	return question;
+	return m_text;
 }
 
-void Question::setQuestion(const std::string& question)
+void Question::setText(const std::string& text)
 {
-	this->question = question;
+	m_text = text;
 }
 
-const std::vector<std::string>& Question::getAnswers()
+const std::vector<Answer>& Question::getAnswers() const
 {
-	return answers;
+	return m_answers;
 }
 
-void Question::setAnswers(const std::vector<std::string> &answers)
+void Question::setAnswers(const std::vector<Answer> &answers)
 {
-	this->answers = answers;
-}
-
-bool Question::isMultichoice()
-{
-	return false;
-}
-
-bool Question::setMultichoice(bool multichoice)
-{
-	return false;
+	m_answers = answers;
 }

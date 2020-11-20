@@ -5,16 +5,13 @@ class Answer
 {
 public:
 	Answer();
-	Answer(const std::string, float);
+	Answer(int id, const std::string& text, float percentage);
 	void setPercent(const float&);
-	const float getPercent();
-	void makeCorrect();
-	void makeIncorrect();
-	bool isCorrect();
+	const float getPercent() const;
 	void setAnswer(const std::string&);
-	const std::string getAnswer();
+	const std::string& getAnswer() const;
 private:
-	std::string answer;
-	float percent;
-	bool correct;
+	int m_id;
+	std::string m_text;
+	float m_percentage;
 };
