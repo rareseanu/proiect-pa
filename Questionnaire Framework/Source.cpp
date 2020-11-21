@@ -13,5 +13,5 @@ int main() {
         std::cout << error;
     }
     questionnaire.loadQuestions();
-    questionnaire.printQuestions();
+    questionnaire.printQuestionsFromCategory("Mate");
 }

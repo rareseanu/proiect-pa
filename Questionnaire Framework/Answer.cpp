@@ -29,6 +29,16 @@ const std::string& Answer::getAnswer() const
 	return m_text;
 }
 
+void Answer::setId(const int& id)
+{
+	m_id = id;
+}
+
+const int& Answer::getId()
+{
+	return m_id;
+}
+
 std::istream& operator>>(std::istream& in, Answer& answer)
 {
 	int answerNumber;
