@@ -14,7 +14,7 @@ public:
     void setAnswers(const std::vector<Answer>& answers);
     void readUserAnswer();
     int getPoints();
-    
+    bool verifyUserAnswer();
 private:
     int m_id;
     std::string m_text;
@@ -22,5 +22,6 @@ private:
     int m_points;
     std::string m_category;
     Answer m_userAnswer;
+    std::vector<bool> m_correctlyAnswered;
 };
 

@@ -24,7 +24,7 @@ void QuestionnaireFramework::loadQuestions(const std::string& questionTable,cons
 			std::string text = answerRow[1];
 			float percentage = std::stof(answerRow[2]);
 			if (std::find_if(answers.begin(), answers.end(), [&text](const Answer& answer) { return answer.getAnswer() == text; }) == answers.end()) {
-				answers.push_back(Answer(id, text, percentage));
+				answers.push_back(Answer(id, text, percentage, false));
 			}
 			else {
 				std::cout << "\nAnswer aleady existent: "<<text<<std::endl;

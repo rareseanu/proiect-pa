@@ -4,8 +4,8 @@ Answer::Answer()
 {
 }
 
-Answer::Answer(int id, const std::string& text, float percent)
-	:m_id(id), m_text(text), m_percentage(percent)
+Answer::Answer(int id, const std::string& text, float percent, bool selected)
+	:m_id(id), m_text(text), m_percentage(percent), m_selected(selected)
 {
 }
 
@@ -39,12 +39,23 @@ const int& Answer::getId()
 	return m_id;
 }
 
+void Answer::setSelected(const bool& selected)
+{
+	m_selected = selected;
+}
+
+const bool Answer::getSelected() const
+{
+	return m_selected;
+}
+
 std::istream& operator>>(std::istream& in, Answer& answer)
 {
 	int answerNumber;
 
 	in >> answerNumber;
 	answer.setId(answerNumber);
+	answer.setSelected(true);
 
 	return in;
 }

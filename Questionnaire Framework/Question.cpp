@@ -38,3 +38,33 @@ int Question::getPoints()
 {
 	return m_points;
 }
+
+bool Question::verifyUserAnswer()
+{
+	std::vector<bool> shouldBeTrue;
+	for (auto currentAnswer : m_answers)
+	{
+		if (m_userAnswer.getId() == currentAnswer.getId())
+		{
+			shouldBeTrue[currentAnswer.getId()] = true;
+
+			if (currentAnswer.getPercent() > 0)
+			{
+				m_correctlyAnswered[m_userAnswer.getId()] = true;
+			}
+			else
+			{
+				m_correctlyAnswered[m_userAnswer.getId()] = false;
+			}
+		}
+	}
+
+	bool fullyCorrect = true;
+	for (int index = 0; index < m_answers.size(); index++)
+	{
+		if (shouldBeTrue[index] == true && m_correctlyAnswered[index] == false)
+			fullyCorrect = false;
+	}
+
+	return fullyCorrect;
+}
