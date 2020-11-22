@@ -33,3 +33,8 @@ void Question::readUserAnswer()
 {
 	std::cin >> m_userAnswer;
 }
+
+int Question::getPoints()
+{
+	return m_points;
+}

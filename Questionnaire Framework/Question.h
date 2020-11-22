@@ -13,6 +13,7 @@ public:
     const std::vector<Answer>& getAnswers() const;
     void setAnswers(const std::vector<Answer>& answers);
     void readUserAnswer();
+    int getPoints();
     
 private:
     int m_id;
