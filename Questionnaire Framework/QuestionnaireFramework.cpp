@@ -2,24 +2,34 @@
 #include <vector>
 #include <string>
 
-void QuestionnaireFramework::loadQuestions() {
+void QuestionnaireFramework::loadQuestions(const std::string& questionTable,const std::string& answerTable) {
 
-	for (auto questionRow : dh->getTable("question")) {
+	for (auto questionRow : dh->getTable(questionTable)) {
 		int id = std::stoi(questionRow[0]);
 		std::string text = questionRow[1];
 		int points = std::stoi(questionRow[2]);
 		std::string category = questionRow[3];
-		std::vector<std::vector<std::string>> answerTable = dh->getTableFromCommand("select * from answer where q_id = " + std::to_string(id));
+		std::string command= "select * from " + answerTable + " where q_id = " + std::to_string(id);
+		std::vector<std::vector<std::string>> answerTable = dh->getTableFromCommand(command);
 		std::vector<Answer> answers;
 
 		for (auto answerRow : answerTable) {
 			int id = std::stoi(answerRow[0]);
 			std::string text = answerRow[1];
 			float percentage = std::stof(answerRow[2]);
-
-			answers.push_back(Answer(id, text, percentage));
+			if (std::find_if(answers.begin(), answers.end(), [&text](const Answer& answer) { return answer.getAnswer() == text; }) == answers.end()) {
+				answers.push_back(Answer(id, text, percentage));
+			}
+			else {
+				std::cout << "Answer aleady existent: "<<text<<std::endl;
+			}
 		}
-		m_questions[category].push_back(Question(id, text, points, category, answers));
+		if (answers.empty()) {
+			std::cout<<"Question has no answers: "<< text<<std::endl;
+		}
+		else {
+			m_questions[category].push_back(Question(id, text, points, category, answers));
+		}
 	}
 
 }

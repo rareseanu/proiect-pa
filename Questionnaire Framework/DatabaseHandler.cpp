@@ -12,11 +12,11 @@ DatabaseHandler::DatabaseHandler(const std::string& databaseName, const std::str
 	connectString = connectString + "dbname = " + databaseName + " host = " + databaseHost +" user = " + databaseUser +" password = " + databasePassword;
 	conn = PQconnectdb(connectString.c_str());
 }
-std::vector<std::vector<std::string>> DatabaseHandler::getTable(const std::string& denumire) {
+std::vector<std::vector<std::string>> DatabaseHandler::getTable(const std::string& tableName) {
 
     std::vector<std::vector<std::string>> table;
     std::string sqlCommand = "select * from ";
-    sqlCommand = sqlCommand + denumire;
+    sqlCommand = sqlCommand + tableName;
     PGresult* res = PQexec(conn, sqlCommand.c_str());
     int recCount = PQntuples(res);
     int colNumber = PQnfields(res);
@@ -30,10 +30,10 @@ std::vector<std::vector<std::string>> DatabaseHandler::getTable(const std::strin
     return table;
 }
 
-std::vector<std::vector<std::string>> DatabaseHandler::getTableFromCommand(const std::string& comanda) {
+std::vector<std::vector<std::string>> DatabaseHandler::getTableFromCommand(const std::string& command) {
 
     std::vector<std::vector<std::string>> table;
-    std::string sqlCommand = comanda;
+    std::string sqlCommand = command;
     PGresult* res = PQexec(conn, sqlCommand.c_str());
     int recCount = PQntuples(res);
     int colNumber = PQnfields(res);
@@ -45,6 +45,10 @@ std::vector<std::vector<std::string>> DatabaseHandler::getTableFromCommand(const
         }
     }
     return table;
+}
+void DatabaseHandler::runCommand(const std::string& command)
+{
+    PQexec(conn, command.c_str());
 }
 void DatabaseHandler::printTable(const std::vector<std::vector<std::string>>& table) const {
     for (std::vector<std::string> i : table) {

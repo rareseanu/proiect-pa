@@ -8,7 +8,7 @@
 class QuestionnaireFramework
 {
 public:
-	void loadQuestions();
+	void loadQuestions(const std::string& questionTable, const std::string& answerTable);
 	void openDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
 		const  std::string& databaseUser, const std::string& databasePassword);
 	void printQuestions() const;
