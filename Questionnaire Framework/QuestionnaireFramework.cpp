@@ -1,9 +1,11 @@
 #include "QuestionnaireFramework.h"
 #include <vector>
 #include <string>
+#include <thread>
+#include <windows.h>
 
 QuestionnaireFramework::QuestionnaireFramework(int numberOfQuestionsNeeded)
-	: m_numberOfQuestionsNeeded(numberOfQuestionsNeeded), m_maximumMark(0), m_totalNumberOfQuestions(0)
+	: m_numberOfQuestionsNeeded(numberOfQuestionsNeeded), m_maximumMark(0), m_totalNumberOfQuestions(0),m_canAnswer(false)
 {
 	srand(time(NULL));
 }
@@ -149,6 +151,27 @@ void QuestionnaireFramework::printQuestions(const std::vector<Question>& vectorQ
 const std::vector<Question>& QuestionnaireFramework::getSelectedQuestions()
 {
 	return m_selectedQuestions;
+}
+
+void QuestionnaireFramework::start()
+{
+	std::cout << "\nThe timer has started. You can answer";
+	Timer timer;
+	timer.setTimeout(std::bind(&QuestionnaireFramework::stop,this), 5);
+	std::cout << '\n';
+	m_canAnswer = true;
+	std::thread timerThread(std::bind(&Timer::start, timer));
+	timerThread.detach();
+	while (m_canAnswer) {
+		
+	}
+}
+
+void QuestionnaireFramework::stop()
+{
+	//to be replaced with some useful functionality
+	std::cout << "You ran out of time.";
+	m_canAnswer = false;
 }
 
 int QuestionnaireFramework::getMaximumMark()

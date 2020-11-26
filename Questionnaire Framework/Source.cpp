@@ -15,5 +15,5 @@ int main() {
     questionnaire.selectQuestions(std::vector<std::string> {"Mate", "SA"});
     questionnaire.printQuestions(questionnaire.getSelectedQuestions());
     std::cout << "\n\n" << questionnaire.getMaximumMark();
-
+    questionnaire.start();
 }
