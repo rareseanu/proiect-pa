@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <thread>
-#include <windows.h>
+#include "Logger.h"
 
 QuestionnaireFramework::QuestionnaireFramework(int numberOfQuestionsNeeded)
 	: m_numberOfQuestionsNeeded(numberOfQuestionsNeeded), m_maximumMark(0), m_totalNumberOfQuestions(0),m_canAnswer(false)
@@ -29,11 +29,11 @@ void QuestionnaireFramework::loadQuestions(const std::string& questionTable,cons
 				answers.push_back(Answer(id, text, percentage, false));
 			}
 			else {
-				std::cout << "\nAnswer aleady existent: "<<text<<std::endl;
+				LOG_WARN("Answer aleady existent: " + text);
 			}
 		}
 		if (answers.empty()) {
-			std::cout<<"\nQuestion has no answers: "<< text<<std::endl;
+			LOG_WARN("Question has no answers: " + text);
 		}
 		else {
 			m_questions[category].push_back(Question(id, text, points, category, answers));
@@ -41,7 +41,7 @@ void QuestionnaireFramework::loadQuestions(const std::string& questionTable,cons
 		++m_totalNumberOfQuestions;
 	}
 	if (m_totalNumberOfQuestions < m_numberOfQuestionsNeeded) {
-		std::cout << "\nWARNING: Not enough questions in the question bank.";
+		LOG_WARN("Not enough questions in the question bank.");
 		m_numberOfQuestionsNeeded = m_totalNumberOfQuestions;
 	}
 }
@@ -82,7 +82,13 @@ const std::vector<Question>& QuestionnaireFramework::getQuestionsFromCategory(co
 void QuestionnaireFramework::printQuestionsFromCategory(const std::string& category) const
 {
 	int questionSymbol = 1;
-	std::vector<Question> questions = getQuestionsFromCategory(category);
+	std::vector<Question> questions;
+	try {
+		questions = getQuestionsFromCategory(category);
+	}
+	catch (std::string error) {
+		LOG_ERROR(error);
+	}
 	int answerSymbol = 97; // ASCII(97) = a
 	std::cout << category << " => \n";
 	for (auto& question : questions) {
