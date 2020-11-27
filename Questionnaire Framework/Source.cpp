@@ -2,6 +2,7 @@
 #include <iomanip>
 #include "DatabaseHandler.h"
 #include "QuestionnaireFramework.h"
+#include "Logger.h"
 
 int main() {
     QuestionnaireFramework questionnaire(2);
@@ -16,4 +17,9 @@ int main() {
     questionnaire.printQuestions(questionnaire.getSelectedQuestions());
     std::cout << "\n\n" << questionnaire.getMaximumMark();
     questionnaire.start();
+
+    Logger logger;
+    logger.LOG_WARN("Test warning");
+    logger.LOG_ERROR("Test error");
+    logger.LOG_INFO("Test info");
 }
