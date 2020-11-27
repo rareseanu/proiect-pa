@@ -6,16 +6,18 @@
 
 int main() {
     Logger* l = Logger::getLogger("log.txt");
-    QuestionnaireFramework questionnaire(2);
+    QuestionnaireFramework questionnaire(2,20);
    try {
-        questionnaire.openDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
+        questionnaire.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
     }
     catch (std::string error){
         LOG_ERROR(error);
     }
-    questionnaire.loadQuestions("question","answer");
-    questionnaire.selectQuestions(std::vector<std::string> {"Mate", "SA"});
-    questionnaire.printQuestions(questionnaire.getSelectedQuestions());
-    std::cout << "\n\n" << questionnaire.getMaximumMark();
-    questionnaire.start();
+    questionnaire.LoadQuestions("question","answer");
+    questionnaire.SelectQuestions(std::vector<std::string> {"Mate", "SA"});
+    questionnaire.Start();
+    /*Logger logger;
+    logger.LOG_WARN("Test warning");
+    logger.LOG_ERROR("Test error");
+    logger.LOG_INFO("Test info");*/
 }

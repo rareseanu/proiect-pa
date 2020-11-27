@@ -7,13 +7,15 @@
 class Timer
 {
 public:
-	void setTimeout(const std::function<void()> &func,int waitTime);
-	bool isRunning();
-	void start();
+	void SetTimeout(const std::function<void()> &func,int waitTime);
+	int GetTimeLeft()const;
+	bool IsRunning();
+	void Start();
 private:
 	std::function<void()> m_functionToRun;
 	int m_waitingTime = 0;
 	int m_endTime = 0;
+	int m_timeLeft;
 	bool m_running = false;
 };
 

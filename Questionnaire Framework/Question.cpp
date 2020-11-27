@@ -9,52 +9,63 @@ Question::Question(int id, const std::string& text, int points, const std::strin
 {
 }
 
-const std::string& Question::getText() const
+const std::string& Question::GetText() const
 {
 	return m_text;
 }
 
-void Question::setText(const std::string& text)
+void Question::SetText(const std::string& text)
 {
 	m_text = text;
 }
 
-const std::vector<Answer>& Question::getAnswers() const
+const std::vector<Answer>& Question::GetAnswers() const
 {
 	return m_answers;
 }
 
-void Question::setAnswers(const std::vector<Answer> &answers)
+void Question::SetAnswers(const std::vector<Answer> &answers)
 {
 	m_answers = answers;
 }
 
-void Question::readUserAnswer()
+void Question::ReadUserAnswer()
 {
 	std::cin >> m_userAnswer;
 }
 
-int Question::getPoints()
+int Question::GetPoints()
 {
 	return m_points;
 }
 
-bool Question::verifyUserAnswer()
+float Question::GetAquiredMark()const 
+{
+	float percentage = 0;
+	for (Answer answer : m_answers) {
+		if (answer.GetSelected()) {
+			percentage = percentage + answer.GetPercent();
+		}
+	}
+	return m_points*(percentage/100);
+}
+
+bool Question::VerifyUserAnswer()
 {
 	std::vector<bool> shouldBeTrue;
 	for (auto currentAnswer : m_answers)
 	{
-		if (m_userAnswer.getId() == currentAnswer.getId())
+		if (m_userAnswer.GetId() == currentAnswer.GetId())
 		{
-			shouldBeTrue[currentAnswer.getId()] = true;
+			shouldBeTrue[currentAnswer.GetId()] = true;
 
-			if (currentAnswer.getPercent() > 0)
+			if (currentAnswer.GetPercent() > 0)
 			{
-				m_correctlyAnswered[m_userAnswer.getId()] = true;
+				m_correctlyAnswered[m_userAnswer.GetId()] = true;
 			}
 			else
 			{
-				m_correctlyAnswered[m_userAnswer.getId()] = false;
+				m_correctlyAnswered[m_userAnswer.GetId()] = false;
 			}
 		}
 	}
@@ -67,4 +78,24 @@ bool Question::verifyUserAnswer()
 	}
 
 	return fullyCorrect;
+}
+
+void Question::GiveAnswer()
+{
+	std::string string;
+	std::cout << "Answer:";
+	std::cin >> string;
+	for (const char& chr : string) {
+		m_answers[chr - 'a'].SetSelected(true);
+	}
+}
+
+std::ostream& operator<<(std::ostream& out,const Question& question)
+{
+	char answerSymbol='a';
+	out <<question.m_text << '\n';
+	for (auto& a : question.GetAnswers()) {
+		out << "\t" << (char)answerSymbol++ << ". " << a << '\n';
+	}
+	return out;
 }

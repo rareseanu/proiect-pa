@@ -17,7 +17,6 @@ Logger::Logger(const std::string& fileName)
 Logger* Logger::getLogger(const std::string& fileName)
 {
 	if (!instance) {
-		std::cout << fileName;
 		instance = new Logger(fileName);
 	}
 	return instance;

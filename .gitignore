@@ -364,3 +364,4 @@ FodyWeavers.xsd
 x64/
 .vs/
 "Questionnaire Framework"/x64/
+"Questionnaire Framework"/log.txt
