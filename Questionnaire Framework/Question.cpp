@@ -31,7 +31,11 @@ void Question::SetAnswers(const std::vector<Answer> &answers)
 
 void Question::ReadUserAnswer()
 {
-	std::cin >> m_userAnswer;
+	Answer userAns;
+	std::cin >> userAns;
+
+	m_answers[userAns.GetId() - 'a'].SetSelected(true);
+	m_userAnswer.push_back(userAns);
 }
 
 int Question::GetPoints()
@@ -55,17 +59,20 @@ bool Question::VerifyUserAnswer()
 	std::vector<bool> shouldBeTrue;
 	for (auto currentAnswer : m_answers)
 	{
-		if (m_userAnswer.GetId() == currentAnswer.GetId())
+		for (int indexUserAnswer = 0; indexUserAnswer < m_userAnswer.size(); indexUserAnswer++)
 		{
-			shouldBeTrue[currentAnswer.GetId()] = true;
+			if (m_userAnswer[indexUserAnswer].GetId() == currentAnswer.GetId())
+			{
+				shouldBeTrue[currentAnswer.GetId()] = true;
 
-			if (currentAnswer.GetPercent() > 0)
-			{
-				m_correctlyAnswered[m_userAnswer.GetId()] = true;
-			}
-			else
-			{
-				m_correctlyAnswered[m_userAnswer.GetId()] = false;
+				if (currentAnswer.GetPercent() > 0)
+				{
+					m_correctlyAnswered[m_userAnswer[indexUserAnswer].GetId()] = true;
+				}
+				else
+				{
+					m_correctlyAnswered[m_userAnswer[indexUserAnswer].GetId()] = false;
+				}
 			}
 		}
 	}
@@ -88,6 +95,21 @@ void Question::GiveAnswer()
 	for (const char& chr : string) {
 		m_answers[chr - 'a'].SetSelected(true);
 	}
+}
+
+void Question::ResetAnswer()
+{
+	m_userAnswer.clear();
+}
+
+void Question::Flag()
+{
+	m_flagged = true;
+}
+
+void Question::Unflag()
+{
+	m_flagged = false;
 }
 
 std::ostream& operator<<(std::ostream& out,const Question& question)

@@ -17,6 +17,9 @@ public:
     float GetAquiredMark()const;
     bool VerifyUserAnswer();
     void GiveAnswer();
+    void ResetAnswer();
+    void Flag();
+    void Unflag();
     friend std::ostream& operator<<(std::ostream& out, const Question& question);
 private:
     int m_id;
@@ -24,7 +27,8 @@ private:
     std::vector<Answer> m_answers;
     int m_points;
     std::string m_category;
-    Answer m_userAnswer;
+    std::vector<Answer> m_userAnswer;
+    bool m_flagged;
     std::vector<bool> m_correctlyAnswered;
 };
 
