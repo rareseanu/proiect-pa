@@ -19,5 +19,6 @@ void TimerV2::cronometru(int ore, int minute, int secunde)
 			minute--;
 		}
 		cout << ore << ":" << minute << ":" << secunde--;
+		Sleep(1000);
 	}
 }
