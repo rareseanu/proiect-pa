@@ -4,8 +4,8 @@ Question::Question()
 {
 }
 
-Question::Question(int id, const std::string& text, int points, const std::string& category, const std::vector<Answer>& answers)
-	: m_id(id), m_text(text), m_points(points), m_category(category), m_answers(answers)
+Question::Question(int id, const std::string& text, int points, const std::string& category, const std::vector<Answer>& answers, const bool flagged)
+	: m_id(id), m_text(text), m_points(points), m_category(category), m_answers(answers), m_flagged(flagged)
 {
 }
 
@@ -130,9 +130,16 @@ void Question::Unflag()
 	m_flagged = false;
 }
 
+bool Question::GetFlag() const
+{
+	return m_flagged;
+}
+
 std::ostream& operator<<(std::ostream& out,const Question& question)
 {
 	char answerSymbol='a';
+	if (question.GetFlag() == true)
+		out << "(FLAGGED) ";
 	out <<question.m_text << '\n';
 	for (auto& a : question.GetAnswers()) {
 		out << "\t" << (char)answerSymbol++ << ". " << a << '\n';

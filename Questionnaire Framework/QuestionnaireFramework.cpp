@@ -36,7 +36,7 @@ void QuestionnaireFramework::LoadQuestions(const std::string& questionTable, con
 			LOG_WARN("Question has no answers: " + text);
 		}
 		else {
-			m_questions[category].push_back(Question(id, text, points, category, answers));
+			m_questions[category].push_back(Question(id, text, points, category, answers, false));
 		}
 		++m_totalNumberOfQuestions;
 	}
@@ -196,18 +196,31 @@ void QuestionnaireFramework::Start()
 	timerThread.detach();
 	for (int i = 0; i < m_selectedQuestions.size() && m_canAnswer; i++) {
 		system("cls");
-		std::cout << timer.GetTimeLeft() << '\n';
-		std::cout << "(" << m_selectedQuestions[i].GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions[i] << '\n';
 		std::string string;
-		std::cout << "(\\b to go back)Answer:";
-		std::cin >> string;
-		if (string == "\\b" && i > 0) {
-			i = i - 2;
-			LOG_INFO("User went back to question ID " + std::to_string(m_selectedQuestions[i].GetID()));
-		}
-		else {
-			m_selectedQuestions[i].GiveAnswer(string);
-			LOG_INFO("User answered '" + string + "' to question ID " + std::to_string(m_selectedQuestions[i].GetID()));
+		string = "entry";
+		while (string == "entry" || string == "\\f" || string == "\\u") {
+			system("cls");
+			std::cout << timer.GetTimeLeft() << '\n';
+			std::cout << "(" << m_selectedQuestions[i].GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions[i] << '\n';
+			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question)" << std::endl;
+			std::cout << "Answer: ";
+			std::cin >> string;
+			if (string == "\\b" && i > 0) {
+				i = i - 2;
+				LOG_INFO("User went back to question ID " + std::to_string(m_selectedQuestions[i].GetID()));
+			}
+			else if (string == "\\f") {
+				m_selectedQuestions[i].Flag();
+				LOG_INFO("User flagged question ID " + std::to_string(m_selectedQuestions[i].GetID()));
+			}
+			else if (string == "\\u") {
+				m_selectedQuestions[i].Unflag();
+				LOG_INFO("User unflagged question ID " + std::to_string(m_selectedQuestions[i].GetID()));
+			}
+			else {
+				m_selectedQuestions[i].GiveAnswer(string);
+				LOG_INFO("User answered '" + string + "' to question ID " + std::to_string(m_selectedQuestions[i].GetID()));
+			}
 		}
 	}
 	
@@ -222,9 +235,22 @@ void QuestionnaireFramework::Start()
 		try {
 			questionNumber = std::stoi(choice);
 			if (questionNumber >= 0 && questionNumber < m_selectedQuestions.size()) {
-				std::cout << '\n' << m_selectedQuestions[questionNumber];
-				std::cout << "\nAnswer: ";
-				std::cin >> answer;
+				answer = "entry";
+				while (answer == "entry" || answer == "\\f" || answer == "\\u") {
+					system("cls");
+					std::cout << '\n' << m_selectedQuestions[questionNumber];
+					std::cout << "\n(\\f to flag question, \\u to unflag question)" << std::endl;
+					std::cout << "\nAnswer: ";
+					std::cin >> answer;
+					if (answer == "\\f") {
+						m_selectedQuestions[questionNumber].Flag();
+						LOG_INFO("User flagged question ID " + std::to_string(m_selectedQuestions[questionNumber].GetID()));
+					}
+					else if (answer == "\\u") {
+						m_selectedQuestions[questionNumber].Unflag();
+						LOG_INFO("User unflagged question ID " + std::to_string(m_selectedQuestions[questionNumber].GetID()));
+					}
+				}
 				LOG_INFO("User changed answer for question ID: " + std::to_string(m_selectedQuestions[questionNumber].GetID())
 					+ ". New answer: " + answer);
 				m_selectedQuestions[questionNumber].GiveAnswer(answer);

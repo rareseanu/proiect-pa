@@ -7,7 +7,7 @@ class Question
 {
 public:
     Question();
-    Question(int id, const std::string& text, int points, const std::string& category, const std::vector<Answer>& answers);
+    Question(int id, const std::string& text, int points, const std::string& category, const std::vector<Answer>& answers, const bool flagged);
     const std::string& GetText() const;
     const int GetID() const;
     void SetText(const std::string& question);
@@ -22,6 +22,7 @@ public:
     void ResetAnswer();
     void Flag();
     void Unflag();
+    bool GetFlag() const;
     friend std::ostream& operator<<(std::ostream& out, const Question& question);
 private:
     int m_id;
