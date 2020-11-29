@@ -150,6 +150,27 @@ void QuestionnaireFramework::PrintSelectedQuestions() const {
 	}
 }
 
+void QuestionnaireFramework::PrintResults() const
+{
+	for (auto& question : m_selectedQuestions) {
+		std::cout << question.GetText() << " Marks: " << question.GetAquiredMark()
+			<< '/' << question.GetPoints() << '\n';
+		for (auto& answer : question.GetAnswers()) {
+			std::string temp = answer.GetAnswer();
+			if (answer.GetPercent() > 0) {
+				temp += "(correct)";
+			}
+			else {
+				temp += "(wrong)";
+			}
+			if (answer.GetSelected()) {
+				temp += + "(chosen)";
+			}
+			std::cout << '\t' <<temp << '\n';
+		}
+	}
+}
+
 void QuestionnaireFramework::PrintQuestions(const std::vector<Question>& vectorQuestions)const
 {
 	int questionSymbol = 1;
@@ -182,9 +203,11 @@ void QuestionnaireFramework::Start()
 		std::cin >> string;
 		if (string == "\\b" && i > 0) {
 			i = i - 2;
+			LOG_INFO("User went back to question ID " + std::to_string(m_selectedQuestions[i].GetID()));
 		}
 		else {
 			m_selectedQuestions[i].GiveAnswer(string);
+			LOG_INFO("User answered '" + string + "' to question ID " + std::to_string(m_selectedQuestions[i].GetID()));
 		}
 	}
 	
@@ -202,7 +225,10 @@ void QuestionnaireFramework::Start()
 				std::cout << '\n' << m_selectedQuestions[questionNumber];
 				std::cout << "\nAnswer: ";
 				std::cin >> answer;
+				LOG_INFO("User changed answer for question ID: " + std::to_string(m_selectedQuestions[questionNumber].GetID())
+					+ ". New answer: " + answer);
 				m_selectedQuestions[questionNumber].GiveAnswer(answer);
+				
 				std::cout << "\nNew answer: ";
 				m_selectedQuestions[questionNumber].PrintSelected();
 			}
@@ -214,6 +240,7 @@ void QuestionnaireFramework::Start()
 	}
 	if (m_canAnswer) {
 		timer.Stop();
+		LOG_INFO("Timer stopped. Remaining time: " + std::to_string(timer.GetTimeLeft()));
 		Stop();
 	}
 }
@@ -223,9 +250,11 @@ void QuestionnaireFramework::Stop()
 	//to be replaced with some useful functionality
 	std::cout << "Quiz finished" << '\n';
 	CalculateFinalGrade();
+	LOG_INFO("Quiz finished. Final grade: " + std::to_string(m_finalGrade));
 	m_canAnswer = false;
-	std::cout << m_user.GetName()<<'\n';
-	std::cout << "Final grade:" << m_finalGrade;
+	PrintResults();
+	std::cout << "User: " << m_user.GetName()<<'\n';
+	std::cout << "\nFinal grade:" << m_finalGrade;
 }
 
 int QuestionnaireFramework::GetMaximumMark()const

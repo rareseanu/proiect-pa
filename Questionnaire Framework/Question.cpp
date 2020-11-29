@@ -43,7 +43,7 @@ void Question::ReadUserAnswer()
 	m_userAnswer.push_back(userAns);
 }
 
-int Question::GetPoints()
+const int Question::GetPoints() const
 {
 	return m_points;
 }

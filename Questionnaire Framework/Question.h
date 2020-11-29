@@ -14,7 +14,7 @@ public:
     const std::vector<Answer>& GetAnswers() const;
     void SetAnswers(const std::vector<Answer>& answers);
     void ReadUserAnswer();
-    int GetPoints();
+    const int GetPoints() const;
     float GetAquiredMark()const;
     bool VerifyUserAnswer();
     void GiveAnswer(const std::string& string);
