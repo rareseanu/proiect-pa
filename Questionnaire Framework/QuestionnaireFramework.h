@@ -3,6 +3,7 @@
 #include "Answer.h"
 #include "DatabaseHandler.h"
 #include <time.h>       
+#include "User.h"
 #include "Timer.h"
 #include <unordered_map>
 #include <vector>
@@ -26,6 +27,7 @@ public:
 	void Start();
 	void Stop();
 	int GetMaximumMark()const;
+	void SetUser(const std::string& lastName, const std::string& firstName);
 	void CalculateFinalGrade();
 	float GetFinalGrade()const;
 private:
@@ -35,6 +37,7 @@ private:
 	int m_quizTime;
 	float m_finalGrade;
 	bool m_canAnswer;
+	User m_user;
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
 	DatabaseHandler* dh;
 	std::vector<Question> m_selectedQuestions;

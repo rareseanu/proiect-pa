@@ -35,8 +35,10 @@ void Timer::Start()
 			}
 		}
 		lastSecond = 0;
-		m_functionToRun();
-		Stop();
+		if (m_running == true) {
+			m_functionToRun();
+			Stop();
+		}
 	}
 }
 

@@ -6,17 +6,17 @@ User::User()
 {
 }
 
-User::User(int id, std::string firstName, std::string lastName, Mark mark)
-	 :m_id(id), m_firstName(firstName), m_lastName(lastName), m_mark(mark)
+User::User(int id, std::string firstName, std::string lastName, float grade)
+	 :m_id(id), m_firstName(firstName), m_lastName(lastName), m_grade(grade)
 {
 }
 
-int User::getId() const
+int User::GetId() const
 {
 	return m_id;
 }
 
-std::string User::getName() const
+std::string User::GetName() const
 {
 	std::stringstream ss;
 	ss << m_firstName << " " << m_lastName;
@@ -24,22 +24,41 @@ std::string User::getName() const
 	return ss.str();
 }
 
-std::string User::getFirstName() const
+std::string User::GetFirstName() const
 {
 	return m_firstName;
 }
 
-std::string User::getLastName() const
+void User::SetFirstName(std::string firstName)
+{
+	m_firstName = firstName;
+}
+
+std::string User::GetLastName() const
 {
 	return m_lastName;
 }
 
-Mark User::getMark() const
+void User::SetLastName(std::string lastName)
 {
-	return m_mark;
+	m_lastName = lastName;
 }
 
-void User::setMark(Mark mark)
+float User::GetMark() const
 {
-	m_mark = mark;
+	return m_grade;
+}
+
+void User::SetMark(float grade)
+{
+	m_grade = grade;
+}
+
+std::istream& operator>>(std::istream& in, User& user)
+{
+	std::cout << "First name:";
+	in >> user.m_firstName;
+	std::cout << "Last name:";
+	in >> user.m_lastName;
+	return in;
 }

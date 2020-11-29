@@ -6,7 +6,7 @@
 
 int main() {
     Logger* l = Logger::getLogger("log.txt");
-    QuestionnaireFramework questionnaire(2,5);
+    QuestionnaireFramework questionnaire(2,100);
    try {
         questionnaire.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
     }

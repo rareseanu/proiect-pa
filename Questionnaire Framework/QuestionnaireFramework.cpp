@@ -165,6 +165,7 @@ const std::vector<Question>& QuestionnaireFramework::GetSelectedQuestions()const
 
 void QuestionnaireFramework::Start()
 {
+	std::cin >> m_user;
 	bool stillHasQuestions = true;
 	int currentQuestion = 0;
 	Timer timer;
@@ -186,12 +187,15 @@ void QuestionnaireFramework::Start()
 			m_selectedQuestions[i].GiveAnswer(string);
 		}
 	}
-	PrintSelectedQuestions();
+	
 	std::string choice, answer;
 	while (choice != "F") {
+		system("cls");
+		PrintSelectedQuestions();
 		std::cout << "Enter the question's number if you want to change its answer or 'F' to finish the quiz: ";
 		std::cin >> choice;
 		int questionNumber;
+		system("cls");
 		try {
 			questionNumber = std::stoi(choice);
 			if (questionNumber >= 0 && questionNumber < m_selectedQuestions.size()) {
@@ -206,6 +210,7 @@ void QuestionnaireFramework::Start()
 		catch (...) {
 			
 		}
+
 	}
 	if (m_canAnswer) {
 		timer.Stop();
@@ -216,15 +221,22 @@ void QuestionnaireFramework::Start()
 void QuestionnaireFramework::Stop()
 {
 	//to be replaced with some useful functionality
-	std::cout << "\nQuiz finished" << '\n';
+	std::cout << "Quiz finished" << '\n';
 	CalculateFinalGrade();
 	m_canAnswer = false;
+	std::cout << m_user.GetName()<<'\n';
 	std::cout << "Final grade:" << m_finalGrade;
 }
 
 int QuestionnaireFramework::GetMaximumMark()const
 {
 	return m_maximumMark;
+}
+
+void QuestionnaireFramework::SetUser(const std::string& lastName, const std::string& firstName)
+{
+	m_user.SetLastName(lastName);
+	m_user.SetFirstName(firstName);
 }
 
 void QuestionnaireFramework::CalculateFinalGrade()
