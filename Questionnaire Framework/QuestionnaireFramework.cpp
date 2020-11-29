@@ -58,13 +58,9 @@ void QuestionnaireFramework::OpenDatabase(const std::string& databaseName, const
 void QuestionnaireFramework::PrintAllQuestions() const {
 	int questionSymbol = 1;
 	for (auto& category : m_questions) {
-		int answerSymbol = 97; // ASCII(97) = a
 		std::cout << category.first << " => ";
 		for (auto& question : category.second) {
-			std::cout << questionSymbol++ << ". " << question.GetText() << '\n';
-			for (auto& a : question.GetAnswers()) {
-				std::cout << "\t\t" << (char)answerSymbol++ << ". " << a.GetAnswer() << '\n';
-			}
+			std::cout << questionSymbol++ << ". " << question << '\n';
 		}
 	}
 }
@@ -89,13 +85,9 @@ void QuestionnaireFramework::PrintQuestionsFromCategory(const std::string& categ
 	catch (std::string error) {
 		LOG_ERROR(error);
 	}
-	int answerSymbol = 97; // ASCII(97) = a
 	std::cout << category << " => \n";
 	for (auto& question : questions) {
-		std::cout << '\t' << questionSymbol++ << ". " << question.GetText() << '\n';
-		for (auto& a : question.GetAnswers()) {
-			std::cout << "\t\t" << (char)answerSymbol++ << ". " << a.GetAnswer() << '\n';
-		}
+		std::cout<< questionSymbol++ << ". " << question << '\n';
 	}
 }
 
@@ -145,12 +137,8 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 void QuestionnaireFramework::PrintQuestions(const std::vector<Question>& vectorQuestions)const
 {
 	int questionSymbol = 1;
-	int answerSymbol = 97; // ASCII(97) = a
 	for (auto& question : vectorQuestions) {
-		std::cout << '\t' << questionSymbol++ << ". " << question.GetText() << '\n';
-		for (auto& a : question.GetAnswers()) {
-			std::cout << "\t\t" << (char)answerSymbol++ << ". " << a.GetAnswer() << '\n';
-		}
+		std::cout<< questionSymbol++ << ". " << question << '\n';
 	}
 }
 
@@ -172,7 +160,15 @@ void QuestionnaireFramework::Start()
 		system("cls");
 		std::cout << timer.GetTimeLeft()<<'\n';
 		std::cout <<"("<<m_selectedQuestions[i].GetPoints()<<"p) "<<i + 1 << ". " << m_selectedQuestions[i] << '\n';
-		m_selectedQuestions[i].GiveAnswer();
+		std::string string;
+		std::cout << "(\\b to go back)Answer:";
+		std::cin >> string;
+		if (string == "\\b" && i>0) {
+			i = i - 2;
+		}
+		else {
+			m_selectedQuestions[i].GiveAnswer(string);
+		}
 	}
 	if (m_canAnswer) {
 		Stop();
@@ -183,20 +179,25 @@ void QuestionnaireFramework::Stop()
 {
 	//to be replaced with some useful functionality
 	std::cout << "Quiz finished"<<'\n';
-	float percentage;
-	float mark=0;
+	CalculateFinalGrade();
 	m_canAnswer = false;
-	for (const Question& question : m_selectedQuestions) {
-		mark = mark + question.GetAquiredMark();
-	}
-	percentage = mark / m_maximumMark;
-	m_finalGrade = 10 * percentage;
 	std::cout << "Final grade:" << m_finalGrade;
 }
 
 int QuestionnaireFramework::GetMaximumMark()const
 {
 	return m_maximumMark;
+}
+
+void QuestionnaireFramework::CalculateFinalGrade()
+{
+	float percentage;
+	float mark = 0;
+	for (const Question& question : m_selectedQuestions) {
+		mark = mark + question.GetAquiredMark();
+	}
+	percentage = mark / m_maximumMark;
+	m_finalGrade = 10 * percentage;
 }
 
 float QuestionnaireFramework::GetFinalGrade() const

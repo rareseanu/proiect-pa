@@ -40,3 +40,4 @@ void Timer::Start()
 		m_timeLeft = 0;
 	}
 }
+

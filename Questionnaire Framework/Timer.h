@@ -7,7 +7,7 @@
 class Timer
 {
 public:
-	void SetTimeout(const std::function<void()> &func,int waitTime);
+	void SetTimeout(const std::function<void()>& func,int waitTime);
 	int GetTimeLeft()const;
 	bool IsRunning();
 	void Start();

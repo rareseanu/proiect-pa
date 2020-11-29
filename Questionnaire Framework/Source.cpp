@@ -4,6 +4,10 @@
 #include "QuestionnaireFramework.h"
 #include "Logger.h"
 
+void test(std::string str) {
+    std::cout << str;
+}
+
 int main() {
     Logger* l = Logger::getLogger("log.txt");
     QuestionnaireFramework questionnaire(2,20);

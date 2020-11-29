@@ -16,7 +16,7 @@ public:
     int GetPoints();
     float GetAquiredMark()const;
     bool VerifyUserAnswer();
-    void GiveAnswer();
+    void GiveAnswer(const std::string& string);
     void ResetAnswer();
     void Flag();
     void Unflag();

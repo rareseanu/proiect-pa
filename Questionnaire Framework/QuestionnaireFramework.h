@@ -25,6 +25,7 @@ public:
 	void Start();
 	void Stop();
 	int GetMaximumMark()const;
+	void CalculateFinalGrade();
 	float GetFinalGrade()const;
 private:
 	int m_numberOfQuestionsNeeded;

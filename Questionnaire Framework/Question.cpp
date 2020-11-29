@@ -51,6 +51,9 @@ float Question::GetAquiredMark()const
 			percentage = percentage + answer.GetPercent();
 		}
 	}
+	if (percentage < 0) {
+		percentage = 0;
+	}
 	return m_points*(percentage/100);
 }
 
@@ -87,13 +90,15 @@ bool Question::VerifyUserAnswer()
 	return fullyCorrect;
 }
 
-void Question::GiveAnswer()
+void Question::GiveAnswer(const std::string& string)
 {
-	std::string string;
-	std::cout << "Answer:";
-	std::cin >> string;
+	for (Answer answer : m_answers) {
+		answer.SetSelected(false);
+	}
 	for (const char& chr : string) {
-		m_answers[chr - 'a'].SetSelected(true);
+		if(chr-'a'<m_answers.size() && chr-'a'>=0){
+			m_answers[chr - 'a'].SetSelected(true);
+		}
 	}
 }
 
