@@ -20,6 +20,7 @@ public:
 	void SetNumberOfQuestions(int number);
 	int GetNumberOfQuestions()const;
 	void SelectQuestions(const std::vector<std::string>& categories);
+	void PrintSelectedQuestions() const;
 	void PrintQuestions(const std::vector<Question>& vectorQuestions)const;
 	const std::vector<Question>& GetSelectedQuestions()const;
 	void Start();

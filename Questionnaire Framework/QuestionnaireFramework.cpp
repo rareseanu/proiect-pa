@@ -4,20 +4,20 @@
 #include <thread>
 #include "Logger.h"
 
-QuestionnaireFramework::QuestionnaireFramework(int numberOfQuestionsNeeded,int quizTime)
-	: m_numberOfQuestionsNeeded(numberOfQuestionsNeeded), m_maximumMark(0), m_totalNumberOfQuestions(0),m_canAnswer(false),m_finalGrade(0),m_quizTime(quizTime)
+QuestionnaireFramework::QuestionnaireFramework(int numberOfQuestionsNeeded, int quizTime)
+	: m_numberOfQuestionsNeeded(numberOfQuestionsNeeded), m_maximumMark(0), m_totalNumberOfQuestions(0), m_canAnswer(false), m_finalGrade(0), m_quizTime(quizTime)
 {
 	srand(time(NULL));
 }
 
-void QuestionnaireFramework::LoadQuestions(const std::string& questionTable,const std::string& answerTable) {
+void QuestionnaireFramework::LoadQuestions(const std::string& questionTable, const std::string& answerTable) {
 
 	for (auto questionRow : dh->GetTable(questionTable)) {
 		int id = std::stoi(questionRow[0]);
 		std::string text = questionRow[1];
 		int points = std::stoi(questionRow[2]);
 		std::string category = questionRow[3];
-		std::string command= "select * from " + answerTable + " where q_id = " + std::to_string(id);
+		std::string command = "select * from " + answerTable + " where q_id = " + std::to_string(id);
 		std::vector<std::vector<std::string>> answerTable = dh->GetTableFromCommand(command);
 		std::vector<Answer> answers;
 
@@ -70,7 +70,8 @@ const std::vector<Question>& QuestionnaireFramework::GetQuestionsFromCategory(co
 	auto it = m_questions.find(category);
 	if (it != m_questions.end()) {
 		return  m_questions.find(category)->second;
-	} else {
+	}
+	else {
 		throw "There are no questions in the given category (" + category + ").";
 	}
 }
@@ -87,7 +88,7 @@ void QuestionnaireFramework::PrintQuestionsFromCategory(const std::string& categ
 	}
 	std::cout << category << " => \n";
 	for (auto& question : questions) {
-		std::cout<< questionSymbol++ << ". " << question << '\n';
+		std::cout << questionSymbol++ << ". " << question << '\n';
 	}
 }
 
@@ -108,7 +109,7 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 		int remainingNumberOfQuestions = m_numberOfQuestionsNeeded / categories.size();
 		std::vector<Question> tempQuestions = GetQuestionsFromCategory(category);
 		// Add random question if the category has more questions than the necessary ammount.
-		if (tempQuestions.size() > remainingNumberOfQuestions) { 
+		if (tempQuestions.size() > remainingNumberOfQuestions) {
 			while (remainingNumberOfQuestions != 0) {
 				int tempRand = rand() % tempQuestions.size();
 				m_maximumMark += tempQuestions.at(tempRand).GetPoints();
@@ -134,11 +135,26 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 	}
 }
 
+void QuestionnaireFramework::PrintSelectedQuestions() const {
+	int questionSymbol = 0;
+	for (auto question : m_selectedQuestions) {
+		std::cout << questionSymbol++ << '.' << question;
+		if (question.GetAnswers().empty()) {
+			std::cout << "Question unanswered!";
+		}
+		else {
+			std::cout << "Your answers: ";
+			question.PrintSelected();
+			std::cout << '\n';
+		}
+	}
+}
+
 void QuestionnaireFramework::PrintQuestions(const std::vector<Question>& vectorQuestions)const
 {
 	int questionSymbol = 1;
 	for (auto& question : vectorQuestions) {
-		std::cout<< questionSymbol++ << ". " << question << '\n';
+		std::cout << questionSymbol++ << ". " << question << '\n';
 	}
 }
 
@@ -149,25 +165,46 @@ const std::vector<Question>& QuestionnaireFramework::GetSelectedQuestions()const
 
 void QuestionnaireFramework::Start()
 {
-	bool stillHasQuestions=true;
-	int currentQuestion=0;
+	bool stillHasQuestions = true;
+	int currentQuestion = 0;
 	Timer timer;
-	timer.SetTimeout(std::bind(&QuestionnaireFramework::Stop,this), m_quizTime);
+	timer.SetTimeout(std::bind(&QuestionnaireFramework::Stop, this), m_quizTime);
 	m_canAnswer = true;
 	std::thread timerThread(&Timer::Start, &timer);
 	timerThread.detach();
-	for (int i = 0; i < m_selectedQuestions.size() && m_canAnswer;i++) {
+	for (int i = 0; i < m_selectedQuestions.size() && m_canAnswer; i++) {
 		system("cls");
-		std::cout << timer.GetTimeLeft()<<'\n';
-		std::cout <<"("<<m_selectedQuestions[i].GetPoints()<<"p) "<<i + 1 << ". " << m_selectedQuestions[i] << '\n';
+		std::cout << timer.GetTimeLeft() << '\n';
+		std::cout << "(" << m_selectedQuestions[i].GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions[i] << '\n';
 		std::string string;
 		std::cout << "(\\b to go back)Answer:";
 		std::cin >> string;
-		if (string == "\\b" && i>0) {
+		if (string == "\\b" && i > 0) {
 			i = i - 2;
 		}
 		else {
 			m_selectedQuestions[i].GiveAnswer(string);
+		}
+	}
+	PrintSelectedQuestions();
+	std::string choice, answer;
+	while (choice != "F") {
+		std::cout << "Enter the question's number if you want to change its answer or 'F' to finish the quiz: ";
+		std::cin >> choice;
+		int questionNumber;
+		try {
+			questionNumber = std::stoi(choice);
+			if (questionNumber >= 0 && questionNumber < m_selectedQuestions.size()) {
+				std::cout << '\n' << m_selectedQuestions[questionNumber];
+				std::cout << "\nAnswer: ";
+				std::cin >> answer;
+				m_selectedQuestions[questionNumber].GiveAnswer(answer);
+				std::cout << "\nNew answer: ";
+				m_selectedQuestions[questionNumber].PrintSelected();
+			}
+		}
+		catch (...) {
+			
 		}
 	}
 	if (m_canAnswer) {
@@ -178,7 +215,7 @@ void QuestionnaireFramework::Start()
 void QuestionnaireFramework::Stop()
 {
 	//to be replaced with some useful functionality
-	std::cout << "Quiz finished"<<'\n';
+	std::cout << "\nQuiz finished" << '\n';
 	CalculateFinalGrade();
 	m_canAnswer = false;
 	std::cout << "Final grade:" << m_finalGrade;

@@ -9,6 +9,7 @@ public:
     Question();
     Question(int id, const std::string& text, int points, const std::string& category, const std::vector<Answer>& answers);
     const std::string& GetText() const;
+    const int GetID() const;
     void SetText(const std::string& question);
     const std::vector<Answer>& GetAnswers() const;
     void SetAnswers(const std::vector<Answer>& answers);
@@ -17,6 +18,7 @@ public:
     float GetAquiredMark()const;
     bool VerifyUserAnswer();
     void GiveAnswer(const std::string& string);
+    void PrintSelected();
     void ResetAnswer();
     void Flag();
     void Unflag();

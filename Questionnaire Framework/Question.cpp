@@ -14,6 +14,11 @@ const std::string& Question::GetText() const
 	return m_text;
 }
 
+const int Question::GetID() const
+{
+	return m_id;
+}
+
 void Question::SetText(const std::string& text)
 {
 	m_text = text;
@@ -92,7 +97,7 @@ bool Question::VerifyUserAnswer()
 
 void Question::GiveAnswer(const std::string& string)
 {
-	for (Answer answer : m_answers) {
+	for (Answer& answer : m_answers) {
 		answer.SetSelected(false);
 	}
 	for (const char& chr : string) {
@@ -100,6 +105,14 @@ void Question::GiveAnswer(const std::string& string)
 			m_answers[chr - 'a'].SetSelected(true);
 		}
 	}
+}
+
+void Question::PrintSelected() {
+	for (const Answer& answer : m_answers) {
+		if (answer.GetSelected())
+			std::cout << answer << " ";
+	}
+	std::cout << '\n';
 }
 
 void Question::ResetAnswer()
