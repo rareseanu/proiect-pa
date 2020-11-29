@@ -170,7 +170,7 @@ void QuestionnaireFramework::Start()
 	Timer timer;
 	timer.SetTimeout(std::bind(&QuestionnaireFramework::Stop, this), m_quizTime);
 	m_canAnswer = true;
-	std::thread timerThread(&Timer::Start, &timer);
+	std::thread timerThread(&Timer::Start, std::ref(timer));
 	timerThread.detach();
 	for (int i = 0; i < m_selectedQuestions.size() && m_canAnswer; i++) {
 		system("cls");
@@ -208,6 +208,7 @@ void QuestionnaireFramework::Start()
 		}
 	}
 	if (m_canAnswer) {
+		timer.Stop();
 		Stop();
 	}
 }

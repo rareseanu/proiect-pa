@@ -11,6 +11,7 @@ public:
 	int GetTimeLeft()const;
 	bool IsRunning();
 	void Start();
+	void Stop();
 private:
 	std::function<void()> m_functionToRun;
 	int m_waitingTime = 0;
