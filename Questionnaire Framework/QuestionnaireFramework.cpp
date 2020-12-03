@@ -202,7 +202,7 @@ void QuestionnaireFramework::Start()
 			system("cls");
 			std::cout << timer.GetTimeLeft() << '\n';
 			std::cout << "(" << m_selectedQuestions[i].GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions[i] << '\n';
-			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question)" << std::endl;
+			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 			std::cout << "Answer: ";
 			std::cin >> string;
 			if (string == "\\b" && i > 0) {
@@ -216,6 +216,17 @@ void QuestionnaireFramework::Start()
 			else if (string == "\\u") {
 				m_selectedQuestions[i].Unflag();
 				LOG_INFO("User unflagged question ID " + std::to_string(m_selectedQuestions[i].GetID()));
+			}
+			else if (string == "\\s") {
+					m_selectedQuestions.push_back(m_selectedQuestions[i]);
+					for (int index = i; index < m_selectedQuestions.size() - 1; index++) {
+						m_selectedQuestions[index] = m_selectedQuestions[index + 1];
+					}
+					m_selectedQuestions.pop_back();
+					if (i != 0)
+						i--;
+					
+					LOG_INFO("User skipped question ID " + std::to_string(m_selectedQuestions[i].GetID()));
 			}
 			else {
 				m_selectedQuestions[i].GiveAnswer(string);
@@ -239,7 +250,7 @@ void QuestionnaireFramework::Start()
 				while (answer == "entry" || answer == "\\f" || answer == "\\u") {
 					system("cls");
 					std::cout << '\n' << m_selectedQuestions[questionNumber];
-					std::cout << "\n(\\f to flag question, \\u to unflag question)" << std::endl;
+					std::cout << "\n(\\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 					std::cout << "\nAnswer: ";
 					std::cin >> answer;
 					if (answer == "\\f") {
@@ -249,6 +260,13 @@ void QuestionnaireFramework::Start()
 					else if (answer == "\\u") {
 						m_selectedQuestions[questionNumber].Unflag();
 						LOG_INFO("User unflagged question ID " + std::to_string(m_selectedQuestions[questionNumber].GetID()));
+					}
+					else if (answer == "\\s") {
+						m_selectedQuestions.push_back(m_selectedQuestions[questionNumber]);
+						for (int index = questionNumber; index < m_selectedQuestions.size() - 1; index++) {
+							m_selectedQuestions[index] = m_selectedQuestions[index + 1];
+						}
+						LOG_INFO("User skipped question ID " + std::to_string(m_selectedQuestions[questionNumber].GetID()));
 					}
 				}
 				LOG_INFO("User changed answer for question ID: " + std::to_string(m_selectedQuestions[questionNumber].GetID())
