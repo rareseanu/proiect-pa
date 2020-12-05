@@ -11,7 +11,7 @@
 class QuestionnaireFramework
 {
 public:
-	QuestionnaireFramework();
+	QuestionnaireFramework(bool loggerEnabled = true);
 	void LoadQuestions(const std::string& questionTable, const std::string& answerTable);
 	void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
 		const  std::string& databaseUser, const std::string& databasePassword);
@@ -49,4 +49,3 @@ private:
 	DatabaseHandler* dh = NULL;
 	std::vector<Question> m_selectedQuestions;
 };
-

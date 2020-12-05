@@ -1,13 +1,21 @@
 #include "Logger.h"
 
 Logger* Logger::instance;
+bool Logger::m_activated = false;
 
 Logger::Logger(const std::string& fileName)
 {
-	m_file.open(fileName, std::ofstream::out | std::ofstream::app);
-	if (!m_file.is_open()) {
-		throw "Can't open the given file.";
+	if (m_activated) {
+		m_file.open(fileName, std::ofstream::out | std::ofstream::app);
+		if (!m_file.is_open()) {
+			throw "Can't open the given file.";
+		}
 	}
+}
+
+void Logger::ActivateLogger()
+{
+	m_activated = true;
 }
 
 Logger* Logger::getLogger(const std::string& fileName)
@@ -49,11 +57,11 @@ std::string Logger::getCurrentTime() {
 	std::stringstream sStream;
 	timeinfo.tm_mon = 3;
 	sStream << std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_mday) << '-'
-		    << std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_mon + 1) << '-' 
-			<< std::to_string(timeinfo.tm_year + 1900) << ' '
-			<< std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_hour) << ':'
-			<< std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_min) << ':' 
-			<< std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_sec);
+		<< std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_mon + 1) << '-'
+		<< std::to_string(timeinfo.tm_year + 1900) << ' '
+		<< std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_hour) << ':'
+		<< std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_min) << ':'
+		<< std::setw(2) << std::setfill('0') << std::to_string(timeinfo.tm_sec);
 	return sStream.str();
 }
 

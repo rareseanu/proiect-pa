@@ -4,7 +4,11 @@
 #include <thread>
 #include "Logger.h"
 
-QuestionnaireFramework::QuestionnaireFramework(){}
+QuestionnaireFramework::QuestionnaireFramework(bool loggerEnabled) {
+	if (loggerEnabled) {
+		Logger::ActivateLogger();
+	}
+}
 
 void QuestionnaireFramework::LoadQuestions(const std::string& questionTable, const std::string& answerTable) {
 
@@ -199,4 +203,3 @@ void QuestionnaireFramework::SendResult(const std::string & tableName, const std
 	std::string command="insert into "+tableName+"("+nameColumn+","+gradeColumn+") values('"+m_user.GetName()+"','"+std::to_string(m_user.GetGrade())+"')";
 	dh->RunCommand(command);
 }
-

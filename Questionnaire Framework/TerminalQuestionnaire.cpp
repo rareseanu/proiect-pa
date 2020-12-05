@@ -15,6 +15,7 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int qu
 	quiz.LoadQuestions("question", "answer");
 	quiz.SelectQuestions(std::vector<std::string> {"Mate", "SA"});
 	m_selectedQuestions = quiz.GetSelectedQuestions();
+	
 }
 
 void TerminalQuestionnaire::Start()
