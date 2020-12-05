@@ -31,6 +31,7 @@ public:
 	User& GetUser();
 	void CalculateFinalGrade();
 	float GetFinalGrade()const;
+	void SendResult(const std::string & tableName, const std::string& nameColumn, const std::string& gradeColumn)const;
 private:
 	int m_numberOfQuestionsNeeded = 0;
 	int m_totalNumberOfQuestions = 0;

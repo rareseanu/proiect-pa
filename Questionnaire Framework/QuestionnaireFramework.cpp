@@ -164,14 +164,17 @@ void QuestionnaireFramework::CalculateFinalGrade()
 		mark = mark + question.GetAquiredMark();
 	}
 	percentage = mark / m_maximumMark;
-	m_finalGrade = 10 * percentage;
+	m_user.SetGrade(10 * percentage);
 }
 
 float QuestionnaireFramework::GetFinalGrade() const
 {
-	return m_finalGrade;
+	return m_user.GetGrade();
 }
 
-
-
+void QuestionnaireFramework::SendResult(const std::string & tableName, const std::string& nameColumn, const std::string& gradeColumn) const
+{
+	std::string command="insert into "+tableName+"("+nameColumn+","+gradeColumn+") values('"+m_user.GetName()+"','"+std::to_string(m_user.GetGrade())+"')";
+	dh->RunCommand(command);
+}
 

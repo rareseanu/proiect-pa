@@ -124,6 +124,7 @@ void TerminalQuestionnaire::Stop()
 	PrintResults();
 	std::cout << "User: " << quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << quiz.GetFinalGrade();
+	quiz.SendResult("student", "nume", "nota");
 }
 
 void TerminalQuestionnaire::PrintAllQuestions() const

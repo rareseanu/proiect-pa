@@ -29,11 +29,6 @@ const std::string& Answer::GetAnswer() const
 	return m_text;
 }
 
-void Answer::SetId(const int& id)
-{
-	m_id = id;
-}
-
 const int& Answer::GetId()
 {
 	return m_id;
@@ -47,17 +42,6 @@ void Answer::SetSelected(const bool& selected)
 const bool Answer::GetSelected() const
 {
 	return m_selected;
-}
-
-std::istream& operator>>(std::istream& in, Answer& answer)
-{
-	int answerNumber;
-
-	in >> answerNumber;
-	answer.SetId(answerNumber);
-	answer.SetSelected(true);
-
-	return in;
 }
 
 std::ostream& operator<<(std::ostream& out,const Answer& answer)

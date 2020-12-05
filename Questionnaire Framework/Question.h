@@ -13,7 +13,6 @@ public:
     void SetText(const std::string& question);
     const std::vector<Answer>& GetAnswers() const;
     void SetAnswers(const std::vector<Answer>& answers);
-    void ReadUserAnswer();
     const int GetPoints() const;
     float GetAquiredMark()const;
     bool VerifyUserAnswer();

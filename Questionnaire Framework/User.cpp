@@ -39,12 +39,12 @@ void User::SetLastName(std::string lastName)
 	m_lastName = lastName;
 }
 
-float User::GetMark() const
+float User::GetGrade() const
 {
 	return m_grade;
 }
 
-void User::SetMark(float grade)
+void User::SetGrade(float grade)
 {
 	m_grade = grade;
 }

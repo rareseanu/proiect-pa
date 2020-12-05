@@ -34,15 +34,6 @@ void Question::SetAnswers(const std::vector<Answer>& answers)
 	m_answers = answers;
 }
 
-void Question::ReadUserAnswer()
-{
-	Answer userAns;
-	std::cin >> userAns;
-
-	m_answers[userAns.GetId() - 'a'].SetSelected(true);
-	m_userAnswer.push_back(userAns);
-}
-
 const int Question::GetPoints() const
 {
 	return m_points;
