@@ -32,6 +32,7 @@ void TerminalQuestionnaire::Start()
 		while (string == "entry" || string == "\\f" || string == "\\u" || string == "\\b" || string == "\\s") {
 			system("cls");
 			PrintTimeLeft();
+			std::cout << "Number of questions: " << m_selectedQuestions->size(); std::cout << "   Remaining: " << m_selectedQuestions->size() - i << std::endl;
 			std::cout << "(" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
 			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 			std::cout << "Answer ";
@@ -88,7 +89,7 @@ void TerminalQuestionnaire::Start()
 					system("cls");
 					PrintTimeLeft();
 					std::cout << '\n' << m_selectedQuestions->at(questionNumber);
-					std::cout << "\n(\\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
+					std::cout << "\n(\\f to flag question, \\u to unflag question, \\c to clear your answer)" << std::endl;
 					std::cout << "\nAnswer: ";
 					std::cin.ignore();
 					std::getline(std::cin, answer);
@@ -99,6 +100,10 @@ void TerminalQuestionnaire::Start()
 					else if (answer == "\\u") {
 						m_selectedQuestions->at(questionNumber).Unflag();
 						LOG_INFO("User unflagged question ID " + std::to_string(m_selectedQuestions->at(questionNumber).GetID()));
+					}
+					else if (answer == "\\c") {
+						m_selectedQuestions->at(questionNumber).ResetAnswer();
+						LOG_INFO("User cleared his answer on question ID " + std::to_string(m_selectedQuestions->at(questionNumber).GetID()));
 					}
 				}
 				LOG_INFO("User changed answer for question ID: " + std::to_string(m_selectedQuestions->at(questionNumber).GetID())
