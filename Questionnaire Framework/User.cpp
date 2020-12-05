@@ -6,11 +6,6 @@ User::User()
 {
 }
 
-User::User(int id, std::string firstName, std::string lastName, float grade)
-	 :m_id(id), m_firstName(firstName), m_lastName(lastName), m_grade(grade)
-{
-}
-
 int User::GetId() const
 {
 	return m_id;

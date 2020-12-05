@@ -4,11 +4,7 @@
 #include <thread>
 #include "Logger.h"
 
-QuestionnaireFramework::QuestionnaireFramework(int numberOfQuestionsNeeded, int quizTime)
-	: m_numberOfQuestionsNeeded(numberOfQuestionsNeeded), m_maximumMark(0), m_totalNumberOfQuestions(0), m_canAnswer(false), m_finalGrade(0), m_quizTime(quizTime)
-{
-	srand(time(NULL));
-}
+QuestionnaireFramework::QuestionnaireFramework(){}
 
 void QuestionnaireFramework::LoadQuestions(const std::string& questionTable, const std::string& answerTable) {
 
@@ -55,16 +51,6 @@ void QuestionnaireFramework::OpenDatabase(const std::string& databaseName, const
 	}
 }
 
-void QuestionnaireFramework::PrintAllQuestions() const {
-	int questionSymbol = 1;
-	for (auto& category : m_questions) {
-		std::cout << category.first << " => ";
-		for (auto& question : category.second) {
-			std::cout << questionSymbol++ << ". " << question << '\n';
-		}
-	}
-}
-
 const std::vector<Question>& QuestionnaireFramework::GetQuestionsFromCategory(const std::string& category) const
 {
 	auto it = m_questions.find(category);
@@ -73,22 +59,6 @@ const std::vector<Question>& QuestionnaireFramework::GetQuestionsFromCategory(co
 	}
 	else {
 		throw "There are no questions in the given category (" + category + ").";
-	}
-}
-
-void QuestionnaireFramework::PrintQuestionsFromCategory(const std::string& category) const
-{
-	int questionSymbol = 1;
-	std::vector<Question> questions;
-	try {
-		questions = GetQuestionsFromCategory(category);
-	}
-	catch (std::string error) {
-		LOG_ERROR(error);
-	}
-	std::cout << category << " => \n";
-	for (auto& question : questions) {
-		std::cout << questionSymbol++ << ". " << question << '\n';
 	}
 }
 
@@ -102,11 +72,36 @@ int QuestionnaireFramework::GetNumberOfQuestions()const
 	return m_numberOfQuestionsNeeded;
 }
 
+void QuestionnaireFramework::SetQuizTime(int seconds)
+{
+	m_quizTime = seconds;
+}
+
+int QuestionnaireFramework::GetQuizTime()
+{
+	return m_quizTime;
+}
+
+void QuestionnaireFramework::SetCanAnswer(bool canAnswer)
+{
+	m_canAnswer = canAnswer;
+}
+
+bool QuestionnaireFramework::CanAnswer()
+{
+	return m_canAnswer;
+}
+
+const std::unordered_map<std::string, std::vector<Question>>& QuestionnaireFramework::GetAllQuestions() const
+{
+	return m_questions;
+}
+
 void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& categories)
 {
 	std::vector<Question> unchosenQuestions; //Vector to store remaining unchosen questions from each category.
 	for (auto& category : categories) {
-		int remainingNumberOfQuestions = m_numberOfQuestionsNeeded / categories.size();
+		size_t remainingNumberOfQuestions = m_numberOfQuestionsNeeded / categories.size();
 		std::vector<Question> tempQuestions = GetQuestionsFromCategory(category);
 		// Add random question if the category has more questions than the necessary ammount.
 		if (tempQuestions.size() > remainingNumberOfQuestions) {
@@ -135,170 +130,14 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 	}
 }
 
-void QuestionnaireFramework::PrintSelectedQuestions() const {
-	int questionSymbol = 0;
-	for (auto question : m_selectedQuestions) {
-		std::cout << questionSymbol++ << '.' << question;
-		if (question.GetAnswers().empty()) {
-			std::cout << "Question unanswered!";
-		}
-		else {
-			std::cout << "Your answers: ";
-			question.PrintSelected();
-			std::cout << '\n';
-		}
-	}
-}
-
-void QuestionnaireFramework::PrintResults() const
-{
-	for (auto& question : m_selectedQuestions) {
-		std::cout << question.GetText() << " Marks: " << question.GetAquiredMark()
-			<< '/' << question.GetPoints() << '\n';
-		for (auto& answer : question.GetAnswers()) {
-			std::string temp = answer.GetAnswer();
-			if (answer.GetPercent() > 0) {
-				temp += "(correct)";
-			}
-			else {
-				temp += "(wrong)";
-			}
-			if (answer.GetSelected()) {
-				temp += + "(chosen)";
-			}
-			std::cout << '\t' <<temp << '\n';
-		}
-	}
-}
-
-void QuestionnaireFramework::PrintQuestions(const std::vector<Question>& vectorQuestions)const
-{
-	int questionSymbol = 1;
-	for (auto& question : vectorQuestions) {
-		std::cout << questionSymbol++ << ". " << question << '\n';
-	}
-}
-
 const std::vector<Question>& QuestionnaireFramework::GetSelectedQuestions()const
 {
 	return m_selectedQuestions;
 }
 
-void QuestionnaireFramework::Start()
+std::vector<Question>* QuestionnaireFramework::GetSelectedQuestions()
 {
-	std::cin >> m_user;
-	bool stillHasQuestions = true;
-	int currentQuestion = 0;
-	Timer timer;
-	timer.SetTimeout(std::bind(&QuestionnaireFramework::Stop, this), m_quizTime);
-	m_canAnswer = true;
-	std::thread timerThread(&Timer::Start, std::ref(timer));
-	timerThread.detach();
-	for (int i = 0; i < m_selectedQuestions.size() && m_canAnswer; i++) {
-		system("cls");
-		std::string string;
-		string = "entry";
-		while (string == "entry" || string == "\\f" || string == "\\u") {
-			system("cls");
-			std::cout << timer.GetTimeLeft() << '\n';
-			std::cout << "(" << m_selectedQuestions[i].GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions[i] << '\n';
-			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
-			std::cout << "Answer: ";
-			std::cin >> string;
-			if (string == "\\b" && i > 0) {
-				i = i - 2;
-				LOG_INFO("User went back to question ID " + std::to_string(m_selectedQuestions[i].GetID()));
-			}
-			else if (string == "\\f") {
-				m_selectedQuestions[i].Flag();
-				LOG_INFO("User flagged question ID " + std::to_string(m_selectedQuestions[i].GetID()));
-			}
-			else if (string == "\\u") {
-				m_selectedQuestions[i].Unflag();
-				LOG_INFO("User unflagged question ID " + std::to_string(m_selectedQuestions[i].GetID()));
-			}
-			else if (string == "\\s") {
-					m_selectedQuestions.push_back(m_selectedQuestions[i]);
-					for (int index = i; index < m_selectedQuestions.size() - 1; index++) {
-						m_selectedQuestions[index] = m_selectedQuestions[index + 1];
-					}
-					m_selectedQuestions.pop_back();
-					if (i != 0)
-						i--;
-					
-					LOG_INFO("User skipped question ID " + std::to_string(m_selectedQuestions[i].GetID()));
-			}
-			else {
-				m_selectedQuestions[i].GiveAnswer(string);
-				LOG_INFO("User answered '" + string + "' to question ID " + std::to_string(m_selectedQuestions[i].GetID()));
-			}
-		}
-	}
-	
-	std::string choice, answer;
-	while (choice != "F") {
-		system("cls");
-		PrintSelectedQuestions();
-		std::cout << "Enter the question's number if you want to change its answer or 'F' to finish the quiz: ";
-		std::cin >> choice;
-		int questionNumber;
-		system("cls");
-		try {
-			questionNumber = std::stoi(choice);
-			if (questionNumber >= 0 && questionNumber < m_selectedQuestions.size()) {
-				answer = "entry";
-				while (answer == "entry" || answer == "\\f" || answer == "\\u") {
-					system("cls");
-					std::cout << '\n' << m_selectedQuestions[questionNumber];
-					std::cout << "\n(\\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
-					std::cout << "\nAnswer: ";
-					std::cin >> answer;
-					if (answer == "\\f") {
-						m_selectedQuestions[questionNumber].Flag();
-						LOG_INFO("User flagged question ID " + std::to_string(m_selectedQuestions[questionNumber].GetID()));
-					}
-					else if (answer == "\\u") {
-						m_selectedQuestions[questionNumber].Unflag();
-						LOG_INFO("User unflagged question ID " + std::to_string(m_selectedQuestions[questionNumber].GetID()));
-					}
-					else if (answer == "\\s") {
-						m_selectedQuestions.push_back(m_selectedQuestions[questionNumber]);
-						for (int index = questionNumber; index < m_selectedQuestions.size() - 1; index++) {
-							m_selectedQuestions[index] = m_selectedQuestions[index + 1];
-						}
-						LOG_INFO("User skipped question ID " + std::to_string(m_selectedQuestions[questionNumber].GetID()));
-					}
-				}
-				LOG_INFO("User changed answer for question ID: " + std::to_string(m_selectedQuestions[questionNumber].GetID())
-					+ ". New answer: " + answer);
-				m_selectedQuestions[questionNumber].GiveAnswer(answer);
-				
-				std::cout << "\nNew answer: ";
-				m_selectedQuestions[questionNumber].PrintSelected();
-			}
-		}
-		catch (...) {
-			
-		}
-
-	}
-	if (m_canAnswer) {
-		timer.Stop();
-		LOG_INFO("Timer stopped. Remaining time: " + std::to_string(timer.GetTimeLeft()));
-		Stop();
-	}
-}
-
-void QuestionnaireFramework::Stop()
-{
-	//to be replaced with some useful functionality
-	std::cout << "Quiz finished" << '\n';
-	CalculateFinalGrade();
-	LOG_INFO("Quiz finished. Final grade: " + std::to_string(m_finalGrade));
-	m_canAnswer = false;
-	PrintResults();
-	std::cout << "User: " << m_user.GetName()<<'\n';
-	std::cout << "\nFinal grade:" << m_finalGrade;
+	return &m_selectedQuestions;
 }
 
 int QuestionnaireFramework::GetMaximumMark()const
@@ -310,6 +149,11 @@ void QuestionnaireFramework::SetUser(const std::string& lastName, const std::str
 {
 	m_user.SetLastName(lastName);
 	m_user.SetFirstName(firstName);
+}
+
+User& QuestionnaireFramework::GetUser()
+{
+	return m_user;
 }
 
 void QuestionnaireFramework::CalculateFinalGrade()

@@ -11,36 +11,36 @@
 class QuestionnaireFramework
 {
 public:
-	QuestionnaireFramework(int numberOfQuestionsNeeded,int quizTime);
+	QuestionnaireFramework();
 	void LoadQuestions(const std::string& questionTable, const std::string& answerTable);
 	void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
 		const  std::string& databaseUser, const std::string& databasePassword);
-	void PrintAllQuestions() const;
 	const std::vector<Question>& GetQuestionsFromCategory(const std::string& category) const;
-	void PrintQuestionsFromCategory(const std::string& category) const;
 	void SetNumberOfQuestions(int number);
 	int GetNumberOfQuestions()const;
+	void SetQuizTime(int seconds);
+	int GetQuizTime();
+	void SetCanAnswer(bool canAnswer);
+	bool CanAnswer();
+	const std::unordered_map<std::string, std::vector<Question>>& GetAllQuestions() const;
 	void SelectQuestions(const std::vector<std::string>& categories);
-	void PrintSelectedQuestions() const;
-	void PrintResults() const;
-	void PrintQuestions(const std::vector<Question>& vectorQuestions)const;
 	const std::vector<Question>& GetSelectedQuestions()const;
-	void Start();
-	void Stop();
+	std::vector<Question>* GetSelectedQuestions();
 	int GetMaximumMark()const;
 	void SetUser(const std::string& lastName, const std::string& firstName);
+	User& GetUser();
 	void CalculateFinalGrade();
 	float GetFinalGrade()const;
 private:
-	int m_numberOfQuestionsNeeded;
-	int m_totalNumberOfQuestions;
-	int m_maximumMark;
-	int m_quizTime;
-	float m_finalGrade;
-	bool m_canAnswer;
+	int m_numberOfQuestionsNeeded = 0;
+	int m_totalNumberOfQuestions = 0;
+	int m_maximumMark = 0;
+	int m_quizTime = 0;
+	float m_finalGrade = 0;
+	bool m_canAnswer = false;
 	User m_user;
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
-	DatabaseHandler* dh;
+	DatabaseHandler* dh = NULL;
 	std::vector<Question> m_selectedQuestions;
 };
 

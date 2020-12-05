@@ -6,7 +6,6 @@ class User
 {
 public:
 	User();
-	User(int, std::string, std::string, float);
 	int GetId() const;
 	std::string GetName() const;
 	std::string GetFirstName() const;
@@ -17,9 +16,9 @@ public:
 	void SetMark(float);
 	friend std::istream& operator>>(std::istream& in, User& user);
 private:
-	int m_id;
+	int m_id = 0;
 	std::string m_firstName;
 	std::string m_lastName;
-	float m_grade;
+	float m_grade = 0;
 };
 

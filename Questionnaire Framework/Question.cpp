@@ -29,7 +29,7 @@ const std::vector<Answer>& Question::GetAnswers() const
 	return m_answers;
 }
 
-void Question::SetAnswers(const std::vector<Answer> &answers)
+void Question::SetAnswers(const std::vector<Answer>& answers)
 {
 	m_answers = answers;
 }
@@ -48,7 +48,7 @@ const int Question::GetPoints() const
 	return m_points;
 }
 
-float Question::GetAquiredMark()const 
+float Question::GetAquiredMark()const
 {
 	float percentage = 0;
 	for (Answer answer : m_answers) {
@@ -59,7 +59,7 @@ float Question::GetAquiredMark()const
 	if (percentage < 0) {
 		percentage = 0;
 	}
-	return m_points*(percentage/100);
+	return m_points * (percentage / 100);
 }
 
 bool Question::VerifyUserAnswer()
@@ -101,7 +101,7 @@ void Question::GiveAnswer(const std::string& string)
 		answer.SetSelected(false);
 	}
 	for (const char& chr : string) {
-		if(chr-'a'<m_answers.size() && chr-'a'>=0){
+		if (chr - 'a' < m_answers.size() && chr - 'a' >= 0) {
 			m_answers[chr - 'a'].SetSelected(true);
 		}
 	}
@@ -135,12 +135,12 @@ bool Question::GetFlag() const
 	return m_flagged;
 }
 
-std::ostream& operator<<(std::ostream& out,const Question& question)
+std::ostream& operator<<(std::ostream& out, const Question& question)
 {
-	char answerSymbol='a';
+	char answerSymbol = 'a';
 	if (question.GetFlag() == true)
 		out << "(FLAGGED) ";
-	out <<question.m_text << '\n';
+	out << question.m_text << '\n';
 	for (auto& a : question.GetAnswers()) {
 		out << "\t" << (char)answerSymbol++ << ". " << a << '\n';
 	}

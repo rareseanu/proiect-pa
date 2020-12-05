@@ -16,7 +16,7 @@ private:
 	std::function<void()> m_functionToRun;
 	int m_waitingTime = 0;
 	int m_endTime = 0;
-	int m_timeLeft;
+	int m_timeLeft = 0;
 	bool m_running = false;
 };
 

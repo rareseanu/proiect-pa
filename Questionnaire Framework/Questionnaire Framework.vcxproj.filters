@@ -45,6 +45,9 @@
     <ClCompile Include="TimerV2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TerminalQuestionnaire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DatabaseHandler.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TimerV2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TerminalQuestionnaire.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

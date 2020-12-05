@@ -25,13 +25,13 @@ public:
     bool GetFlag() const;
     friend std::ostream& operator<<(std::ostream& out, const Question& question);
 private:
-    int m_id;
+    int m_id = 0;
     std::string m_text;
     std::vector<Answer> m_answers;
-    int m_points;
+    int m_points = 0;
     std::string m_category;
     std::vector<Answer> m_userAnswer;
-    bool m_flagged;
+    bool m_flagged = false;
     std::vector<bool> m_correctlyAnswered;
 };
 
