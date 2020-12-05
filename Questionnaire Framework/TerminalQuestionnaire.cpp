@@ -30,7 +30,7 @@ void TerminalQuestionnaire::Start()
 		string = "entry";
 		while (string == "entry" || string == "\\f" || string == "\\u" || string == "\\b" || string == "\\s") {
 			system("cls");
-			std::cout << quiz.GetTimer().GetTimeLeft() << '\n';
+			PrintTimeLeft();
 			std::cout << "(" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
 			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 			std::cout << "Answer: ";
@@ -66,6 +66,7 @@ void TerminalQuestionnaire::Start()
 	std::string choice, answer;
 	while (choice != "F") {
 		system("cls");
+		PrintTimeLeft();
 		PrintSelectedQuestions();
 		std::cout << "Enter the question's number if you want to change its answer or 'F' to finish the quiz: ";
 		std::cin >> choice;
@@ -77,6 +78,7 @@ void TerminalQuestionnaire::Start()
 				answer = "entry";
 				while (answer == "entry" || answer == "\\f" || answer == "\\u") {
 					system("cls");
+					PrintTimeLeft();
 					std::cout << '\n' << m_selectedQuestions->at(questionNumber);
 					std::cout << "\n(\\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 					std::cout << "\nAnswer: ";
@@ -165,6 +167,16 @@ void TerminalQuestionnaire::PrintSelectedQuestions() const
 			std::cout << '\n';
 		}
 	}
+}
+
+void TerminalQuestionnaire::PrintTimeLeft() const
+{
+	int seconds = quiz.GetTimer().GetTimeLeft() % 60;
+	int minutes = (quiz.GetTimer().GetTimeLeft()/60)%60;
+	int hours = (quiz.GetTimer().GetTimeLeft() / 60/60)%24;
+	std::cout << "Time left: " <<std::setw(2)<< std::setfill('0')<< hours
+								<<":"<< std::setw(2)<<std::setfill('0') <<minutes
+								<<":"<< std::setw(2)<<seconds << '\n';
 }
 
 void TerminalQuestionnaire::PrintResults() const

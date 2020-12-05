@@ -1,6 +1,10 @@
 #pragma once
 #include <ostream>
 #include <fstream>
+#include <chrono>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
 
 class Logger
 {

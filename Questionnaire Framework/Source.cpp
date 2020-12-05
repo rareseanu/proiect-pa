@@ -5,7 +5,7 @@
 
 int main() {
     Logger* l = Logger::getLogger("log.txt");
-    TerminalQuestionnaire test(3, 10);
+    TerminalQuestionnaire test(3, 3670);
     test.Start();
     /*Logger logger;
     logger.LOG_WARN("Test warning");

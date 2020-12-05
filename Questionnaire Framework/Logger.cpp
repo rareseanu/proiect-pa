@@ -1,8 +1,4 @@
 #include "Logger.h"
-#include <chrono>
-#include <sstream>
-#include <iostream>
-#include <iomanip>
 
 Logger* Logger::instance;
 

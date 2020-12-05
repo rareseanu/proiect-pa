@@ -12,6 +12,7 @@ public:
 	void PrintAllQuestions() const;
 	void PrintQuestionsFromCategory(const std::string& category) const;
 	void PrintSelectedQuestions() const;
+	void PrintTimeLeft() const;
 	void PrintResults() const;
 private:
 	QuestionnaireFramework quiz;
