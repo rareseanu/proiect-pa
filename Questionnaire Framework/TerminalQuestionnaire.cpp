@@ -22,19 +22,15 @@ void TerminalQuestionnaire::Start()
 	std::cin >> quiz.GetUser();
 	bool stillHasQuestions = true;
 	int currentQuestion = 0;
-	Timer timer;
-	timer.SetTimeout(std::bind(&TerminalQuestionnaire::Stop, this), quiz.GetQuizTime());
-	quiz.SetCanAnswer(true);
-	std::thread timerThread(&Timer::Start, std::ref(timer));
-	timerThread.detach();
-
+	quiz.SetTimerFunction(std::bind(&TerminalQuestionnaire::Stop, this));
+	quiz.StartTimer();
 	for (int i = 0; i < m_selectedQuestions->size() && quiz.CanAnswer(); i++) {
 		system("cls");
 		std::string string;
 		string = "entry";
 		while (string == "entry" || string == "\\f" || string == "\\u" || string == "\\b" || string == "\\s") {
 			system("cls");
-			std::cout << timer.GetTimeLeft() << '\n';
+			std::cout << quiz.GetTimer().GetTimeLeft() << '\n';
 			std::cout << "(" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
 			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 			std::cout << "Answer: ";
@@ -108,8 +104,8 @@ void TerminalQuestionnaire::Start()
 
 	}
 	if (quiz.CanAnswer()) {
-		timer.Stop();
-		LOG_INFO("Timer stopped. Remaining time: " + std::to_string(timer.GetTimeLeft()));
+		quiz.StopTimer();
+		LOG_INFO("Timer stopped. Remaining time: " + std::to_string(quiz.GetTimer().GetTimeLeft()));
 		Stop();
 	}
 }
@@ -125,6 +121,7 @@ void TerminalQuestionnaire::Stop()
 	std::cout << "User: " << quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << quiz.GetFinalGrade();
 	quiz.SendResult("student", "nume", "nota");
+	exit(0);
 }
 
 void TerminalQuestionnaire::PrintAllQuestions() const

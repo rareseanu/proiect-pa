@@ -31,6 +31,10 @@ public:
 	User& GetUser();
 	void CalculateFinalGrade();
 	float GetFinalGrade()const;
+	void StartTimer();
+	void StopTimer();
+	const Timer& GetTimer()const;
+	void SetTimerFunction(const std::function<void()>& funcToRun);
 	void SendResult(const std::string & tableName, const std::string& nameColumn, const std::string& gradeColumn)const;
 private:
 	int m_numberOfQuestionsNeeded = 0;
@@ -39,6 +43,7 @@ private:
 	int m_quizTime = 0;
 	float m_finalGrade = 0;
 	bool m_canAnswer = false;
+	Timer m_timer;
 	User m_user;
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
 	DatabaseHandler* dh = NULL;

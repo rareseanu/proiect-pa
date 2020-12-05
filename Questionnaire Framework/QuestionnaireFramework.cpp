@@ -172,6 +172,28 @@ float QuestionnaireFramework::GetFinalGrade() const
 	return m_user.GetGrade();
 }
 
+void QuestionnaireFramework::StartTimer()
+{
+	std::thread timerThread(&Timer::Start, std::ref(m_timer));
+	timerThread.detach();
+	m_canAnswer = true;
+}
+
+void QuestionnaireFramework::StopTimer()
+{
+	m_timer.Stop();
+}
+
+const Timer& QuestionnaireFramework::GetTimer() const
+{
+	return m_timer;
+}
+
+void QuestionnaireFramework::SetTimerFunction(const std::function<void()>& funcToRun)
+{
+	m_timer.SetTimeout(funcToRun, m_quizTime);
+}
+
 void QuestionnaireFramework::SendResult(const std::string & tableName, const std::string& nameColumn, const std::string& gradeColumn) const
 {
 	std::string command="insert into "+tableName+"("+nameColumn+","+gradeColumn+") values('"+m_user.GetName()+"','"+std::to_string(m_user.GetGrade())+"')";
