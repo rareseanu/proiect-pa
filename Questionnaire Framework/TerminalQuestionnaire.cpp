@@ -13,14 +13,14 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int qu
 	}
 	srand(time(NULL));
 	quiz.LoadQuestions("question", "answer");
-	quiz.SelectQuestions(std::vector<std::string> {"Mate", "SA"});
-	m_selectedQuestions = quiz.GetSelectedQuestions();
-	
+	quiz.SelectQuestions(std::vector<std::string> {"SA"});
+	m_selectedQuestions = quiz.GetSelectedQuestions();	
 }
 
 void TerminalQuestionnaire::Start()
 {
 	std::cin >> quiz.GetUser();
+	std::cin.ignore();
 	bool stillHasQuestions = true;
 	int currentQuestion = 0;
 	quiz.SetTimerFunction(std::bind(&TerminalQuestionnaire::Stop, this));
@@ -34,8 +34,15 @@ void TerminalQuestionnaire::Start()
 			PrintTimeLeft();
 			std::cout << "(" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
 			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
-			std::cout << "Answer: ";
-			std::cin >> string;
+			std::cout << "Answer ";
+			if (m_selectedQuestions->at(i).GetAnswers().size() == 1) {
+				std::cout << "(text answer): ";
+			} 
+			else {
+				std::cout << "(multichoice): ";
+			}
+		
+			std::getline(std::cin, string);
 			if (string == "\\b" && i > 0) {
 				LOG_INFO("User went back to question ID " + std::to_string(m_selectedQuestions->at(i).GetID()));
 				i--;
@@ -83,7 +90,8 @@ void TerminalQuestionnaire::Start()
 					std::cout << '\n' << m_selectedQuestions->at(questionNumber);
 					std::cout << "\n(\\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 					std::cout << "\nAnswer: ";
-					std::cin >> answer;
+					std::cin.ignore();
+					std::getline(std::cin, answer);
 					if (answer == "\\f") {
 						m_selectedQuestions->at(questionNumber).Flag();
 						LOG_INFO("User flagged question ID " + std::to_string(m_selectedQuestions->at(questionNumber).GetID()));
@@ -123,7 +131,7 @@ void TerminalQuestionnaire::Stop()
 	PrintResults();
 	std::cout << "User: " << quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << quiz.GetFinalGrade();
-	quiz.SendResult("student", "nume", "nota");
+	//quiz.SendResult("student", "nume", "nota");
 	exit(0);
 }
 

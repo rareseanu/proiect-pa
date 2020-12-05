@@ -86,22 +86,42 @@ bool Question::VerifyUserAnswer()
 	return fullyCorrect;
 }
 
-void Question::GiveAnswer(const std::string& string)
+void Question::GiveAnswer(std::string string)
 {
-	for (Answer& answer : m_answers) {
-		answer.SetSelected(false);
-	}
-	for (const char& chr : string) {
-		if (chr - 'a' < m_answers.size() && chr - 'a' >= 0) {
-			m_answers[chr - 'a'].SetSelected(true);
+	if (m_answers.size() > 1) {
+		for (Answer& answer : m_answers) {
+			answer.SetSelected(false);
 		}
+		for (const char& chr : string) {
+			if (chr - 'a' < m_answers.size() && chr - 'a' >= 0) {
+				m_answers[chr - 'a'].SetSelected(true);
+			}
+		}
+	}
+	else {
+		std::string temp = m_answers[0].GetAnswer();
+		temp.erase(std::remove_if(temp.begin(), temp.end(), isspace), temp.end());
+		string.erase(std::remove_if(string.begin(), string.end(), isspace), string.end());
+		std::transform(temp.begin(), temp.end(), temp.begin(),
+			[](unsigned char c) { return tolower(c); });
+		std::transform(string.begin(), string.end(), string.begin(),
+			[](unsigned char c) { return tolower(c); });
+		if (temp == string) {
+			m_answers[0].SetSelected(true);
+		}
+		m_givenTextAnswer = string;
 	}
 }
 
 void Question::PrintSelected() {
-	for (const Answer& answer : m_answers) {
-		if (answer.GetSelected())
-			std::cout << answer << " ";
+	if (m_answers.size() > 1) {
+		for (const Answer& answer : m_answers) {
+			if (answer.GetSelected())
+				std::cout << answer << " ";
+		}
+	}
+	else {
+		std::cout << m_givenTextAnswer;
 	}
 	std::cout << '\n';
 }
@@ -132,8 +152,10 @@ std::ostream& operator<<(std::ostream& out, const Question& question)
 	if (question.GetFlag() == true)
 		out << "(FLAGGED) ";
 	out << question.m_text << '\n';
-	for (auto& a : question.GetAnswers()) {
-		out << "\t" << (char)answerSymbol++ << ". " << a << '\n';
+	if (question.GetAnswers().size() > 1) {
+		for (auto& a : question.GetAnswers()) {
+			out << "\t" << (char)answerSymbol++ << ". " << a << '\n';
+		}
 	}
 	return out;
 }

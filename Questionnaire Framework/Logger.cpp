@@ -37,10 +37,10 @@ Logger& Logger::operator<<(const LoggerLevel& level)
 	auto now = std::chrono::system_clock::now();
 	switch (level) {
 	case LoggerLevel::Error:
-		m_file << "[ERROR] ";
+		m_file << "[ERROR]  ";
 		break;
 	case LoggerLevel::Info:
-		m_file << "[INFO]  ";
+		m_file << "[INFO]   ";
 		break;
 	default:
 		m_file << "[WARNING]";

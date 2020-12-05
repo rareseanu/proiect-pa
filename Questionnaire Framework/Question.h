@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<vector>
+#include<algorithm>
 #include "Answer.h"
 
 class Question
@@ -16,7 +17,7 @@ public:
     const int GetPoints() const;
     float GetAquiredMark()const;
     bool VerifyUserAnswer();
-    void GiveAnswer(const std::string& string);
+    void GiveAnswer(std::string string);
     void PrintSelected();
     void ResetAnswer();
     void Flag();
@@ -28,6 +29,7 @@ private:
     std::string m_text;
     std::vector<Answer> m_answers;
     int m_points = 0;
+    std::string m_givenTextAnswer;
     std::string m_category;
     std::vector<Answer> m_userAnswer;
     bool m_flagged = false;
