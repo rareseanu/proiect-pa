@@ -23,6 +23,7 @@ public:
     void Flag();
     void Unflag();
     bool GetFlag() const;
+    std::string GetCategory() const;
     friend std::ostream& operator<<(std::ostream& out, const Question& question);
 private:
     int m_id = 0;

@@ -32,8 +32,8 @@ void TerminalQuestionnaire::Start()
 		while (string == "entry" || string == "\\f" || string == "\\u" || string == "\\b" || string == "\\s") {
 			system("cls");
 			PrintTimeLeft();
-			std::cout << "Number of questions: " << m_selectedQuestions->size(); std::cout << "   Remaining: " << m_selectedQuestions->size() - i << std::endl;
-			std::cout << "(" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
+			std::cout << "Number of questions: " << m_selectedQuestions->size(); std::cout << "   Remaining: " << m_selectedQuestions->size() - i << std::endl << std::endl;
+			std::cout << "(Category: " << m_selectedQuestions->at(i).GetCategory() <<") (" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
 			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 			std::cout << "Answer ";
 			if (m_selectedQuestions->at(i).GetAnswers().size() == 1) {

@@ -146,6 +146,11 @@ bool Question::GetFlag() const
 	return m_flagged;
 }
 
+std::string Question::GetCategory() const
+{
+	return m_category;
+}
+
 std::ostream& operator<<(std::ostream& out, const Question& question)
 {
 	char answerSymbol = 'a';
