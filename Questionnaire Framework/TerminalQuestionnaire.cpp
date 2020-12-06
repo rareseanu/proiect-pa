@@ -3,17 +3,20 @@
 
 TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int quizTime)
 {
+	Logger::ActivateLogger();
 	quiz.SetQuizTime(quizTime);
 	quiz.SetNumberOfQuestions(numberOfQuestionsNeeded);
 	try {
 		quiz.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
 	}
 	catch (std::string error) {
+		std::cout << error;
 		LOG_ERROR(error);
+		exit(0);
 	}
 	srand(time(NULL));
 	quiz.LoadQuestions("question", "answer");
-	quiz.SelectQuestions(std::vector<std::string> {"SA"});
+	quiz.SelectQuestions(std::vector<std::string> {"SA","Mate"});
 	m_selectedQuestions = quiz.GetSelectedQuestions();	
 }
 
@@ -36,12 +39,7 @@ void TerminalQuestionnaire::Start()
 			std::cout << "(Category: " << m_selectedQuestions->at(i).GetCategory() <<") (" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
 			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 			std::cout << "Answer ";
-			if (m_selectedQuestions->at(i).GetAnswers().size() == 1) {
-				std::cout << "(text answer): ";
-			} 
-			else {
-				std::cout << "(multichoice): ";
-			}
+			std::cout << "("+ Question::ConvertQuestionTypeToString(m_selectedQuestions->at(i).GetQuestionType())+")";
 		
 			std::getline(std::cin, string);
 			if (string == "\\b" && i > 0) {
@@ -66,8 +64,13 @@ void TerminalQuestionnaire::Start()
 				LOG_INFO("User skipped question ID " + std::to_string(m_selectedQuestions->at(i).GetID()));
 			}
 			else {
-				m_selectedQuestions->at(i).GiveAnswer(string);
-				LOG_INFO("User answered '" + string + "' to question ID " + std::to_string(m_selectedQuestions->at(i).GetID()));
+				try {
+					m_selectedQuestions->at(i).GiveAnswer(string);
+					LOG_INFO("User answered '" + string + "' to question ID " + std::to_string(m_selectedQuestions->at(i).GetID()));
+				}
+				catch(std::string error){
+					string = "entry";
+				}
 			}
 		}
 	}

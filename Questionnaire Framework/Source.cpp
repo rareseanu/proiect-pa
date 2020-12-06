@@ -2,7 +2,7 @@
 #include "TerminalQuestionnaire.h"
 
 int main() {
-    TerminalQuestionnaire test(2, 3670);
+    TerminalQuestionnaire test(4, 3670);
     test.Start();
     /*Logger logger;
     logger.LOG_WARN("Test warning");

@@ -8,7 +8,7 @@ Logger::Logger(const std::string& fileName)
 	if (m_activated) {
 		m_file.open(fileName, std::ofstream::out | std::ofstream::app);
 		if (!m_file.is_open()) {
-			throw "Can't open the given file.";
+			throw std::string("Can't open the given file.");
 		}
 	}
 }

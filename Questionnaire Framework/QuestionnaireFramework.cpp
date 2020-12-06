@@ -17,6 +17,14 @@ void QuestionnaireFramework::LoadQuestions(const std::string& questionTable, con
 		std::string text = questionRow[1];
 		int points = std::stoi(questionRow[2]);
 		std::string category = questionRow[3];
+		Question::QuestionType questionType;
+		try {
+			questionType = Question::ConvertStringToQuestionType(questionRow[4]);
+		}
+		catch(std::string error){
+			LOG_ERROR(error);
+			questionType = Question::QuestionType::Multichoice;
+		}
 		std::string command = "select * from " + answerTable + " where q_id = " + std::to_string(id);
 		std::vector<std::vector<std::string>> answerTable = dh->GetTableFromCommand(command);
 		std::vector<Answer> answers;
@@ -36,7 +44,7 @@ void QuestionnaireFramework::LoadQuestions(const std::string& questionTable, con
 			LOG_WARN("Question has no answers: " + text);
 		}
 		else {
-			m_questions[category].push_back(Question(id, text, points, category, answers, false));
+			m_questions[category].push_back(Question(id, text, points, category, answers, false,questionType));
 		}
 		++m_totalNumberOfQuestions;
 	}
@@ -51,7 +59,7 @@ void QuestionnaireFramework::OpenDatabase(const std::string& databaseName, const
 {
 	dh = new DatabaseHandler(databaseName, databaseHost, databasePort, databaseUser, databasePassword);
 	if (!dh->IsConnected()) {
-		throw "Connection to the database failed.";
+		throw std::string("Connection to the database failed.");
 	}
 }
 
@@ -62,7 +70,7 @@ const std::vector<Question>& QuestionnaireFramework::GetQuestionsFromCategory(co
 		return  m_questions.find(category)->second;
 	}
 	else {
-		throw "There are no questions in the given category (" + category + ").";
+		throw std::string("There are no questions in the given category (" + category + ").");
 	}
 }
 
@@ -106,7 +114,15 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 	std::vector<Question> unchosenQuestions; //Vector to store remaining unchosen questions from each category.
 	for (auto& category : categories) {
 		size_t remainingNumberOfQuestions = m_numberOfQuestionsNeeded / categories.size();
-		std::vector<Question> tempQuestions = GetQuestionsFromCategory(category);
+		std::vector<Question> tempQuestions;
+		try {
+			tempQuestions = GetQuestionsFromCategory(category);
+		}
+		catch (std::string error) {
+			std::cout << error;
+			LOG_ERROR(error);
+			exit(0);
+		}
 		// Add random question if the category has more questions than the necessary ammount.
 		if (tempQuestions.size() > remainingNumberOfQuestions) {
 			while (remainingNumberOfQuestions != 0) {

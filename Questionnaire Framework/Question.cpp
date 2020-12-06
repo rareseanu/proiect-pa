@@ -89,28 +89,47 @@ bool Question::VerifyUserAnswer()
 
 void Question::GiveAnswer(std::string string)
 {
-	if (m_answers.size() > 1) {
-		for (Answer& answer : m_answers) {
-			answer.SetSelected(false);
+	switch (m_questionType) {
+		case QuestionType::Multichoice:
+			for (Answer& answer : m_answers) {
+				answer.SetSelected(false);
+			}
+			for (const char& chr : string) {
+				if (chr - 'a' < m_answers.size() && chr - 'a' >= 0) {
+					m_answers[chr - 'a'].SetSelected(true);
+				}
+			}
+			break;
+		case QuestionType::Text:
+		{
+			std::string temp = m_answers[0].GetAnswer();
+			temp.erase(std::remove_if(temp.begin(), temp.end(), isspace), temp.end());
+			string.erase(std::remove_if(string.begin(), string.end(), isspace), string.end());
+			std::transform(temp.begin(), temp.end(), temp.begin(),
+				[](unsigned char c) { return tolower(c); });
+			std::transform(string.begin(), string.end(), string.begin(),
+				[](unsigned char c) { return tolower(c); });
+			if (temp == string) {
+				m_answers[0].SetSelected(true);
+			}
+			m_givenTextAnswer = string;
+			break;
 		}
-		for (const char& chr : string) {
-			if (chr - 'a' < m_answers.size() && chr - 'a' >= 0) {
-				m_answers[chr - 'a'].SetSelected(true);
+		case QuestionType::Singlechoice:
+		{
+			for (Answer& answer : m_answers) {
+				answer.SetSelected(false);
+			}
+			if (string.size() == 1) {
+				if (string[0] - 'a' < m_answers.size() && string[0] - 'a' >= 0) {
+					m_answers[string[0] - 'a'].SetSelected(true);
+				}
+				break;
+			}
+			else {
+				throw std::string("User entered an invalid answer for this type of question");
 			}
 		}
-	}
-	else {
-		std::string temp = m_answers[0].GetAnswer();
-		temp.erase(std::remove_if(temp.begin(), temp.end(), isspace), temp.end());
-		string.erase(std::remove_if(string.begin(), string.end(), isspace), string.end());
-		std::transform(temp.begin(), temp.end(), temp.begin(),
-			[](unsigned char c) { return tolower(c); });
-		std::transform(string.begin(), string.end(), string.begin(),
-			[](unsigned char c) { return tolower(c); });
-		if (temp == string) {
-			m_answers[0].SetSelected(true);
-		}
-		m_givenTextAnswer = string;
 	}
 }
 
@@ -169,7 +188,7 @@ Question::QuestionType Question::ConvertStringToQuestionType(const std::string& 
 	else if (temporary == "text")
 		return QuestionType::Text;
 
-	throw "The question type entered was invalid. Types allowed: Singlechoice, Multichoice, Text.";
+	throw std::string("The question type entered was invalid. Types allowed: Singlechoice, Multichoice, Text.");
 }
 
 std::string Question::ConvertQuestionTypeToString(const QuestionType& qType)
