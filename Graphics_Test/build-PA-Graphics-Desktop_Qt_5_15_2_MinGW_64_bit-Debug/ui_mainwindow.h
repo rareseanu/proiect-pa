@@ -1,3 +1,11 @@
+/********************************************************************************
+** Form generated from reading UI file 'mainwindow.ui'
+**
+** Created by: Qt User Interface Compiler version 5.15.2
+**
+** WARNING! All changes made in this file will be lost when recompiling UI file!
+********************************************************************************/
+
 #ifndef UI_MAINWINDOW_H
 #define UI_MAINWINDOW_H
 
@@ -6,6 +14,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
@@ -21,6 +30,7 @@ public:
     QRadioButton *radioButton_2;
     QRadioButton *radioButton_3;
     QRadioButton *radioButton_4;
+    QPushButton *pushButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -46,6 +56,9 @@ public:
         radioButton_4 = new QRadioButton(centralwidget);
         radioButton_4->setObjectName(QString::fromUtf8("radioButton_4"));
         radioButton_4->setGeometry(QRect(40, 260, 95, 20));
+        pushButton = new QPushButton(centralwidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(600, 470, 141, 31));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -68,6 +81,7 @@ public:
         radioButton_2->setText(QCoreApplication::translate("MainWindow", "B", nullptr));
         radioButton_3->setText(QCoreApplication::translate("MainWindow", "C", nullptr));
         radioButton_4->setText(QCoreApplication::translate("MainWindow", "D", nullptr));
+        pushButton->setText(QCoreApplication::translate("MainWindow", "Intrebarea urmatoare", nullptr));
     } // retranslateUi
 
 };

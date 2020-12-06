@@ -223,6 +223,7 @@ Makefile: ../PA-Graphics/PA-Graphics.pro ../../../5.15.2/mingw81_64/mkspecs/win3
 		../../../5.15.2/mingw81_64/mkspecs/features/qt_config.prf \
 		../../../5.15.2/mingw81_64/mkspecs/win32-g++/qmake.conf \
 		../../../5.15.2/mingw81_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../5.15.2/mingw81_64/mkspecs/features/exclusive_builds.prf \
 		../../../5.15.2/mingw81_64/mkspecs/features/toolchain.prf \
 		../../../5.15.2/mingw81_64/mkspecs/features/default_pre.prf \
@@ -251,7 +252,6 @@ Makefile: ../PA-Graphics/PA-Graphics.pro ../../../5.15.2/mingw81_64/mkspecs/win3
 		../../../5.15.2/mingw81_64/lib/Qt5Gui.prl \
 		../../../5.15.2/mingw81_64/lib/Qt5Core.prl \
 		../../../5.15.2/mingw81_64/lib/qtmain.prl \
-		.qmake.stash \
 		../../../5.15.2/mingw81_64/mkspecs/features/build_pass.prf
 	$(QMAKE) -o Makefile ..\PA-Graphics\PA-Graphics.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 ../../../5.15.2/mingw81_64/mkspecs/features/spec_pre.prf:
@@ -407,6 +407,7 @@ Makefile: ../PA-Graphics/PA-Graphics.pro ../../../5.15.2/mingw81_64/mkspecs/win3
 ../../../5.15.2/mingw81_64/mkspecs/features/qt_config.prf:
 ../../../5.15.2/mingw81_64/mkspecs/win32-g++/qmake.conf:
 ../../../5.15.2/mingw81_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../5.15.2/mingw81_64/mkspecs/features/exclusive_builds.prf:
 ../../../5.15.2/mingw81_64/mkspecs/features/toolchain.prf:
 ../../../5.15.2/mingw81_64/mkspecs/features/default_pre.prf:
@@ -435,7 +436,6 @@ Makefile: ../PA-Graphics/PA-Graphics.pro ../../../5.15.2/mingw81_64/mkspecs/win3
 ../../../5.15.2/mingw81_64/lib/Qt5Gui.prl:
 ../../../5.15.2/mingw81_64/lib/Qt5Core.prl:
 ../../../5.15.2/mingw81_64/lib/qtmain.prl:
-.qmake.stash:
 ../../../5.15.2/mingw81_64/mkspecs/features/build_pass.prf:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\PA-Graphics\PA-Graphics.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
