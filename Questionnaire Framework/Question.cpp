@@ -4,8 +4,9 @@ Question::Question()
 {
 }
 
-Question::Question(int id, const std::string& text, int points, const std::string& category, const std::vector<Answer>& answers, const bool flagged)
-	: m_id(id), m_text(text), m_points(points), m_category(category), m_answers(answers), m_flagged(flagged)
+Question::Question(int id, const std::string& text, int points, const std::string& category, 
+				   const std::vector<Answer>& answers, const bool flagged, const QuestionType& qType)
+	: m_id(id), m_text(text), m_points(points), m_category(category), m_answers(answers), m_flagged(flagged), m_questionType(qType)
 {
 }
 
@@ -149,6 +150,36 @@ bool Question::GetFlag() const
 std::string Question::GetCategory() const
 {
 	return m_category;
+}
+
+const Question::QuestionType& Question::GetQuestionType()
+{
+	return m_questionType;
+}
+
+Question::QuestionType Question::ConvertStringToQuestionType(const std::string& qType)
+{
+	std::string temporary = qType;
+	std::transform(temporary.begin(), temporary.end(), temporary.begin(),
+		[](unsigned char c) { return tolower(c); });
+	if (temporary == "singlechoice")
+		return QuestionType::Singlechoice;
+	else if (temporary == "multichoice")
+		return QuestionType::Multichoice;
+	else if (temporary == "text")
+		return QuestionType::Text;
+
+	throw "The question type entered was invalid. Types allowed: Singlechoice, Multichoice, Text.";
+}
+
+std::string Question::ConvertQuestionTypeToString(const QuestionType& qType)
+{
+	if (qType == QuestionType::Singlechoice)
+		return "Singlechoice";
+	else if (qType == QuestionType::Multichoice)
+		return "Multichoice";
+	else if (qType == QuestionType::Text)
+		return "Text";
 }
 
 std::ostream& operator<<(std::ostream& out, const Question& question)
