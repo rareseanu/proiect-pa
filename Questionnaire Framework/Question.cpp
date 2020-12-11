@@ -102,6 +102,7 @@ void Question::GiveAnswer(std::string string)
 			break;
 		case QuestionType::Text:
 		{
+			m_givenTextAnswer = string;
 			std::string temp = m_answers[0].GetAnswer();
 			temp.erase(std::remove_if(temp.begin(), temp.end(), isspace), temp.end());
 			string.erase(std::remove_if(string.begin(), string.end(), isspace), string.end());
@@ -112,7 +113,6 @@ void Question::GiveAnswer(std::string string)
 			if (temp == string) {
 				m_answers[0].SetSelected(true);
 			}
-			m_givenTextAnswer = string;
 			break;
 		}
 		case QuestionType::Singlechoice:
@@ -144,6 +144,11 @@ void Question::PrintSelected() {
 		std::cout << m_givenTextAnswer;
 	}
 	std::cout << '\n';
+}
+
+const std::string& Question::GetGivenTextAnswer() const
+{
+	return m_givenTextAnswer;
 }
 
 void Question::ResetAnswer()

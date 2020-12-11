@@ -49,6 +49,10 @@ void User::SetGrade(float grade)
 	m_grade = grade;
 }
 
+void User::SetId(int id) {
+	m_id = id;
+}
+
 std::istream& operator>>(std::istream& in, User& user)
 {
 	std::cout << "First name:";

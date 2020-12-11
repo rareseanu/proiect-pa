@@ -363,5 +363,8 @@ FodyWeavers.xsd
 
 x64/
 .vs/
+QuestionnaireGUI/.vs/
+QuestionnaireGUI/debug/
+QuestionnaireGUI/release/
 "Questionnaire Framework"/x64/
 "Questionnaire Framework"/log.txt

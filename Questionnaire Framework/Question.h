@@ -25,6 +25,7 @@ public:
     bool VerifyUserAnswer();
     void GiveAnswer(std::string string);
     void PrintSelected();
+    const std::string& GetGivenTextAnswer() const;
     void ResetAnswer();
     void Flag();
     void Unflag();

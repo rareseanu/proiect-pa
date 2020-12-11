@@ -27,7 +27,7 @@ public:
 	const std::vector<Question>& GetSelectedQuestions()const;
 	std::vector<Question>* GetSelectedQuestions();
 	int GetMaximumMark()const;
-	void SetUser(const std::string& lastName, const std::string& firstName);
+	void SetUser(const std::string& studentTable, const std::string& nameColumn);
 	User& GetUser();
 	void CalculateFinalGrade();
 	float GetFinalGrade()const;
@@ -35,7 +35,7 @@ public:
 	void StopTimer();
 	const Timer& GetTimer()const;
 	void SetTimerFunction(const std::function<void()>& funcToRun);
-	void SendResult(const std::string & tableName, const std::string& nameColumn, const std::string& gradeColumn)const;
+	void SendResult(const std::string& resultTable, const std::string& gradeColumn, const std::string& studentAnswerTable)const;
 private:
 	int m_numberOfQuestionsNeeded = 0;
 	int m_totalNumberOfQuestions = 0;

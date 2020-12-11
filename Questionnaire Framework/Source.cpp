@@ -1,5 +1,6 @@
 #include <iostream>
 #include "TerminalQuestionnaire.h"
+#include <windows.h>
 
 int main() {
     TerminalQuestionnaire test(4, 3670);

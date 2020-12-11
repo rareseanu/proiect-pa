@@ -1,0 +1,128 @@
+[11-04-2020 14:00:19] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:00:19] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:00:29] [INFO]    User answered 'F' to question ID 1
+[11-04-2020 14:00:31] [INFO]    User answered 'F' to question ID 4
+[11-04-2020 14:00:32] [INFO]    User answered 'c' to question ID 0
+[11-04-2020 14:00:36] [INFO]    User answered 'b' to question ID 2
+[11-04-2020 14:00:43] [INFO]    Timer stopped. Remaining time: 3652
+[11-04-2020 14:00:43] [INFO]    Quiz finished. Final grade: 2.865329
+[11-04-2020 14:08:05] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:08:06] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:08:15] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 14:08:16] [INFO]    User answered 'b' to question ID 4
+[11-04-2020 14:08:17] [INFO]    User answered 'ab' to question ID 0
+[11-04-2020 14:08:22] [INFO]    User answered 'b' to question ID 2
+[11-04-2020 14:08:26] [INFO]    Timer stopped. Remaining time: 3657
+[11-04-2020 14:08:26] [INFO]    Quiz finished. Final grade: 8.567335
+[11-04-2020 14:19:01] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:19:02] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:19:09] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 14:19:11] [INFO]    User answered 'DA' to question ID 4
+[11-04-2020 14:19:12] [INFO]    User answered 'ab' to question ID 0
+[11-04-2020 14:19:15] [INFO]    User answered 'b' to question ID 2
+[11-04-2020 14:19:16] [INFO]    Timer stopped. Remaining time: 3660
+[11-04-2020 14:19:16] [INFO]    Quiz finished. Final grade: 10.000000
+[11-04-2020 14:20:32] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:20:32] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:20:37] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 14:20:39] [INFO]    User answered 'DA' to question ID 4
+[11-04-2020 14:20:39] [INFO]    User answered 'ab' to question ID 0
+[11-04-2020 14:20:40] [INFO]    User answered 'b' to question ID 2
+[11-04-2020 14:20:44] [INFO]    Timer stopped. Remaining time: 3662
+[11-04-2020 14:20:44] [INFO]    Quiz finished. Final grade: 10.000000
+[11-04-2020 14:25:53] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:25:53] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:26:02] [INFO]    User answered 'a' to question ID 1
+[11-04-2020 14:26:04] [INFO]    User answered 'nu' to question ID 4
+[11-04-2020 14:26:12] [INFO]    User answered 'a' to question ID 0
+[11-04-2020 14:26:15] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 14:26:17] [INFO]    Timer stopped. Remaining time: 3652
+[11-04-2020 14:26:17] [INFO]    Quiz finished. Final grade: 4.283668
+[11-04-2020 14:52:04] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:52:04] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:52:09] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 14:52:11] [INFO]    User answered 'NU' to question ID 4
+[11-04-2020 14:52:14] [INFO]    User answered 'a' to question ID 0
+[11-04-2020 14:52:20] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 14:52:21] [INFO]    Timer stopped. Remaining time: 3656
+[11-04-2020 14:52:21] [INFO]    Quiz finished. Final grade: 5.702005
+[11-04-2020 14:55:10] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:55:11] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:55:19] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 14:55:21] [INFO]    User answered 'nu' to question ID 4
+[11-04-2020 14:55:21] [INFO]    User answered 'ab' to question ID 0
+[11-04-2020 14:55:24] [INFO]    User answered 'b' to question ID 2
+[11-04-2020 14:55:25] [INFO]    Timer stopped. Remaining time: 3662
+[11-04-2020 14:55:25] [INFO]    Quiz finished. Final grade: 8.567335
+[11-04-2020 14:56:30] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:56:30] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:56:34] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 14:56:38] [INFO]    User answered 'nu' to question ID 4
+[11-04-2020 14:56:41] [INFO]    User answered 'ab' to question ID 0
+[11-04-2020 14:56:42] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 14:56:44] [INFO]    Timer stopped. Remaining time: 3659
+[11-04-2020 14:56:44] [INFO]    Quiz finished. Final grade: 5.702005
+[11-04-2020 14:58:14] [WARNING] Question has no answers: Test no answers
+[11-04-2020 14:58:14] [WARNING] Answer aleady existent: 3
+[11-04-2020 14:58:20] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 14:58:23] [INFO]    User answered 'Nu' to question ID 4
+[11-04-2020 14:58:24] [INFO]    User answered 'a' to question ID 0
+[11-04-2020 14:58:26] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 14:58:27] [INFO]    Timer stopped. Remaining time: 3661
+[11-04-2020 14:58:27] [INFO]    Quiz finished. Final grade: 5.702005
+[11-04-2020 15:04:58] [WARNING] Question has no answers: Test no answers
+[11-04-2020 15:04:58] [WARNING] Answer aleady existent: 3
+[11-04-2020 15:05:02] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 15:05:04] [INFO]    User answered 'yes' to question ID 4
+[11-04-2020 15:05:06] [INFO]    User answered 'b' to question ID 0
+[11-04-2020 15:05:07] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 15:05:08] [INFO]    Timer stopped. Remaining time: 3663
+[11-04-2020 15:05:08] [INFO]    Quiz finished. Final grade: 2.836676
+[11-04-2020 15:33:47] [WARNING] Question has no answers: Test no answers
+[11-04-2020 15:33:48] [WARNING] Answer aleady existent: 3
+[11-04-2020 15:33:54] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 15:33:59] [INFO]    User answered 'u fucking nigger' to question ID 4
+[11-04-2020 15:34:00] [INFO]    User answered 'ab' to question ID 0
+[11-04-2020 15:34:01] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 15:34:02] [INFO]    Timer stopped. Remaining time: 3660
+[11-04-2020 15:34:02] [INFO]    Quiz finished. Final grade: 5.702005
+[11-04-2020 15:35:22] [WARNING] Question has no answers: Test no answers
+[11-04-2020 15:35:22] [WARNING] Answer aleady existent: 3
+[11-04-2020 15:35:27] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 15:35:33] [INFO]    User answered 'U fucking nigger' to question ID 4
+[11-04-2020 15:35:34] [INFO]    User answered 'ab' to question ID 0
+[11-04-2020 15:35:35] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 15:35:36] [INFO]    Timer stopped. Remaining time: 3660
+[11-04-2020 15:35:36] [INFO]    Quiz finished. Final grade: 5.702005
+[11-04-2020 15:39:12] [WARNING] Question has no answers: Test no answers
+[11-04-2020 15:39:13] [WARNING] Answer aleady existent: 3
+[11-04-2020 15:39:18] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 15:39:20] [INFO]    User answered 'nigger' to question ID 4
+[11-04-2020 15:39:21] [INFO]    User answered 'ab' to question ID 0
+[11-04-2020 15:39:21] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 15:39:23] [INFO]    Timer stopped. Remaining time: 3663
+[11-04-2020 15:39:23] [INFO]    Quiz finished. Final grade: 5.702005
+[11-04-2020 15:40:24] [WARNING] Question has no answers: Test no answers
+[11-04-2020 15:40:24] [WARNING] Answer aleady existent: 3
+[11-04-2020 15:40:29] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 15:40:31] [INFO]    User answered 'b' to question ID 4
+[11-04-2020 15:40:32] [INFO]    User answered 'a' to question ID 0
+[11-04-2020 15:40:33] [INFO]    User answered 'b' to question ID 2
+[11-04-2020 15:40:34] [INFO]    Timer stopped. Remaining time: 3664
+[11-04-2020 15:40:34] [INFO]    Quiz finished. Final grade: 8.567335
+[11-04-2020 15:42:10] [WARNING] Question has no answers: Test no answers
+[11-04-2020 15:42:10] [WARNING] Answer aleady existent: 3
+[11-04-2020 15:42:13] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 15:42:15] [INFO]    User answered 'nu' to question ID 4
+[11-04-2020 15:42:18] [INFO]    User answered 'c' to question ID 0
+[11-04-2020 15:42:19] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 15:42:20] [INFO]    Timer stopped. Remaining time: 3662
+[11-04-2020 15:42:20] [INFO]    Quiz finished. Final grade: 2.836676
+[11-04-2020 15:45:06] [WARNING] Question has no answers: Test no answers
+[11-04-2020 15:45:06] [WARNING] Answer aleady existent: 3
+[11-04-2020 15:45:16] [INFO]    User answered 'ab' to question ID 1
+[11-04-2020 15:45:17] [INFO]    User answered 'nigger' to question ID 4
+[11-04-2020 15:45:18] [INFO]    User answered 'b' to question ID 0
+[11-04-2020 15:45:19] [INFO]    User answered 'c' to question ID 2
+[11-04-2020 15:45:20] [INFO]    Timer stopped. Remaining time: 3664
+[11-04-2020 15:45:20] [INFO]    Quiz finished. Final grade: 2.836676

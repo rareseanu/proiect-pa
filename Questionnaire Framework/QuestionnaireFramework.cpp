@@ -165,10 +165,15 @@ int QuestionnaireFramework::GetMaximumMark()const
 	return m_maximumMark;
 }
 
-void QuestionnaireFramework::SetUser(const std::string& lastName, const std::string& firstName)
+void QuestionnaireFramework::SetUser(const std::string& studentTable, const std::string& nameColumn)
 {
-	m_user.SetLastName(lastName);
-	m_user.SetFirstName(firstName);
+	std::cin >> m_user;
+	std::string command = "insert into "+studentTable+"("+nameColumn+")"+ " values('" + m_user.GetName()+"')";
+	dh->RunCommand(command);
+	int id = stoi(dh->GetTableFromCommand("select max(s_id) from student").at(0).at(0));
+	std::cout << id;
+	system("pause");
+	m_user.SetId(id);
 }
 
 User& QuestionnaireFramework::GetUser()
@@ -214,8 +219,20 @@ void QuestionnaireFramework::SetTimerFunction(const std::function<void()>& funcT
 	m_timer.SetTimeout(funcToRun, m_quizTime);
 }
 
-void QuestionnaireFramework::SendResult(const std::string & tableName, const std::string& nameColumn, const std::string& gradeColumn) const
+void QuestionnaireFramework::SendResult(const std::string & resultTable, const std::string& gradeColumn, const std::string& studentAnswerTable) const
 {
-	std::string command="insert into "+tableName+"("+nameColumn+","+gradeColumn+") values('"+m_user.GetName()+"','"+std::to_string(m_user.GetGrade())+"')";
+	std::string command="update "+resultTable+" set "+gradeColumn+"="+ std::to_string(m_user.GetGrade())+" where s_id="+ std::to_string(m_user.GetId())+";";
+	for (Question question : m_selectedQuestions) {
+		if (question.GetQuestionType() == Question::QuestionType::Text) {
+			command =command+ "insert into " + studentAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'" + question.GetGivenTextAnswer() + "'," + std::to_string(question.GetID()) + ");";
+		}
+		else {
+			for (Answer answer : question.GetAnswers()) {
+				if (answer.GetSelected()) {
+					command = command + "insert into " + studentAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'" + answer.GetAnswer() + "'," + std::to_string(question.GetID()) + ");";
+				}
+			}
+		}
+	}
 	dh->RunCommand(command);
 }

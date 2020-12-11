@@ -3,7 +3,6 @@
 
 TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int quizTime)
 {
-	Logger::ActivateLogger();
 	quiz.SetQuizTime(quizTime);
 	quiz.SetNumberOfQuestions(numberOfQuestionsNeeded);
 	try {
@@ -22,7 +21,7 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int qu
 
 void TerminalQuestionnaire::Start()
 {
-	std::cin >> quiz.GetUser();
+	quiz.SetUser("student","nume");
 	std::cin.ignore();
 	bool stillHasQuestions = true;
 	int currentQuestion = 0;
@@ -139,7 +138,8 @@ void TerminalQuestionnaire::Stop()
 	PrintResults();
 	std::cout << "User: " << quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << quiz.GetFinalGrade();
-	//quiz.SendResult("student", "nume", "nota");
+	quiz.SendResult("student", "nota", "student_raspuns");
+	system("pause");
 	exit(0);
 }
 

@@ -14,6 +14,7 @@ public:
 	void SetLastName(std::string lastName);
 	float GetGrade() const;
 	void SetGrade(float);
+	void SetId(int id);
 	friend std::istream& operator>>(std::istream& in, User& user);
 private:
 	int m_id = 0;
