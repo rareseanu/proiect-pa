@@ -15,6 +15,16 @@ public:
     explicit SecDialog(QWidget *parent = nullptr);
     ~SecDialog();
 
+/*private slots:
+    void on_radioButton_clicked();
+
+    void on_radioButton_2_clicked();
+
+    void on_radioButton_3_clicked();
+
+    void on_radioButton_4_clicked();
+*/
+
 private:
     Ui::SecDialog *ui;
 };

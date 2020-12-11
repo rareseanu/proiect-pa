@@ -49,7 +49,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(453, 244);
+        MainWindow->resize(452, 237);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         verticalLayout_5 = new QVBoxLayout(centralwidget);
@@ -60,21 +60,11 @@ public:
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         label_3 = new QLabel(centralwidget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        QFont font;
-        font.setFamily(QString::fromUtf8("Segoe UI Semibold"));
-        font.setPointSize(16);
-        font.setBold(true);
-        label_3->setFont(font);
 
         verticalLayout_3->addWidget(label_3);
 
         label_4 = new QLabel(centralwidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("Segoe UI Semibold"));
-        font1.setPointSize(12);
-        font1.setBold(true);
-        label_4->setFont(font1);
 
         verticalLayout_3->addWidget(label_4);
 
@@ -137,14 +127,13 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 453, 21));
+        menubar->setGeometry(QRect(0, 0, 452, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
         MainWindow->setStatusBar(statusbar);
 
         retranslateUi(MainWindow);
-        QObject::connect(pushButton_2, &QPushButton::clicked, MainWindow, &QMainWindow::close);
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -152,10 +141,10 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Welcome!</span></p></body></html>", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Enter your name below:</span></p></body></html>", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">First name:</span></p></body></html>", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Last name:</span></p></body></html>", nullptr));
+        label_3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">Welcome!</p></body></html>", nullptr));
+        label_4->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\">Enter your name below:</p></body></html>", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "First name:", nullptr));
+        label_2->setText(QCoreApplication::translate("MainWindow", "Last name:", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Start Quiz", nullptr));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "Close", nullptr));
     } // retranslateUi
