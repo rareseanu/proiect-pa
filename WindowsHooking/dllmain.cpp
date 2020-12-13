@@ -1,6 +1,5 @@
-#include <stdio.h>
 #include <windows.h>
-#include "../Questionnaire Framework/Logger.h"
+#include "../Questionnaire Framework/Logger.cpp"
 
 BOOL APIENTRY DllMain(HMODULE hModule,
 	DWORD  ul_reason_for_call,
@@ -10,10 +9,10 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		LOG_INFO("DLL process attach function called.\n");
+		LOG_INFO("DLL process attach function called.");
 		break;
 	case DLL_PROCESS_DETACH:
-		LOG_INFO("DLL process detach function called.\n");
+		LOG_INFO("DLL process detach function called.");
 		break;
 	case DLL_THREAD_ATTACH:
 		break;
@@ -30,7 +29,7 @@ extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARA
 		//0x8 - WN_KILLFOCUS message
 		if (pt_stMessage->message == 0x8 && pt_stMessage->wParam != NULL)
 		{
-			LOG_INFO("WN_KILLFOCUS called.\n");
+			LOG_INFO("WN_KILLFOCUS called.");
 		}
 	}
 	return(CallNextHookEx(NULL, code, wParam, lParam));

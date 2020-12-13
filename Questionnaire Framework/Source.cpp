@@ -1,12 +1,13 @@
-#include <iostream>
 #include "TerminalQuestionnaire.h"
-#include <windows.h>
+#include <string>
+#include <Windows.h>
+#include "WindowsAPIUtils.h"
 
 int main() {
-    TerminalQuestionnaire test(4, 3670);
-    test.Start();
-    /*Logger logger;
-    logger.LOG_WARN("Test warning");
-    logger.LOG_ERROR("Test error");
-    logger.LOG_INFO("Test info");*/
+	//HHOOK hook = SetupHook(L"Notepad", L"WindowsHooking.dll");
+	//printf("Press enter to unhook.\n");
+	//getchar();
+	//UnhookWindowsHookEx(hook);
+	TerminalQuestionnaire test(4, 3670);
+	test.Start();
 }

@@ -48,6 +48,9 @@
     <ClCompile Include="TerminalQuestionnaire.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WindowsAPIUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DatabaseHandler.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TerminalQuestionnaire.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsAPIUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
