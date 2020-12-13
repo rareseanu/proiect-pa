@@ -43,7 +43,7 @@
     <ClCompile Include="mainwindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="secdialog.cpp">
+    <ClCompile Include="QuestionWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -51,29 +51,23 @@
     <QtMoc Include="mainwindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="secdialog.h">
+    <QtMoc Include="QuestionWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    
-    
     <CustomBuild Include="debug\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
     <CustomBuild Include="release\moc_predefs.h.cbt">
       <Filter>Generated Files</Filter>
     </CustomBuild>
-    
-    
-    
-    
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="mainwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="secdialog.ui">
+    <QtUic Include="QuestionForm.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

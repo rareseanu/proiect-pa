@@ -1,28 +1,14 @@
 #include "mainwindow.h"
-#include "ui_mainwindow.h"
 #include <QMessageBox>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+StartWindow::StartWindow(QMainWindow* source,QWidget *parent)
+    : QMainWindow(parent),source(source)
 {
-    ui->setupUi(this);
+    ui.setupUi(this); 
+    connect(ui.startQuizButton, &QPushButton::pressed, this, &StartWindow::StartQuiz);
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
+void StartWindow::StartQuiz() {
+    source->show();
+    close();
 }
-
-
-void MainWindow::on_pushButton_clicked()
-{
-//    SecDialog secDialog;
-//  secDialog.setModal(true);
-//    secDialog.exec();
-    hide();
-    secDialog = new SecDialog(this);
-    secDialog->show();
-}
-
-/**/

@@ -1,26 +1,19 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
+#pragma once
 #include <QMainWindow>
-#include "secdialog.h"
+#include "ui_mainwindow.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui { class StartWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class StartWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
-    ~MainWindow();
-
-private slots:
-    void on_pushButton_clicked();
-
+    StartWindow(QMainWindow* source,QWidget *parent = nullptr);
+    void StartQuiz();
 private:
-    Ui::MainWindow *ui;
-    SecDialog *secDialog;
+    Ui::StartWindow ui;
+    QMainWindow* source;
 };
-#endif // MAINWINDOW_H

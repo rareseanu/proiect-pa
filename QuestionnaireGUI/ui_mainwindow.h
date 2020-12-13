@@ -15,155 +15,146 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_StartWindow
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout_5;
-    QVBoxLayout *verticalLayout_4;
+    QWidget *widget;
     QVBoxLayout *verticalLayout_3;
-    QLabel *label_3;
-    QLabel *label_4;
+    QLabel *welcomeLabel;
+    QLabel *enterNameLabel;
+    QWidget *widget1;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *verticalLayout_2;
-    QLabel *label;
-    QLabel *label_2;
+    QLabel *firstNameLabel;
+    QLabel *lastNameLabel;
     QVBoxLayout *verticalLayout;
-    QLineEdit *lineEdit;
-    QLineEdit *lineEdit_2;
+    QLineEdit *firstNameEdit;
+    QLineEdit *lastNameEdit;
+    QWidget *widget2;
     QHBoxLayout *horizontalLayout;
-    QPushButton *pushButton;
-    QPushButton *pushButton_2;
-    QMenuBar *menubar;
-    QStatusBar *statusbar;
+    QPushButton *startQuizButton;
+    QPushButton *closeButton;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *StartWindow)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(453, 244);
-        centralwidget = new QWidget(MainWindow);
+        if (StartWindow->objectName().isEmpty())
+            StartWindow->setObjectName(QString::fromUtf8("StartWindow"));
+        StartWindow->resize(450, 193);
+        StartWindow->setMinimumSize(QSize(450, 193));
+        StartWindow->setMaximumSize(QSize(450, 193));
+        centralwidget = new QWidget(StartWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
-        verticalLayout_5 = new QVBoxLayout(centralwidget);
-        verticalLayout_5->setObjectName(QString::fromUtf8("verticalLayout_5"));
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        verticalLayout_3 = new QVBoxLayout();
+        centralwidget->setMinimumSize(QSize(450, 193));
+        centralwidget->setMaximumSize(QSize(450, 193));
+        widget = new QWidget(centralwidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(10, 10, 431, 71));
+        verticalLayout_3 = new QVBoxLayout(widget);
+        verticalLayout_3->setSpacing(2);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
+        verticalLayout_3->setContentsMargins(0, 0, 0, 0);
+        welcomeLabel = new QLabel(widget);
+        welcomeLabel->setObjectName(QString::fromUtf8("welcomeLabel"));
         QFont font;
         font.setFamily(QString::fromUtf8("Segoe UI Semibold"));
         font.setPointSize(16);
         font.setBold(true);
-        label_3->setFont(font);
+        welcomeLabel->setFont(font);
 
-        verticalLayout_3->addWidget(label_3);
+        verticalLayout_3->addWidget(welcomeLabel);
 
-        label_4 = new QLabel(centralwidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        enterNameLabel = new QLabel(widget);
+        enterNameLabel->setObjectName(QString::fromUtf8("enterNameLabel"));
         QFont font1;
         font1.setFamily(QString::fromUtf8("Segoe UI Semibold"));
         font1.setPointSize(12);
         font1.setBold(true);
-        label_4->setFont(font1);
+        enterNameLabel->setFont(font1);
 
-        verticalLayout_3->addWidget(label_4);
+        verticalLayout_3->addWidget(enterNameLabel);
 
-
-        verticalLayout_4->addLayout(verticalLayout_3);
-
-        horizontalLayout_2 = new QHBoxLayout();
+        widget1 = new QWidget(centralwidget);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        widget1->setGeometry(QRect(10, 90, 431, 54));
+        horizontalLayout_2 = new QHBoxLayout(widget1);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
-        label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
+        firstNameLabel = new QLabel(widget1);
+        firstNameLabel->setObjectName(QString::fromUtf8("firstNameLabel"));
 
-        verticalLayout_2->addWidget(label);
+        verticalLayout_2->addWidget(firstNameLabel);
 
-        label_2 = new QLabel(centralwidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
+        lastNameLabel = new QLabel(widget1);
+        lastNameLabel->setObjectName(QString::fromUtf8("lastNameLabel"));
 
-        verticalLayout_2->addWidget(label_2);
+        verticalLayout_2->addWidget(lastNameLabel);
 
 
         horizontalLayout_2->addLayout(verticalLayout_2);
 
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        lineEdit = new QLineEdit(centralwidget);
-        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        firstNameEdit = new QLineEdit(widget1);
+        firstNameEdit->setObjectName(QString::fromUtf8("firstNameEdit"));
 
-        verticalLayout->addWidget(lineEdit);
+        verticalLayout->addWidget(firstNameEdit);
 
-        lineEdit_2 = new QLineEdit(centralwidget);
-        lineEdit_2->setObjectName(QString::fromUtf8("lineEdit_2"));
+        lastNameEdit = new QLineEdit(widget1);
+        lastNameEdit->setObjectName(QString::fromUtf8("lastNameEdit"));
 
-        verticalLayout->addWidget(lineEdit_2);
+        verticalLayout->addWidget(lastNameEdit);
 
 
         horizontalLayout_2->addLayout(verticalLayout);
 
-
-        verticalLayout_4->addLayout(horizontalLayout_2);
-
-        horizontalLayout = new QHBoxLayout();
+        widget2 = new QWidget(centralwidget);
+        widget2->setObjectName(QString::fromUtf8("widget2"));
+        widget2->setGeometry(QRect(10, 160, 431, 26));
+        horizontalLayout = new QHBoxLayout(widget2);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        pushButton = new QPushButton(centralwidget);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        startQuizButton = new QPushButton(widget2);
+        startQuizButton->setObjectName(QString::fromUtf8("startQuizButton"));
 
-        horizontalLayout->addWidget(pushButton);
+        horizontalLayout->addWidget(startQuizButton);
 
-        pushButton_2 = new QPushButton(centralwidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        closeButton = new QPushButton(widget2);
+        closeButton->setObjectName(QString::fromUtf8("closeButton"));
 
-        horizontalLayout->addWidget(pushButton_2);
+        horizontalLayout->addWidget(closeButton);
 
+        StartWindow->setCentralWidget(centralwidget);
 
-        verticalLayout_4->addLayout(horizontalLayout);
+        retranslateUi(StartWindow);
+        QObject::connect(closeButton, &QPushButton::clicked, StartWindow, &QMainWindow::close);
 
-
-        verticalLayout_5->addLayout(verticalLayout_4);
-
-        MainWindow->setCentralWidget(centralwidget);
-        menubar = new QMenuBar(MainWindow);
-        menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 453, 21));
-        MainWindow->setMenuBar(menubar);
-        statusbar = new QStatusBar(MainWindow);
-        statusbar->setObjectName(QString::fromUtf8("statusbar"));
-        MainWindow->setStatusBar(statusbar);
-
-        retranslateUi(MainWindow);
-        QObject::connect(pushButton_2, &QPushButton::clicked, MainWindow, &QMainWindow::close);
-
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(StartWindow);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *StartWindow)
     {
-        MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
-        label_3->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Welcome!</span></p></body></html>", nullptr));
-        label_4->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Enter your name below:</span></p></body></html>", nullptr));
-        label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">First name:</span></p></body></html>", nullptr));
-        label_2->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Last name:</span></p></body></html>", nullptr));
-        pushButton->setText(QCoreApplication::translate("MainWindow", "Start Quiz", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Close", nullptr));
+        StartWindow->setWindowTitle(QCoreApplication::translate("StartWindow", "Questionnaire", nullptr));
+        welcomeLabel->setText(QCoreApplication::translate("StartWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Welcome!</span></p></body></html>", nullptr));
+        enterNameLabel->setText(QCoreApplication::translate("StartWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Enter your name below:</span></p></body></html>", nullptr));
+        firstNameLabel->setText(QCoreApplication::translate("StartWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">First name:</span></p></body></html>", nullptr));
+        lastNameLabel->setText(QCoreApplication::translate("StartWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Last name:</span></p></body></html>", nullptr));
+        startQuizButton->setText(QCoreApplication::translate("StartWindow", "Start Quiz", nullptr));
+        closeButton->setText(QCoreApplication::translate("StartWindow", "Close", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class StartWindow: public Ui_StartWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE
