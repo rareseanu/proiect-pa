@@ -11,12 +11,12 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,9 +25,11 @@ class Ui_QuestionWindow
 {
 public:
     QWidget *centralwidget;
-    QVBoxLayout *verticalLayout;
-    QLabel *label;
-    QGridLayout *answerGrid;
+    QLabel *questionNumber;
+    QLabel *questionLabel;
+    QFrame *choicesFrame;
+    QGridLayout *gridLayout;
+    QWidget *widget;
     QHBoxLayout *horizontalLayout;
     QPushButton *nextQuestionButton;
     QPushButton *finishButton;
@@ -43,39 +45,47 @@ public:
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         centralwidget->setMinimumSize(QSize(800, 800));
         centralwidget->setMaximumSize(QSize(800, 800));
-        verticalLayout = new QVBoxLayout(centralwidget);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
-        verticalLayout->setContentsMargins(-1, -1, -1, 9);
-        label = new QLabel(centralwidget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setMaximumSize(QSize(16777215, 300));
+        questionNumber = new QLabel(centralwidget);
+        questionNumber->setObjectName(QString::fromUtf8("questionNumber"));
+        questionNumber->setGeometry(QRect(9, 9, 116, 27));
+        questionNumber->setMaximumSize(QSize(200, 30));
         QFont font;
-        font.setPointSize(27);
-        label->setFont(font);
-        label->setAlignment(Qt::AlignCenter);
-
-        verticalLayout->addWidget(label);
-
-        answerGrid = new QGridLayout();
-        answerGrid->setObjectName(QString::fromUtf8("answerGrid"));
-
-        verticalLayout->addLayout(answerGrid);
-
-        horizontalLayout = new QHBoxLayout();
+        font.setPointSize(15);
+        questionNumber->setFont(font);
+        questionNumber->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop);
+        questionNumber->setWordWrap(true);
+        questionLabel = new QLabel(centralwidget);
+        questionLabel->setObjectName(QString::fromUtf8("questionLabel"));
+        questionLabel->setGeometry(QRect(10, 40, 781, 100));
+        questionLabel->setMaximumSize(QSize(16777215, 100));
+        QFont font1;
+        font1.setPointSize(27);
+        questionLabel->setFont(font1);
+        questionLabel->setAlignment(Qt::AlignCenter);
+        questionLabel->setWordWrap(true);
+        choicesFrame = new QFrame(centralwidget);
+        choicesFrame->setObjectName(QString::fromUtf8("choicesFrame"));
+        choicesFrame->setEnabled(true);
+        choicesFrame->setGeometry(QRect(0, 150, 801, 591));
+        choicesFrame->setFrameShape(QFrame::StyledPanel);
+        choicesFrame->setFrameShadow(QFrame::Raised);
+        gridLayout = new QGridLayout(choicesFrame);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        widget = new QWidget(centralwidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(10, 760, 781, 26));
+        horizontalLayout = new QHBoxLayout(widget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        nextQuestionButton = new QPushButton(centralwidget);
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        nextQuestionButton = new QPushButton(widget);
         nextQuestionButton->setObjectName(QString::fromUtf8("nextQuestionButton"));
 
         horizontalLayout->addWidget(nextQuestionButton);
 
-        finishButton = new QPushButton(centralwidget);
+        finishButton = new QPushButton(widget);
         finishButton->setObjectName(QString::fromUtf8("finishButton"));
 
         horizontalLayout->addWidget(finishButton);
-
-
-        verticalLayout->addLayout(horizontalLayout);
 
         QuestionWindow->setCentralWidget(centralwidget);
 
@@ -87,7 +97,8 @@ public:
     void retranslateUi(QMainWindow *QuestionWindow)
     {
         QuestionWindow->setWindowTitle(QCoreApplication::translate("QuestionWindow", "Questionnaire", nullptr));
-        label->setText(QCoreApplication::translate("QuestionWindow", "Question", nullptr));
+        questionNumber->setText(QCoreApplication::translate("QuestionWindow", "Question: 0/?", nullptr));
+        questionLabel->setText(QCoreApplication::translate("QuestionWindow", "Question", nullptr));
         nextQuestionButton->setText(QCoreApplication::translate("QuestionWindow", "Next", nullptr));
         finishButton->setText(QCoreApplication::translate("QuestionWindow", "Finish", nullptr));
     } // retranslateUi
