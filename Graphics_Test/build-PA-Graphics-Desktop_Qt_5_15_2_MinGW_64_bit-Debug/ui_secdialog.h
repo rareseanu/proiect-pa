@@ -35,6 +35,7 @@ public:
         if (SecDialog->objectName().isEmpty())
             SecDialog->setObjectName(QString::fromUtf8("SecDialog"));
         SecDialog->resize(812, 557);
+        SecDialog->setStyleSheet(QString::fromUtf8("background-color:rgb(113, 211, 220);"));
         label = new QLabel(SecDialog);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(30, 80, 141, 41));
@@ -53,9 +54,11 @@ public:
         pushButton = new QPushButton(SecDialog);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(640, 500, 141, 31));
+        pushButton->setStyleSheet(QString::fromUtf8("background-color:qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 169, 202, 255), stop:1 rgba(255, 255, 255, 255));"));
         pushButton_2 = new QPushButton(SecDialog);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
         pushButton_2->setGeometry(QRect(490, 500, 141, 31));
+        pushButton_2->setStyleSheet(QString::fromUtf8("background-color:qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 169, 202, 255), stop:1 rgba(255, 255, 255, 255));"));
         label_2 = new QLabel(SecDialog);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(30, 60, 81, 21));
