@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <fstream>
 #include "../Questionnaire Framework/Logger.cpp"
 
 BOOL APIENTRY DllMain(HMODULE hModule,
@@ -24,12 +25,15 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 
 extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARAM lParam) {
 	LPCWPSTRUCT pt_stMessage = (LPCWPSTRUCT)lParam;
+	std::fstream fileStream;
 	if (code >= 0)
 	{
-		//0x8 - WN_KILLFOCUS message
-		if (pt_stMessage->message == 0x8 && pt_stMessage->wParam != NULL)
+		//0x8 - WM_KILLFOCUS message
+		if (pt_stMessage->message == WM_KILLFOCUS && pt_stMessage->wParam != NULL)
 		{
-			LOG_INFO("WN_KILLFOCUS called.");
+			fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
+			fileStream << "WN_KILLFOCUS called.\n";
+			fileStream.close();
 		}
 	}
 	return(CallNextHookEx(NULL, code, wParam, lParam));
