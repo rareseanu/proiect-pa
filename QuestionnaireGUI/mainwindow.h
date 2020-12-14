@@ -1,5 +1,5 @@
 #pragma once
-#include <QMainWindow>
+#include <QtWidgets/QMainWindow>
 #include "ui_mainwindow.h"
 
 QT_BEGIN_NAMESPACE

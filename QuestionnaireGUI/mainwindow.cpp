@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include <QMessageBox>
+#include <QtWidgets/QMessageBox>
 
 StartWindow::StartWindow(QMainWindow* source,QWidget *parent)
     : QMainWindow(parent),source(source)

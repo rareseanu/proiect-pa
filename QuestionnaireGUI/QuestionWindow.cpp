@@ -1,5 +1,5 @@
 #include "QuestionWindow.h"
-#include <QMessageBox>
+#include <QtWidgets/QMessageBox>
 
 QuestionWindow::QuestionWindow(QWidget* parent)
     : QMainWindow(parent)
