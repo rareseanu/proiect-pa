@@ -6,14 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>800</height>
+    <width>770</width>
+    <height>499</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
-    <height>800</height>
+    <width>600</width>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -38,98 +38,57 @@
      <height>800</height>
     </size>
    </property>
-   <widget class="QLabel" name="questionNumber">
+   <widget class="QLabel" name="questionNumbeLabel">
     <property name="geometry">
      <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>116</width>
-      <height>27</height>
+      <x>20</x>
+      <y>20</y>
+      <width>171</width>
+      <height>41</height>
      </rect>
     </property>
-    <property name="maximumSize">
-     <size>
-      <width>200</width>
-      <height>30</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>15</pointsize>
-     </font>
-    </property>
     <property name="text">
-     <string>Question: 0/?</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;Question: 0/?&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="questionLabel">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>781</width>
-      <height>100</height>
+      <x>300</x>
+      <y>80</y>
+      <width>171</width>
+      <height>31</height>
      </rect>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>16777215</width>
-      <height>100</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>27</pointsize>
-     </font>
     </property>
     <property name="text">
-     <string>Question</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Question&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QFrame" name="choicesFrame">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
+   <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>150</y>
-      <width>801</width>
-      <height>591</height>
+      <x>40</x>
+      <y>170</y>
+      <width>691</width>
+      <height>181</height>
      </rect>
     </property>
-    <property name="frameShape">
-     <enum>QFrame::StyledPanel</enum>
+    <property name="text">
+     <string/>
     </property>
-    <property name="frameShadow">
-     <enum>QFrame::Raised</enum>
-    </property>
-    <layout class="QGridLayout" name="gridLayout"/>
    </widget>
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>760</y>
-      <width>781</width>
-      <height>26</height>
+      <x>60</x>
+      <y>440</y>
+      <width>671</width>
+      <height>31</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="nextQuestionButton">
+      <widget class="QPushButton" name="nextButton">
        <property name="text">
         <string>Next</string>
        </property>
