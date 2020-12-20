@@ -3,5 +3,6 @@
 #include <string>
 #include <iostream>
 
-HWND GetHandlerFromTitle(LPCWSTR windowTitle);
-HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName);
+HWND GetHandlerFromTitle(LPCWSTR windowTitle, bool isConsole);
+std::string GetLastErrorString();
+HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole);

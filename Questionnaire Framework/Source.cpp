@@ -4,7 +4,10 @@
 #include "WindowsAPIUtils.h"
 
 int main() {
-	//HHOOK hook = SetupHook(L"Notepad", L"WindowsHooking.dll");
+	//SetConsoleTitle(L"Test");
+	//Sleep(2000);
+	//GetHandlerFromTitle(L"Test", false);
+	//HHOOK hook = SetupHook(L"Notepad", L"WindowsHooking.dll", false);
 	//printf("Press enter to unhook.\n");
 	//getchar();
 	//UnhookWindowsHookEx(hook);
