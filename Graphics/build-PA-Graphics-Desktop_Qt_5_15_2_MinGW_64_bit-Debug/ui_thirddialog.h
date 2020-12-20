@@ -74,7 +74,8 @@ public:
         label_3->setGeometry(QRect(40, 450, 81, 31));
         pushButton_3 = new QPushButton(ThirdDialog);
         pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
-        pushButton_3->setGeometry(QRect(650, 450, 93, 28));
+        pushButton_3->setGeometry(QRect(620, 460, 141, 31));
+        pushButton_3->setStyleSheet(QString::fromUtf8("background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(0, 169, 202, 255), stop:1 rgba(255, 255, 255, 255));"));
 
         retranslateUi(ThirdDialog);
 

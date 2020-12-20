@@ -31,6 +31,14 @@ private slots:
 
     void on_pushButton_3_clicked();
 
+    void on_checkBox_stateChanged(int arg1);
+
+    void on_checkBox_2_stateChanged(int arg1);
+
+    void on_checkBox_3_stateChanged(int arg1);
+
+    void on_checkBox_4_stateChanged(int arg1);
+
 private:
     Ui::SecDialog *ui;
 };
