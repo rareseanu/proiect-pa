@@ -105,7 +105,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>unitbvLogo.png</pixmap>
+          <pixmap>images/unitbvLogo.png</pixmap>
          </property>
         </widget>
        </item>
@@ -121,7 +121,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap>miLogo.png</pixmap>
+          <pixmap>images/miLogo.png</pixmap>
          </property>
         </widget>
        </item>

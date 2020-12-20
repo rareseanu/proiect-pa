@@ -19,26 +19,26 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_Dialog
+class Ui_FinishDialog
 {
 public:
     QVBoxLayout *verticalLayout;
     QLabel *label;
     QDialogButtonBox *buttonBox;
 
-    void setupUi(QDialog *Dialog)
+    void setupUi(QDialog *FinishDialog)
     {
-        if (Dialog->objectName().isEmpty())
-            Dialog->setObjectName(QString::fromUtf8("Dialog"));
-        Dialog->resize(284, 138);
-        verticalLayout = new QVBoxLayout(Dialog);
+        if (FinishDialog->objectName().isEmpty())
+            FinishDialog->setObjectName(QString::fromUtf8("FinishDialog"));
+        FinishDialog->resize(284, 138);
+        verticalLayout = new QVBoxLayout(FinishDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        label = new QLabel(Dialog);
+        label = new QLabel(FinishDialog);
         label->setObjectName(QString::fromUtf8("label"));
 
         verticalLayout->addWidget(label);
 
-        buttonBox = new QDialogButtonBox(Dialog);
+        buttonBox = new QDialogButtonBox(FinishDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
@@ -46,23 +46,23 @@ public:
         verticalLayout->addWidget(buttonBox);
 
 
-        retranslateUi(Dialog);
-        QObject::connect(buttonBox, &QDialogButtonBox::accepted, Dialog, &QDialog::accept);
-        QObject::connect(buttonBox, &QDialogButtonBox::rejected, Dialog, &QDialog::reject);
+        retranslateUi(FinishDialog);
+        QObject::connect(buttonBox, &QDialogButtonBox::accepted, FinishDialog, &QDialog::accept);
+        QObject::connect(buttonBox, &QDialogButtonBox::rejected, FinishDialog, &QDialog::reject);
 
-        QMetaObject::connectSlotsByName(Dialog);
+        QMetaObject::connectSlotsByName(FinishDialog);
     } // setupUi
 
-    void retranslateUi(QDialog *Dialog)
+    void retranslateUi(QDialog *FinishDialog)
     {
-        Dialog->setWindowTitle(QCoreApplication::translate("Dialog", "Dialog", nullptr));
-        label->setText(QCoreApplication::translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Are you sure you want to finish the quiz and </span></p><p align=\"center\"><span style=\" font-size:10pt;\">send the results?</span></p></body></html>", nullptr));
+        FinishDialog->setWindowTitle(QCoreApplication::translate("FinishDialog", "Confirm", nullptr));
+        label->setText(QCoreApplication::translate("FinishDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Are you sure you want to finish the quiz and </span></p><p align=\"center\"><span style=\" font-size:10pt;\">send the results?</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class Dialog: public Ui_Dialog {};
+    class FinishDialog: public Ui_FinishDialog {};
 } // namespace Ui
 
 QT_END_NAMESPACE

@@ -46,12 +46,18 @@
     <ClCompile Include="StartWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FinishDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QuestionWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="StartWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="FinishDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

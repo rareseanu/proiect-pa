@@ -91,20 +91,21 @@ public:
         layoutWidget1->setGeometry(QRect(10, 10, 617, 54));
         horizontalLayout_4 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setSizeConstraint(QLayout::SetDefaultConstraint);
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         unitbvLogo = new QLabel(layoutWidget1);
         unitbvLogo->setObjectName(QString::fromUtf8("unitbvLogo"));
         unitbvLogo->setMaximumSize(QSize(50, 50));
-        unitbvLogo->setPixmap(QPixmap(QString::fromUtf8("unitbvLogo.png")));
+        unitbvLogo->setPixmap(QPixmap(QString::fromUtf8("images/unitbvLogo.png")));
 
         horizontalLayout_3->addWidget(unitbvLogo);
 
         miLogo = new QLabel(layoutWidget1);
         miLogo->setObjectName(QString::fromUtf8("miLogo"));
         miLogo->setMaximumSize(QSize(50, 50));
-        miLogo->setPixmap(QPixmap(QString::fromUtf8("miLogo.png")));
+        miLogo->setPixmap(QPixmap(QString::fromUtf8("images/miLogo.png")));
 
         horizontalLayout_3->addWidget(miLogo);
 
@@ -149,6 +150,7 @@ public:
         timeLabel = new QLabel(layoutWidget1);
         timeLabel->setObjectName(QString::fromUtf8("timeLabel"));
         timeLabel->setFont(font);
+        timeLabel->setLayoutDirection(Qt::LeftToRight);
 
         horizontalLayout_2->addWidget(timeLabel);
 
