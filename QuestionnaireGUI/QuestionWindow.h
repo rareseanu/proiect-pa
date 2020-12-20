@@ -15,7 +15,7 @@ class QuestionWindow : public QMainWindow
 
 public:
     QuestionWindow(QWidget* parent = nullptr);
-
+    void openDialog();
 private:
     Ui::QuestionWindow ui;
     StartWindow startWindow=StartWindow(this);
