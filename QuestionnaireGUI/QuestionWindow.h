@@ -1,13 +1,8 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
+#pragma once
 #include <QtWidgets/QMainWindow>
-#include "mainwindow.h"
 #include "ui_QuestionForm.h"
+#include "StartWindow.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class StartWindow; }
-QT_END_NAMESPACE
 
 class QuestionWindow : public QMainWindow
 {
@@ -15,9 +10,9 @@ class QuestionWindow : public QMainWindow
 
 public:
     QuestionWindow(QWidget* parent = nullptr);
-    void openDialog();
+    void OpenDialog();
+    Ui::QuestionWindow GetUi();
 private:
     Ui::QuestionWindow ui;
     StartWindow startWindow=StartWindow(this);
 };
-#endif // MAINWINDOW_H

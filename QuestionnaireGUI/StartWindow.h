@@ -1,10 +1,6 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
-#include "ui_mainwindow.h"
-
-QT_BEGIN_NAMESPACE
-namespace Ui { class StartWindow; }
-QT_END_NAMESPACE
+#include "ui_StartWindow.h"
 
 class StartWindow : public QMainWindow
 {

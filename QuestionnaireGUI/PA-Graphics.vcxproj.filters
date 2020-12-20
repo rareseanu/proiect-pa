@@ -40,18 +40,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mainwindow.cpp">
+    <ClCompile Include="QuestionWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="QuestionWindow.cpp">
+    <ClCompile Include="StartWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="mainwindow.h">
+    <QtMoc Include="QuestionWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="QuestionWindow.h">
+    <QtMoc Include="StartWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -64,10 +64,13 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="mainwindow.ui">
+    <QtUic Include="QuestionForm.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="QuestionForm.ui">
+    <QtUic Include="StartWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="FinishDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

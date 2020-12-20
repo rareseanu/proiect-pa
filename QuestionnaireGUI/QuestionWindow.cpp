@@ -6,9 +6,14 @@ QuestionWindow::QuestionWindow(QWidget* parent)
 {
     ui.setupUi(this);
     startWindow.show();
-    connect(ui.finishButton, &QPushButton::pressed, this, &QuestionWindow::openDialog);
+    connect(ui.finishButton, &QPushButton::pressed, this, &QuestionWindow::OpenDialog);
 }
 
-void QuestionWindow::openDialog() {
+void QuestionWindow::OpenDialog() {
 
+}
+
+Ui::QuestionWindow QuestionWindow::GetUi()
+{
+    return ui;
 }
