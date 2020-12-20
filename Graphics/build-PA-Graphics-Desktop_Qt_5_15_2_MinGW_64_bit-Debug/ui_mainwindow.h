@@ -36,6 +36,7 @@ public:
     QLabel *label_3;
     QLineEdit *lineEdit;
     QLabel *label_4;
+    QPushButton *pushButton_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -79,6 +80,9 @@ public:
         label_4 = new QLabel(centralwidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
         label_4->setGeometry(QRect(50, 480, 71, 31));
+        pushButton_2 = new QPushButton(centralwidget);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(720, 460, 93, 28));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -105,6 +109,7 @@ public:
         label_2->setText(QCoreApplication::translate("MainWindow", "Intrebarea 1", nullptr));
         label_3->setText(QString());
         label_4->setText(QCoreApplication::translate("MainWindow", "Comentarii:", nullptr));
+        pushButton_2->setText(QCoreApplication::translate("MainWindow", "Verifcare", nullptr));
     } // retranslateUi
 
 };

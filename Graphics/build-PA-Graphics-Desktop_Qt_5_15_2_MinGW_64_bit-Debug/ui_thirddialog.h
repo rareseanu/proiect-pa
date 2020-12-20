@@ -32,6 +32,7 @@ public:
     QLabel *label_2;
     QLineEdit *lineEdit;
     QLabel *label_3;
+    QPushButton *pushButton_3;
 
     void setupUi(QDialog *ThirdDialog)
     {
@@ -71,6 +72,9 @@ public:
         label_3 = new QLabel(ThirdDialog);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(40, 450, 81, 31));
+        pushButton_3 = new QPushButton(ThirdDialog);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        pushButton_3->setGeometry(QRect(650, 450, 93, 28));
 
         retranslateUi(ThirdDialog);
 
@@ -89,6 +93,7 @@ public:
         pushButton_2->setText(QCoreApplication::translate("ThirdDialog", "Trimite Raspunsurile", nullptr));
         label_2->setText(QCoreApplication::translate("ThirdDialog", "Intrebarea3", nullptr));
         label_3->setText(QCoreApplication::translate("ThirdDialog", "Comentarii:", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("ThirdDialog", "Verificare", nullptr));
     } // retranslateUi
 
 };

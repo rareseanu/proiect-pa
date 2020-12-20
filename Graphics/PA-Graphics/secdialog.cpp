@@ -30,22 +30,36 @@ void SecDialog::on_pushButton_2_clicked()
      mainWindow->show();
 }
 
+int verificare2 = 0;
+
 void SecDialog::on_radioButton_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    verificare2 = 1;
 }
 
 void SecDialog::on_radioButton_2_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns corect");
+    verificare2 = 2;
 }
 
 void SecDialog::on_radioButton_3_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    verificare2 = 3;
 }
 
 void SecDialog::on_radioButton_4_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    verificare2 = 4;
+}
+
+void SecDialog::on_pushButton_3_clicked()
+{
+    if(verificare2 == 3)
+    {
+        QMessageBox::about(this,"Verificare", "Raspuns corect");
+    }
+    else
+    {
+          QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    }
 }

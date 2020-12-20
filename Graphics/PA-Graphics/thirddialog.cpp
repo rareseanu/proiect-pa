@@ -23,6 +23,8 @@ void ThirdDialog::on_pushButton_clicked()
     secDialog2->show();
 }
 
+int verificare3 = 0;
+
 void ThirdDialog::on_pushButton_2_clicked()
 {
     hide();
@@ -30,20 +32,32 @@ void ThirdDialog::on_pushButton_2_clicked()
 
 void ThirdDialog::on_radioButton_clicked()
 {
-   QMessageBox::about(this,"Verificare", "Raspuns gresit");
+   verificare3 = 1;
 }
 
 void ThirdDialog::on_radioButton_2_clicked()
 {
-   QMessageBox::about(this,"Verificare", "Raspuns gresit");
+   verificare3 = 2;
 }
 
 void ThirdDialog::on_radioButton_3_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns corect");
+    verificare3 = 3;
 }
 
 void ThirdDialog::on_radioButton_4_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    verificare3 = 4;
+}
+
+void ThirdDialog::on_pushButton_3_clicked()
+{
+    if(verificare3 == 2)
+    {
+        QMessageBox::about(this,"Verificare", "Raspuns corect");
+    }
+    else
+    {
+          QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    }
 }

@@ -32,6 +32,7 @@ public:
     QLabel *label_2;
     QLabel *label_3;
     QLineEdit *lineEdit;
+    QPushButton *pushButton_3;
 
     void setupUi(QDialog *SecDialog)
     {
@@ -71,6 +72,9 @@ public:
         lineEdit = new QLineEdit(SecDialog);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(30, 500, 341, 31));
+        pushButton_3 = new QPushButton(SecDialog);
+        pushButton_3->setObjectName(QString::fromUtf8("pushButton_3"));
+        pushButton_3->setGeometry(QRect(660, 430, 93, 28));
 
         retranslateUi(SecDialog);
 
@@ -89,6 +93,7 @@ public:
         pushButton_2->setText(QCoreApplication::translate("SecDialog", "Intrebarea anterioara", nullptr));
         label_2->setText(QCoreApplication::translate("SecDialog", "Intrebarea2", nullptr));
         label_3->setText(QCoreApplication::translate("SecDialog", "Comentarii:", nullptr));
+        pushButton_3->setText(QCoreApplication::translate("SecDialog", "Verificare", nullptr));
     } // retranslateUi
 
 };

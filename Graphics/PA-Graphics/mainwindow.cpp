@@ -15,6 +15,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+int verificare = 0;
 
 void MainWindow::on_pushButton_clicked()
 {
@@ -25,20 +26,32 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_radioButton_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns corect");
+    verificare = 1;
 }
 
 void MainWindow::on_radioButton_2_clicked()
 {
-  QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    verificare = 2;
 }
 
 void MainWindow::on_radioButton_3_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    verificare = 3;
 }
 
 void MainWindow::on_radioButton_4_clicked()
 {
-    QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    verificare = 4;
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    if(verificare == 1)
+    {
+        QMessageBox::about(this,"Verificare", "Raspuns corect");
+    }
+    else
+    {
+          QMessageBox::about(this,"Verificare", "Raspuns gresit");
+    }
 }
