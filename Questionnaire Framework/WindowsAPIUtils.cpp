@@ -43,38 +43,40 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole)
 		std::cout << "ClassName not found!\n";
 		return NULL;
 	}
-	if (consoleClassName == (LPWSTR) className) {
-		std::wcout << consoleClassName;
-	}
 
 	DWORD processId;
 	DWORD tid = GetWindowThreadProcessId(windowHandle, &processId);
-	std::cout << tid;
+	std::cout << "Initial console id: " << tid << '\n';
 	HWND messageOnlyHandle;
 	if (consoleClassName == (LPWSTR)className) {
 		WNDCLASSEX wc = { 0 };
 		wc.cbSize = sizeof(wc);
 		wc.lpfnWndProc = WindowProc;
 		wc.hInstance = GetModuleHandle(NULL);
-		wc.lpszClassName = L"someClass";
+		wc.lpszClassName = L"messageOnly";
 
 		if (!RegisterClassEx(&wc)) {
 			std::cout << "Error while registering the message-only window class.\n";
 			return NULL;
 		}
 
-		messageOnlyHandle = CreateWindowEx(0, L"someClass", L"lmaoxd", 0,
-			0, 0, 0, 0, HWND_MESSAGE, NULL, NULL , NULL);
+		messageOnlyHandle = CreateWindowEx(0, L"messageOnly", NULL, 0, 0, 0,0, 0,
+			HWND_MESSAGE, NULL, GetModuleHandle(NULL), NULL);
 		if (!messageOnlyHandle) {
 			std::cout << GetLastErrorString();
 			return NULL;
 		}
-		tid = GetWindowThreadProcessId(messageOnlyHandle, &processId);
-		//ChangeWindowMessageFilterEx(messageOnlyHandle, WM_KILLFOCUS,);
+		//tid = GetWindowThreadProcessId(messageOnlyHandle, &processId);
+		//ChangeWindowMessageFilterEx(messageOnlyHandle, WM_KILLFOCUS, MSGFLT_ALLOW, 0);
 		std::cout << "Message-only window created\n";
+		ShowWindow(messageOnlyHandle, 5);
+
 	}
-	std::cout << tid;
-	
+	HWND test = FindWindowEx(HWND_MESSAGE, NULL,  L"someClass", NULL);
+	DWORD pid;
+	DWORD testba;
+	testba = GetWindowThreadProcessId(test, &pid);
+	std::cout << testba;
 	TCHAR path[MAX_PATH];
 	DWORD dwRes = GetModuleFileName(NULL, (LPWSTR)path, MAX_PATH);
 	if (!dwRes) {
@@ -98,6 +100,12 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole)
 		return NULL;
 	}
 	HHOOK hook = SetWindowsHookEx(WH_CALLWNDPROC, addr, dll, tid);
+	MSG msg = { };
+	while (GetMessage(&msg, NULL, 0, 0))
+	{
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+	}
 	if (hook == NULL) {
 		FreeLibrary(dll);
 		return NULL;
