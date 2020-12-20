@@ -6,8 +6,8 @@
 int main() {
 	//SetConsoleTitle(L"Test");
 	//Sleep(2000);
-	//GetHandlerFromTitle(L"Test", false);
-	//HHOOK hook = SetupHook(L"Notepad", L"WindowsHooking.dll", false);
+	//HHOOK hook = SetupHook(L"Test", L"WindowsHooking.dll", true);
+
 	//printf("Press enter to unhook.\n");
 	//getchar();
 	//UnhookWindowsHookEx(hook);

@@ -27,6 +27,12 @@ std::string GetLastErrorString() {
 	return message;
 }
 
+LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	std::cout << message << std::endl;
+	return DefWindowProc(hWnd, message, wParam, lParam);
+}
+
 HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole)
 {
 	HWND windowHandle = GetHandlerFromTitle(windowTitle, isConsole);
@@ -43,18 +49,31 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole)
 
 	DWORD processId;
 	DWORD tid = GetWindowThreadProcessId(windowHandle, &processId);
-
+	std::cout << tid;
 	HWND messageOnlyHandle;
 	if (consoleClassName == (LPWSTR)className) {
-		messageOnlyHandle = CreateWindowEx(0, (LPCWSTR) "CustomMessageOnly", (LPCWSTR)"messageOnly", 0,
-			0, 0, 0, 0, windowHandle, NULL, NULL, NULL);
+		WNDCLASSEX wc = { 0 };
+		wc.cbSize = sizeof(wc);
+		wc.lpfnWndProc = WindowProc;
+		wc.hInstance = GetModuleHandle(NULL);
+		wc.lpszClassName = L"someClass";
+
+		if (!RegisterClassEx(&wc)) {
+			std::cout << "Error while registering the message-only window class.\n";
+			return NULL;
+		}
+
+		messageOnlyHandle = CreateWindowEx(0, L"someClass", L"lmaoxd", 0,
+			0, 0, 0, 0, HWND_MESSAGE, NULL, NULL , NULL);
 		if (!messageOnlyHandle) {
 			std::cout << GetLastErrorString();
-
 			return NULL;
 		}
 		tid = GetWindowThreadProcessId(messageOnlyHandle, &processId);
+		//ChangeWindowMessageFilterEx(messageOnlyHandle, WM_KILLFOCUS,);
+		std::cout << "Message-only window created\n";
 	}
+	std::cout << tid;
 	
 	TCHAR path[MAX_PATH];
 	DWORD dwRes = GetModuleFileName(NULL, (LPWSTR)path, MAX_PATH);
@@ -83,5 +102,7 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole)
 		FreeLibrary(dll);
 		return NULL;
 	}
+	std::cout << "\nAjuns\n";
 	return hook;
+
 }
