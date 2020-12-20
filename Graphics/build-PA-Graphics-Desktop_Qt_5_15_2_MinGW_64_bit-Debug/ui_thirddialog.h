@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 
@@ -29,6 +30,8 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QLabel *label_2;
+    QLineEdit *lineEdit;
+    QLabel *label_3;
 
     void setupUi(QDialog *ThirdDialog)
     {
@@ -62,6 +65,12 @@ public:
         label_2 = new QLabel(ThirdDialog);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(30, 70, 71, 21));
+        lineEdit = new QLineEdit(ThirdDialog);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setGeometry(QRect(30, 500, 311, 31));
+        label_3 = new QLabel(ThirdDialog);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(40, 450, 81, 31));
 
         retranslateUi(ThirdDialog);
 
@@ -79,6 +88,7 @@ public:
         pushButton->setText(QCoreApplication::translate("ThirdDialog", "Intrebarea anterioare", nullptr));
         pushButton_2->setText(QCoreApplication::translate("ThirdDialog", "Trimite Raspunsurile", nullptr));
         label_2->setText(QCoreApplication::translate("ThirdDialog", "Intrebarea3", nullptr));
+        label_3->setText(QCoreApplication::translate("ThirdDialog", "Comentarii:", nullptr));
     } // retranslateUi
 
 };

@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QRadioButton>
 
@@ -29,6 +30,8 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QLabel *label_2;
+    QLabel *label_3;
+    QLineEdit *lineEdit;
 
     void setupUi(QDialog *SecDialog)
     {
@@ -62,6 +65,12 @@ public:
         label_2 = new QLabel(SecDialog);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(30, 60, 81, 21));
+        label_3 = new QLabel(SecDialog);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(40, 460, 71, 21));
+        lineEdit = new QLineEdit(SecDialog);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setGeometry(QRect(30, 500, 341, 31));
 
         retranslateUi(SecDialog);
 
@@ -79,6 +88,7 @@ public:
         pushButton->setText(QCoreApplication::translate("SecDialog", "Intrebarea urmatoare", nullptr));
         pushButton_2->setText(QCoreApplication::translate("SecDialog", "Intrebarea anterioara", nullptr));
         label_2->setText(QCoreApplication::translate("SecDialog", "Intrebarea2", nullptr));
+        label_3->setText(QCoreApplication::translate("SecDialog", "Comentarii:", nullptr));
     } // retranslateUi
 
 };

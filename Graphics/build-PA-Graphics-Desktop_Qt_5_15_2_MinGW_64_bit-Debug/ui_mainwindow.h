@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -33,6 +34,8 @@ public:
     QPushButton *pushButton;
     QLabel *label_2;
     QLabel *label_3;
+    QLineEdit *lineEdit;
+    QLabel *label_4;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -70,6 +73,12 @@ public:
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setGeometry(QRect(470, -10, 331, 301));
         label_3->setPixmap(QPixmap(QString::fromUtf8("C:/Users/User/Pictures/Saved Pictures/Project.jpg")));
+        lineEdit = new QLineEdit(centralwidget);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setGeometry(QRect(30, 530, 381, 31));
+        label_4 = new QLabel(centralwidget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(50, 480, 71, 31));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -95,6 +104,7 @@ public:
         pushButton->setText(QCoreApplication::translate("MainWindow", "Intrebarea urmatoare", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Intrebarea 1", nullptr));
         label_3->setText(QString());
+        label_4->setText(QCoreApplication::translate("MainWindow", "Comentarii:", nullptr));
     } // retranslateUi
 
 };
