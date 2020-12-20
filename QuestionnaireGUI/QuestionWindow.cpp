@@ -10,7 +10,10 @@ QuestionWindow::QuestionWindow(QWidget* parent)
 }
 
 void QuestionWindow::OpenDialog() {
-
+    finishDialog.exec();
+    if (finishDialog.result() == QDialog::Accepted) {
+        close();
+    }
 }
 
 Ui::QuestionWindow QuestionWindow::GetUi()

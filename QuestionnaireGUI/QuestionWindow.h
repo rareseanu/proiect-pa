@@ -1,6 +1,7 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
 #include "ui_QuestionForm.h"
+#include "FinishDialog.h"
 #include "StartWindow.h"
 
 
@@ -14,5 +15,6 @@ public:
     Ui::QuestionWindow GetUi();
 private:
     Ui::QuestionWindow ui;
+    FinishDialog finishDialog;
     StartWindow startWindow=StartWindow(this);
 };
