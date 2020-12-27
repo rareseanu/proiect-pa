@@ -182,8 +182,6 @@ void QuestionnaireFramework::SetUser(const std::string& studentTable, const std:
 	std::string command = "insert into "+studentTable+"("+nameColumn+")"+ " values('" + m_user.GetName()+"')";
 	dh->RunCommand(command);
 	int id = stoi(dh->GetTableFromCommand("select max(s_id) from student").at(0).at(0));
-	std::cout << id;
-	system("pause");
 	m_user.SetId(id);
 }
 

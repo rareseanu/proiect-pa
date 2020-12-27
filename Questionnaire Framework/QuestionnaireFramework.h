@@ -15,7 +15,7 @@ public:
 	QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, bool loggerEnabled = true);
 	void LoadQuestions(const std::string& questionTable, const std::string& answerTable);
 	void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
-		const  std::string& databaseUser, const std::string& databasePassword);
+	const  std::string& databaseUser, const std::string& databasePassword);
 	const std::vector<Question>& GetQuestionsFromCategory(const std::string& category) const;
 	void SetNumberOfQuestions(int number);
 	int GetNumberOfQuestions()const;

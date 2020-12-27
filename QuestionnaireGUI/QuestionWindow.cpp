@@ -18,9 +18,8 @@ void QuestionWindow::OpenDialog() {
 
 void QuestionWindow::on_btnClose_clicked()
 {
-    sendDialog = new SendDialog(this);
     this->hide();
-    sendDialog->show();
+    sendDialog.show();
 }
 
 Ui::QuestionWindow QuestionWindow::GetUi()

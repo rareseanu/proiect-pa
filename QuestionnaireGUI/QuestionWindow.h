@@ -18,5 +18,5 @@ private:
     Ui::QuestionWindow ui;
     FinishDialog finishDialog;
     StartWindow startWindow=StartWindow(this);
-    SendDialog* sendDialog;
+    SendDialog sendDialog;
 };

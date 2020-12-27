@@ -1,22 +1,14 @@
-#ifndef SENDDIALOG_H
-#define SENDDIALOG_H
-
+#pragma once
+#include "ui_SendDialog.h"
 #include <QDialog>
-
-namespace Ui {
-class SendDialog;
-}
 
 class SendDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit SendDialog(QWidget *parent = nullptr);
-    ~SendDialog();
+    SendDialog(QWidget *parent = nullptr);
 
 private:
-    Ui::SendDialog *ui;
+    Ui::SendDialog ui;
 };
-
-#endif // SENDDIALOG_H

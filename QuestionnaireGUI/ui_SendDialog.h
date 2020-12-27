@@ -14,7 +14,6 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
-#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -34,11 +33,9 @@ public:
     QVBoxLayout *verticalLayout;
     QLabel *studentLabel;
     QLabel *markLabel;
-    QLabel *mailLabel;
     QVBoxLayout *verticalLayout_2;
     QLabel *nameLabel;
     QLabel *actualMarkLabel;
-    QLineEdit *mailEdit;
 
     void setupUi(QDialog *SendDialog)
     {
@@ -57,12 +54,13 @@ public:
         label->setPixmap(QPixmap(QString::fromUtf8("images/UNITBV_MI_logo.png")));
         layoutWidget = new QWidget(SendDialog);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(130, 140, 381, 123));
+        layoutWidget->setGeometry(QRect(130, 140, 381, 92));
         verticalLayout_3 = new QVBoxLayout(layoutWidget);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
         whereLabel = new QLabel(layoutWidget);
         whereLabel->setObjectName(QString::fromUtf8("whereLabel"));
+        whereLabel->setMaximumSize(QSize(16777215, 30));
 
         verticalLayout_3->addWidget(whereLabel);
 
@@ -80,11 +78,6 @@ public:
 
         verticalLayout->addWidget(markLabel);
 
-        mailLabel = new QLabel(layoutWidget);
-        mailLabel->setObjectName(QString::fromUtf8("mailLabel"));
-
-        verticalLayout->addWidget(mailLabel);
-
 
         horizontalLayout->addLayout(verticalLayout);
 
@@ -99,11 +92,6 @@ public:
         actualMarkLabel->setObjectName(QString::fromUtf8("actualMarkLabel"));
 
         verticalLayout_2->addWidget(actualMarkLabel);
-
-        mailEdit = new QLineEdit(layoutWidget);
-        mailEdit->setObjectName(QString::fromUtf8("mailEdit"));
-
-        verticalLayout_2->addWidget(mailEdit);
 
 
         horizontalLayout->addLayout(verticalLayout_2);
@@ -122,12 +110,11 @@ public:
     {
         SendDialog->setWindowTitle(QCoreApplication::translate("SendDialog", "Results", nullptr));
         thanksLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">Thank you for your time! :)</span></p></body></html>", nullptr));
-        pushButton->setText(QCoreApplication::translate("SendDialog", "Send", nullptr));
+        pushButton->setText(QCoreApplication::translate("SendDialog", "Close", nullptr));
         label->setText(QString());
-        whereLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">Where should we send the results?</span></p></body></html>", nullptr));
+        whereLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">The results were sent into the database.</span></p><p align=\"center\"><br/></p></body></html>", nullptr));
         studentLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">Student:</span></p></body></html>", nullptr));
         markLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">Mark:</span></p></body></html>", nullptr));
-        mailLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">Teacher's e-mail address:</span></p></body></html>", nullptr));
         nameLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">[name]</span></p></body></html>", nullptr));
         actualMarkLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">[mark]</span></p></body></html>", nullptr));
     } // retranslateUi
