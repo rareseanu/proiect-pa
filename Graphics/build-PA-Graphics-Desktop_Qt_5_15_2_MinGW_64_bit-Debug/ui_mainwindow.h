@@ -33,7 +33,6 @@ public:
     QRadioButton *radioButton_4;
     QPushButton *pushButton;
     QLabel *label_2;
-    QLabel *label_3;
     QLineEdit *lineEdit;
     QLabel *label_4;
     QPushButton *pushButton_2;
@@ -70,10 +69,6 @@ public:
         label_2 = new QLabel(centralwidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(40, 60, 81, 31));
-        label_3 = new QLabel(centralwidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(470, -10, 331, 301));
-        label_3->setPixmap(QPixmap(QString::fromUtf8("C:/Users/User/Pictures/Saved Pictures/Project.jpg")));
         lineEdit = new QLineEdit(centralwidget);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
         lineEdit->setGeometry(QRect(30, 530, 381, 31));
@@ -108,7 +103,6 @@ public:
         radioButton_4->setText(QCoreApplication::translate("MainWindow", "D", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "Intrebarea urmatoare", nullptr));
         label_2->setText(QCoreApplication::translate("MainWindow", "Intrebarea 1", nullptr));
-        label_3->setText(QString());
         label_4->setText(QCoreApplication::translate("MainWindow", "Comentarii:", nullptr));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "Verifcare", nullptr));
     } // retranslateUi
