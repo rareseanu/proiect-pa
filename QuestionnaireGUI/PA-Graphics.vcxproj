@@ -193,6 +193,7 @@
     <ClCompile Include="FinishDialog.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QuestionWindow.cpp" />
+    <ClCompile Include="SendDialog.cpp" />
     <ClCompile Include="StartWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +217,7 @@
   <ItemGroup>
     <QtUic Include="FinishDialog.ui" />
     <QtUic Include="QuestionForm.ui" />
+    <QtUic Include="SendDialog.ui" />
     <QtUic Include="StartWindow.ui" />
   </ItemGroup>
   <ItemGroup>
@@ -226,6 +228,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="FinishDialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="SendDialog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

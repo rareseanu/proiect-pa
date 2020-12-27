@@ -12,8 +12,15 @@ QuestionWindow::QuestionWindow(QWidget* parent)
 void QuestionWindow::OpenDialog() {
     finishDialog.exec();
     if (finishDialog.result() == QDialog::Accepted) {
-        close();
+        on_btnClose_clicked();
     }
+}
+
+void QuestionWindow::on_btnClose_clicked()
+{
+    sendDialog = new SendDialog(this);
+    this->hide();
+    sendDialog->show();
 }
 
 Ui::QuestionWindow QuestionWindow::GetUi()

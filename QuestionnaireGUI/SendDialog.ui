@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Results</string>
   </property>
   <widget class="QLabel" name="thanksLabel">
    <property name="geometry">
@@ -55,7 +55,7 @@
     <pixmap>images/UNITBV_MI_logo.png</pixmap>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -126,5 +126,22 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SendDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>309</x>
+     <y>329</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>539</x>
+     <y>296</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

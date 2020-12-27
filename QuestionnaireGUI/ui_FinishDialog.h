@@ -30,7 +30,7 @@ public:
     {
         if (FinishDialog->objectName().isEmpty())
             FinishDialog->setObjectName(QString::fromUtf8("FinishDialog"));
-        FinishDialog->resize(284, 138);
+        FinishDialog->resize(354, 138);
         verticalLayout = new QVBoxLayout(FinishDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         label = new QLabel(FinishDialog);
@@ -47,8 +47,9 @@ public:
 
 
         retranslateUi(FinishDialog);
-        QObject::connect(buttonBox, &QDialogButtonBox::accepted, FinishDialog, &QDialog::accept);
         QObject::connect(buttonBox, &QDialogButtonBox::rejected, FinishDialog, &QDialog::reject);
+        QObject::connect(buttonBox, &QDialogButtonBox::clicked, FinishDialog, &QDialog::accept);
+        QObject::connect(buttonBox, SIGNAL(accepted()), FinishDialog, SLOT(onOkButtonClicked()));
 
         QMetaObject::connectSlotsByName(FinishDialog);
     } // setupUi
