@@ -8,7 +8,7 @@ class SendDialog : public QDialog
 
 public:
     SendDialog(QWidget *parent = nullptr);
-
+    Ui::SendDialog GetUi();
 private:
     Ui::SendDialog ui;
 };

@@ -19,6 +19,8 @@ void QuestionWindow::OpenDialog() {
 void QuestionWindow::on_btnClose_clicked()
 {
     this->hide();
+    Ui::SendDialog sendDialogUi = sendDialog.GetUi();
+    sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
     sendDialog.show();
 }
 
