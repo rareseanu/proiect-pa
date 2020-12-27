@@ -28,13 +28,10 @@ extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARA
 	std::fstream fileStream;
 	if (code >= 0)
 	{
-		fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
-		fileStream << code <<"\n";
-		fileStream.close();
 		if (pt_stMessage->message == WM_ACTIVATE && pt_stMessage->wParam == WA_INACTIVE)
 		{
 			fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
-			fileStream << "WN_KILLFOCUS called.\n";
+			fileStream << "WA_INACTIVE called.\n";
 			fileStream.close();
 		}
 	}
