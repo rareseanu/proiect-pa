@@ -4,7 +4,8 @@
 #include <thread>
 #include "Logger.h"
 
-QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, bool loggerEnabled) {
+QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, std::wstring oldTitle,
+		bool loggerEnabled) {
 	if (loggerEnabled) {
 		Logger::ActivateLogger();
 	}
@@ -12,12 +13,14 @@ QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool is
 		std::wstring windowTitle = GetUniqueWindowTitle();
 		if (isConsole) {
 			SetConsoleTitle((LPCWSTR)windowTitle.c_str());
-			Sleep(100);
-			m_hook = SetupHook((LPCWSTR)windowTitle.c_str(), L"WindowsHooking.dll", isConsole);
 		}
 		else {
-			//TODO GUI anticheating.
+			HWND windowHandle = GetHandlerFromTitle((LPCWSTR)oldTitle.c_str(), false);
+			SetWindowTextW(windowHandle, (LPCWSTR)windowTitle.c_str());
+
 		}
+		Sleep(100);
+		m_hook = SetupHook((LPCWSTR)windowTitle.c_str(), L"WindowsHooking.dll", isConsole, this);
 	}
 }
 
@@ -199,6 +202,15 @@ void QuestionnaireFramework::CalculateFinalGrade()
 	}
 	percentage = mark / m_maximumMark;
 	m_user.SetGrade(10 * percentage);
+}
+
+void QuestionnaireFramework::SetCheatingDetected() {
+	cheatDetected = true;
+}
+
+bool QuestionnaireFramework::CheatingDetected()
+{
+	return cheatDetected;
 }
 
 float QuestionnaireFramework::GetFinalGrade() const

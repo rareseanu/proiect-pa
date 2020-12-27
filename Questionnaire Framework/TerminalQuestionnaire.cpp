@@ -29,6 +29,9 @@ void TerminalQuestionnaire::Start()
 	quiz.StartTimer();
 	for (int i = 0; i < m_selectedQuestions->size() && quiz.CanAnswer(); i++) {
 		system("cls");
+		if (quiz.CheatingDetected()) {
+			break;
+		}
 		std::string string;
 		string = "entry";
 		while (string == "entry" || string == "\\f" || string == "\\u" || string == "\\b" || string == "\\s") {
@@ -77,6 +80,9 @@ void TerminalQuestionnaire::Start()
 	std::string choice, answer;
 	while (choice != "F") {
 		system("cls");
+		if (quiz.CheatingDetected()) {
+			break;
+		}
 		PrintTimeLeft();
 		PrintSelectedQuestions();
 		std::cout << "Enter the question's number if you want to change its answer or 'F' to finish the quiz: ";
@@ -135,6 +141,9 @@ void TerminalQuestionnaire::Stop()
 	quiz.CalculateFinalGrade();
 	LOG_INFO("Quiz finished. Final grade: " + std::to_string(quiz.GetFinalGrade()));
 	quiz.SetCanAnswer(false);
+	if (quiz.CheatingDetected()) {
+		quiz.GetUser().SetGrade(1);
+	}
 	PrintResults();
 	std::cout << "User: " << quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << quiz.GetFinalGrade();

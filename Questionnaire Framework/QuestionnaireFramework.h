@@ -12,7 +12,7 @@
 class QuestionnaireFramework
 {
 public:
-	QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, bool loggerEnabled = true);
+	QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, std::wstring oldTitle, bool loggerEnabled = true);
 	void LoadQuestions(const std::string& questionTable, const std::string& answerTable);
 	void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
 	const  std::string& databaseUser, const std::string& databasePassword);
@@ -31,6 +31,8 @@ public:
 	void SetUser(const std::string& studentTable, const std::string& nameColumn);
 	User& GetUser();
 	void CalculateFinalGrade();
+	void SetCheatingDetected();
+	bool CheatingDetected();
 	float GetFinalGrade()const;
 	void StartTimer();
 	void StopTimer();
@@ -51,4 +53,5 @@ private:
 	DatabaseHandler* dh = NULL;
 	std::vector<Question> m_selectedQuestions;
 	HHOOK m_hook = NULL;
+	boolean cheatDetected = false;
 };

@@ -1,4 +1,5 @@
 #include "WindowsAPIUtils.h"
+#include "QuestionnaireFramework.h"
 
 HWND GetHandlerFromTitle(LPCWSTR windowTitle, bool isConsole)
 {
@@ -43,7 +44,7 @@ std::wstring GetUniqueWindowTitle() {
 	return title;
 }
 
-HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole)
+HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, QuestionnaireFramework* quiz)
 {
 	HWND windowHandle = GetHandlerFromTitle(windowTitle, isConsole);
 	const std::wstring consoleClassName(L"ConsoleWindowClass");
@@ -59,10 +60,10 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole)
 	HWND messageOnlyHandle;
 	//TODO: Research other ways to receive messages from console apps. Polling inefficient.
 	if (consoleClassName == (LPWSTR)className) {
-		std::thread checkFocus([]() {
+		std::thread checkFocus([quiz]() {
 			while (true) {
 				if (GetForegroundWindow() != GetConsoleWindow()) {
-					std::cout << "Window changed.\n";
+					quiz->SetCheatingDetected();
 					return NULL;
 				}
 			}

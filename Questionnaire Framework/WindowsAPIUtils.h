@@ -3,9 +3,10 @@
 #include <string>
 #include <iostream>
 #include <thread>
+class QuestionnaireFramework; //Forward declaration to avoid circular include dependency.
 
 HWND GetHandlerFromTitle(LPCWSTR windowTitle, bool isConsole);
 std::string GetLastErrorString();
 void MinimizeOtherApps(HWND questionnaireHandle);
 std::wstring GetUniqueWindowTitle();
-HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole);
+HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, QuestionnaireFramework* quiz);
