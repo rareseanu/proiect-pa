@@ -4,9 +4,20 @@
 #include <thread>
 #include "Logger.h"
 
-QuestionnaireFramework::QuestionnaireFramework(bool loggerEnabled) {
+QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, bool loggerEnabled) {
 	if (loggerEnabled) {
 		Logger::ActivateLogger();
+	}
+	if (anticheatingEnabled) {
+		std::wstring windowTitle = GetUniqueWindowTitle();
+		if (isConsole) {
+			SetConsoleTitle((LPCWSTR)windowTitle.c_str());
+			Sleep(100);
+			m_hook = SetupHook((LPCWSTR)windowTitle.c_str(), L"WindowsHooking.dll", isConsole);
+		}
+		else {
+			//TODO GUI anticheating.
+		}
 	}
 }
 
@@ -235,4 +246,9 @@ void QuestionnaireFramework::SendResult(const std::string & resultTable, const s
 		}
 	}
 	dh->RunCommand(command);
+}
+
+const HHOOK& QuestionnaireFramework::GetWindowsHook()
+{
+	return m_hook;
 }

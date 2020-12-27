@@ -139,6 +139,9 @@ void TerminalQuestionnaire::Stop()
 	std::cout << "User: " << quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << quiz.GetFinalGrade();
 	quiz.SendResult("student", "nota", "student_raspuns");
+	if (quiz.GetWindowsHook() != NULL) {
+		UnhookWindowsHookEx(quiz.GetWindowsHook());
+	}
 	system("pause");
 	exit(0);
 }

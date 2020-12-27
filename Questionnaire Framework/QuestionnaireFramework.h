@@ -7,11 +7,12 @@
 #include "Timer.h"
 #include <unordered_map>
 #include <vector>
+#include "WindowsAPIUtils.h"
 
 class QuestionnaireFramework
 {
 public:
-	QuestionnaireFramework(bool loggerEnabled = true);
+	QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, bool loggerEnabled = true);
 	void LoadQuestions(const std::string& questionTable, const std::string& answerTable);
 	void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
 		const  std::string& databaseUser, const std::string& databasePassword);
@@ -36,6 +37,7 @@ public:
 	const Timer& GetTimer()const;
 	void SetTimerFunction(const std::function<void()>& funcToRun);
 	void SendResult(const std::string& resultTable, const std::string& gradeColumn, const std::string& studentAnswerTable)const;
+	const HHOOK& GetWindowsHook();
 private:
 	int m_numberOfQuestionsNeeded = 0;
 	int m_totalNumberOfQuestions = 0;
@@ -48,4 +50,5 @@ private:
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
 	DatabaseHandler* dh = NULL;
 	std::vector<Question> m_selectedQuestions;
+	HHOOK m_hook = NULL;
 };

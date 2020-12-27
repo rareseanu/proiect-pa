@@ -34,6 +34,15 @@ void MinimizeOtherApps(HWND questionnaireHandle) {
 	SendMessage(questionnaireHandle, WM_SYSCOMMAND, SC_MAXIMIZE, 0); //maximize questionnaire window
 }
 
+std::wstring GetUniqueWindowTitle() {
+	DWORD tickCount = GetTickCount();
+	DWORD processID = GetCurrentProcessId();
+	std::wstring title = std::to_wstring(tickCount);
+	title.push_back('/');
+	title += std::to_wstring(processID);
+	return title;
+}
+
 HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole)
 {
 	HWND windowHandle = GetHandlerFromTitle(windowTitle, isConsole);
