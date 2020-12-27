@@ -70,11 +70,17 @@ public:
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         studentLabel = new QLabel(layoutWidget);
         studentLabel->setObjectName(QString::fromUtf8("studentLabel"));
+        QFont font;
+        font.setPointSize(12);
+        studentLabel->setFont(font);
+        studentLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(studentLabel);
 
         markLabel = new QLabel(layoutWidget);
         markLabel->setObjectName(QString::fromUtf8("markLabel"));
+        markLabel->setFont(font);
+        markLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(markLabel);
 
@@ -85,11 +91,15 @@ public:
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         nameLabel = new QLabel(layoutWidget);
         nameLabel->setObjectName(QString::fromUtf8("nameLabel"));
+        nameLabel->setFont(font);
+        nameLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(nameLabel);
 
         actualMarkLabel = new QLabel(layoutWidget);
         actualMarkLabel->setObjectName(QString::fromUtf8("actualMarkLabel"));
+        actualMarkLabel->setFont(font);
+        actualMarkLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(actualMarkLabel);
 
@@ -113,10 +123,10 @@ public:
         pushButton->setText(QCoreApplication::translate("SendDialog", "Close", nullptr));
         label->setText(QString());
         whereLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">The results were sent into the database.</span></p><p align=\"center\"><br/></p></body></html>", nullptr));
-        studentLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">Student:</span></p></body></html>", nullptr));
-        markLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">Mark:</span></p></body></html>", nullptr));
-        nameLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">[name]</span></p></body></html>", nullptr));
-        actualMarkLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p><span style=\" font-size:12pt;\">[mark]</span></p></body></html>", nullptr));
+        studentLabel->setText(QCoreApplication::translate("SendDialog", "Student:", nullptr));
+        markLabel->setText(QCoreApplication::translate("SendDialog", "Mark:", nullptr));
+        nameLabel->setText(QCoreApplication::translate("SendDialog", "[name]", nullptr));
+        actualMarkLabel->setText(QCoreApplication::translate("SendDialog", "[mark]", nullptr));
     } // retranslateUi
 
 };
