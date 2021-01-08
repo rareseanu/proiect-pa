@@ -192,7 +192,12 @@
   <ItemGroup>
     <ClCompile Include="FinishDialog.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="QuestionWindow.cpp" />
+    <ClCompile Include="QuestionWindow.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
     <ClCompile Include="SendDialog.cpp" />
     <ClCompile Include="StartWindow.cpp" />
   </ItemGroup>
