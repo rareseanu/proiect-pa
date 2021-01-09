@@ -1,7 +1,5 @@
 #pragma once
 #include "QuestionnaireFramework.h"
-#include "Logger.h"
-#include "Timer.h"
 
 class TerminalQuestionnaire
 {

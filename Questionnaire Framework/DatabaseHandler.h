@@ -3,7 +3,7 @@
 #include <vector>
 #include <libpq-fe.h>
 #include "Question.h"
-class DatabaseHandler
+class __declspec(dllexport) DatabaseHandler
 {
 public:
 	DatabaseHandler(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,

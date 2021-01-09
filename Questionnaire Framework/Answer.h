@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 
-class Answer
+class __declspec(dllexport) Answer
 {
 public:
 	Answer();
@@ -13,7 +13,7 @@ public:
 	const int& GetId();
 	void SetSelected(const bool&);
 	const bool GetSelected() const;
-	friend std::ostream& operator<<(std::ostream& out, const Answer& answer);
+	friend __declspec(dllexport) std::ostream& operator<<(std::ostream& out, const Answer& answer);
 private:
 	int m_id;
 	std::string m_text;

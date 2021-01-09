@@ -4,7 +4,7 @@
 #include<algorithm>
 #include "Answer.h"
 
-class Question
+class __declspec(dllexport) Question
 {
 public:
     enum class QuestionType {
@@ -32,8 +32,7 @@ public:
     bool GetFlag() const;
     std::string GetCategory() const;
     const QuestionType& GetQuestionType();
-    friend std::ostream& operator<<(std::ostream& out, const Question& question);
-
+    friend __declspec(dllexport) std::ostream& operator<<(std::ostream& out, const Question& question);
     static QuestionType ConvertStringToQuestionType(const std::string& qType);
     static std::string  ConvertQuestionTypeToString(const QuestionType& qType);
 private:

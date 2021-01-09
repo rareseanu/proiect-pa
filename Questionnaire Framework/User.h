@@ -1,8 +1,7 @@
 #pragma once
-#include "Mark.h"
 #include <iostream>
 
-class User
+class __declspec(dllexport) User
 {
 public:
 	User();
@@ -15,7 +14,7 @@ public:
 	float GetGrade() const;
 	void SetGrade(float);
 	void SetId(int id);
-	friend std::istream& operator>>(std::istream& in, User& user);
+	friend __declspec(dllexport) std::istream& operator>>(std::istream& in, User& user);
 private:
 	int m_id = 0;
 	std::string m_firstName;

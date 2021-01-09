@@ -1,5 +1,5 @@
 #include "TerminalQuestionnaire.h"
-#include <string>
+#include "Logger.h"
 
 TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int quizTime)
 {
@@ -15,13 +15,13 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int qu
 	}
 	srand(time(NULL));
 	quiz.LoadQuestions("question", "answer");
-	quiz.SelectQuestions(std::vector<std::string> {"SA","Mate"});
-	m_selectedQuestions = quiz.GetSelectedQuestions();	
+	quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
+	m_selectedQuestions = quiz.GetSelectedQuestions();
 }
 
 void TerminalQuestionnaire::Start()
 {
-	quiz.SetUser("student","nume");
+	quiz.SetUser("student", "nume");
 	std::cin.ignore();
 	bool stillHasQuestions = true;
 	int currentQuestion = 0;
@@ -38,11 +38,11 @@ void TerminalQuestionnaire::Start()
 			system("cls");
 			PrintTimeLeft();
 			std::cout << "Number of questions: " << m_selectedQuestions->size(); std::cout << "   Remaining: " << m_selectedQuestions->size() - i << std::endl << std::endl;
-			std::cout << "(Category: " << m_selectedQuestions->at(i).GetCategory() <<") (" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
+			std::cout << "(Category: " << m_selectedQuestions->at(i).GetCategory() << ") (" << m_selectedQuestions->at(i).GetPoints() << "p) " << i + 1 << ". " << m_selectedQuestions->at(i) << '\n';
 			std::cout << "(\\b to go back, \\f to flag question, \\u to unflag question, \\s to skip)" << std::endl;
 			std::cout << "Answer ";
-			std::cout << "("+ Question::ConvertQuestionTypeToString(m_selectedQuestions->at(i).GetQuestionType())+")";
-		
+			std::cout << "(" + Question::ConvertQuestionTypeToString(m_selectedQuestions->at(i).GetQuestionType()) + ")";
+
 			std::getline(std::cin, string);
 			if (string == "\\b" && i > 0) {
 				LOG_INFO("User went back to question ID " + std::to_string(m_selectedQuestions->at(i).GetID()));
@@ -70,7 +70,7 @@ void TerminalQuestionnaire::Start()
 					m_selectedQuestions->at(i).GiveAnswer(string);
 					LOG_INFO("User answered '" + string + "' to question ID " + std::to_string(m_selectedQuestions->at(i).GetID()));
 				}
-				catch(std::string error){
+				catch (std::string error) {
 					string = "entry";
 				}
 			}
@@ -201,11 +201,11 @@ void TerminalQuestionnaire::PrintSelectedQuestions() const
 void TerminalQuestionnaire::PrintTimeLeft() const
 {
 	int seconds = quiz.GetTimer().GetTimeLeft() % 60;
-	int minutes = (quiz.GetTimer().GetTimeLeft()/60)%60;
-	int hours = (quiz.GetTimer().GetTimeLeft() / 60/60)%24;
-	std::cout << "Time left: " <<std::setw(2)<< std::setfill('0')<< hours
-								<<":"<< std::setw(2)<<std::setfill('0') <<minutes
-								<<":"<< std::setw(2)<<seconds << '\n';
+	int minutes = (quiz.GetTimer().GetTimeLeft() / 60) % 60;
+	int hours = (quiz.GetTimer().GetTimeLeft() / 60 / 60) % 24;
+	std::cout << "Time left: " << std::setw(2) << std::setfill('0') << hours
+		<< ":" << std::setw(2) << std::setfill('0') << minutes
+		<< ":" << std::setw(2) << seconds << '\n';
 }
 
 void TerminalQuestionnaire::PrintResults() const

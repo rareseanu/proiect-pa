@@ -6,7 +6,7 @@
 #include <iostream>
 #include <iomanip>
 
-class Logger
+class __declspec(dllexport) Logger
 {
 private:
 	std::ofstream m_file;

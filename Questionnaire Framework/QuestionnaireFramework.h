@@ -5,11 +5,12 @@
 #include <time.h>       
 #include "User.h"
 #include "Timer.h"
+#include "Logger.h"
 #include <unordered_map>
 #include <vector>
 #include "WindowsAPIUtils.h"
 
-class QuestionnaireFramework
+class __declspec(dllexport) QuestionnaireFramework
 {
 public:
 	QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, std::wstring oldTitle, bool loggerEnabled = true);

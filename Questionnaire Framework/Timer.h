@@ -4,7 +4,7 @@
 #include<thread>
 #include <chrono>
 
-class Timer
+class __declspec(dllexport) Timer
 {
 public:
 	void SetTimeout(const std::function<void()>& func,int waitTime);
