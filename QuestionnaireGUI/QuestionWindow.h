@@ -13,8 +13,9 @@ public:
     QuestionWindow(QWidget* parent = nullptr);
     void OpenDialog();
     void on_btnClose_clicked();
-    void on_focusLoss();
+    void on_focusLoss(int);
     Ui::QuestionWindow GetUi();
+    int numberOfFocusLosses;
  
 private:
     Ui::QuestionWindow ui;
