@@ -4,6 +4,7 @@
 #include "FinishDialog.h"
 #include "StartWindow.h"
 #include "SendDialog.h"
+#include "FraudDialog.h"
 
 class QuestionWindow : public QMainWindow
 {
@@ -15,11 +16,12 @@ public:
     void on_btnClose_clicked();
     void on_focusLoss(int);
     Ui::QuestionWindow GetUi();
-    int numberOfFocusLosses;
  
 private:
     Ui::QuestionWindow ui;
     FinishDialog finishDialog;
     StartWindow startWindow=StartWindow(this);
     SendDialog sendDialog;
+    int numberOfFocusLosses;
+    FraudDialog fraudDialog;
 };

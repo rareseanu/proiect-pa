@@ -52,6 +52,9 @@
     <ClCompile Include="QuestionWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FraudDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QuestionWindow.h">
@@ -64,6 +67,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="SendDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="FraudDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -86,6 +92,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="SendDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="FraudDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

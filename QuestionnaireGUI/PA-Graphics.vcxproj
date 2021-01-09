@@ -191,6 +191,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="FinishDialog.cpp" />
+    <ClCompile Include="FraudDialog.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QuestionWindow.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
@@ -221,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="FinishDialog.ui" />
+    <QtUic Include="FraudDialog.ui" />
     <QtUic Include="QuestionForm.ui" />
     <QtUic Include="SendDialog.ui" />
     <QtUic Include="StartWindow.ui" />
@@ -236,6 +238,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SendDialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="FraudDialog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

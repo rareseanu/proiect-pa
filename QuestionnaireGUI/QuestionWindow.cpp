@@ -18,6 +18,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
 void QuestionWindow::OpenDialog() {
     finishDialog.exec();
     if (finishDialog.result() == QDialog::Accepted) {
+        numberOfFocusLosses = -2;
         on_btnClose_clicked();
     }
 }
@@ -32,14 +33,24 @@ void QuestionWindow::on_btnClose_clicked()
 
 void QuestionWindow::on_focusLoss(int numberOfFocusLosses)
 {
-    //open a dialog to inform about the focus loss
-    if (numberOfFocusLosses)
+    if (numberOfFocusLosses == 1)
     {
-        close();
-        Ui::SendDialog sendDialogUi = sendDialog.GetUi();
-        sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
-        sendDialog.exec();
+        fraudDialog.exec();
+        if (fraudDialog.result() == QDialog::Accepted) {
+            close();
+            Ui::SendDialog sendDialogUi = sendDialog.GetUi();
+            sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
+            sendDialog.exec();
+        }
     }
+    else
+        if (numberOfFocusLosses > 1)
+        {
+            close();
+            Ui::SendDialog sendDialogUi = sendDialog.GetUi();
+            sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
+            sendDialog.exec();
+        }
 }
 
 Ui::QuestionWindow QuestionWindow::GetUi()
