@@ -6,12 +6,12 @@
 #include <iostream>
 #include <iomanip>
 
-class __declspec(dllexport) Logger
+class Logger
 {
 private:
 	std::ofstream m_file;
 	static Logger* instance;
-	Logger(const std::string& fileName);
+	__declspec(dllexport) Logger(const std::string& fileName);
 	static bool m_activated;
 public:
 	enum class LoggerLevel {
@@ -20,19 +20,19 @@ public:
 		Error
 	};
 
-	Logger(const Logger&) = delete;
-	Logger(Logger&&) = delete;
-	Logger& operator=(const Logger&) = delete;
-	Logger& operator=(Logger&&) = delete;
+	__declspec(dllexport) Logger(const Logger&) = delete;
+	__declspec(dllexport) Logger(Logger&&) = delete;
+	__declspec(dllexport) Logger& operator=(const Logger&) = delete;
+	__declspec(dllexport) Logger& operator=(Logger&&) = delete;
 
-	static void ActivateLogger();
-	static Logger* getLogger(const std::string& fileName = "log.txt");
+	__declspec(dllexport) static void ActivateLogger();
+	__declspec(dllexport) static Logger* getLogger(const std::string& fileName = "log.txt");
 
-	Logger& operator <<(const std::string& logMessage);
-	Logger& operator <<(const LoggerLevel& level);
+	__declspec(dllexport) Logger& operator <<(const std::string& logMessage);
+	__declspec(dllexport) Logger& operator <<(const LoggerLevel& level);
 
-	std::string getCurrentTime();
-	void log(const LoggerLevel& level, const std::string logMessage);
+	__declspec(dllexport) std::string getCurrentTime();
+	__declspec(dllexport) void log(const LoggerLevel& level, const std::string logMessage);
 };
 
 #define LOG_WARN(message)   Logger::getLogger()->log(Logger::LoggerLevel::Warning, message)

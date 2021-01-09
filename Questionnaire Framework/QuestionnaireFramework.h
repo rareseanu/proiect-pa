@@ -10,39 +10,39 @@
 #include <vector>
 #include "WindowsAPIUtils.h"
 
-class __declspec(dllexport) QuestionnaireFramework
+class QuestionnaireFramework
 {
 public:
-	QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, std::wstring oldTitle, bool loggerEnabled = true);
-	void LoadQuestions(const std::string& questionTable, const std::string& answerTable);
-	void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
-	const  std::string& databaseUser, const std::string& databasePassword);
-	const std::vector<Question>& GetQuestionsFromCategory(const std::string& category) const;
-	void SetNumberOfQuestions(int number);
-	int GetNumberOfQuestions()const;
-	void SetQuizTime(int seconds);
-	int GetQuizTime();
-	void SetCanAnswer(bool canAnswer);
-	bool CanAnswer();
-	const std::unordered_map<std::string, std::vector<Question>>& GetAllQuestions() const;
-	void SelectQuestions(const std::vector<std::string>& categories);
-	const std::vector<Question>& GetSelectedQuestions()const;
-	std::vector<Question>* GetSelectedQuestions();
-	int GetMaximumMark()const;
-	void SetUser(const std::string& studentTable, const std::string& nameColumn);
-	User& GetUser();
-	void CalculateFinalGrade();
-	void SetCheatingDetected();
-	bool CheatingDetected();
-	float GetFinalGrade()const;
-	void StartTimer();
-	void StopTimer();
-	const Timer& GetTimer()const;
-	void SetTimerFunction(const std::function<void()>& funcToRun);
-	void SendResult(const std::string& resultTable, const std::string& gradeColumn, const std::string& studentAnswerTable)const;
-	const HHOOK& GetWindowsHook();
+	__declspec(dllexport) QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, std::wstring oldTitle, bool loggerEnabled = true);
+	__declspec(dllexport) void LoadQuestions(const std::string& questionTable, const std::string& answerTable);
+	__declspec(dllexport) void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
+											const  std::string& databaseUser, const std::string& databasePassword);
+	__declspec(dllexport) const std::vector<Question>& GetQuestionsFromCategory(const std::string& category) const;
+	__declspec(dllexport) void SetNumberOfQuestions(int number);
+	__declspec(dllexport) int GetNumberOfQuestions()const;
+	__declspec(dllexport) void SetQuizTime(int seconds);
+	__declspec(dllexport) int GetQuizTime();
+	__declspec(dllexport) void SetCanAnswer(bool canAnswer);
+	__declspec(dllexport) bool CanAnswer();
+	__declspec(dllexport) const std::unordered_map<std::string, std::vector<Question>>& GetAllQuestions() const;
+	__declspec(dllexport) void SelectQuestions(const std::vector<std::string>& categories);
+	__declspec(dllexport) const std::vector<Question>& GetSelectedQuestions()const;
+	__declspec(dllexport) std::vector<Question>* GetSelectedQuestions();
+	__declspec(dllexport) int GetMaximumMark()const;
+	__declspec(dllexport) void SetUser(const std::string& studentTable, const std::string& nameColumn);
+	__declspec(dllexport) User& GetUser();
+	__declspec(dllexport) void CalculateFinalGrade();
+	__declspec(dllexport) void SetCheatingDetected();
+	__declspec(dllexport) bool CheatingDetected();
+	__declspec(dllexport) float GetFinalGrade()const;
+	__declspec(dllexport) void StartTimer();
+	__declspec(dllexport) void StopTimer();
+	__declspec(dllexport) const Timer& GetTimer()const;
+	__declspec(dllexport) void SetTimerFunction(const std::function<void()>& funcToRun);
+	__declspec(dllexport) void SendResult(const std::string& resultTable, const std::string& gradeColumn, const std::string& studentAnswerTable)const;
+	__declspec(dllexport) const HHOOK& GetWindowsHook();
 private:
-	int m_numberOfQuestionsNeeded = 0;
+	int  m_numberOfQuestionsNeeded = 0;
 	int m_totalNumberOfQuestions = 0;
 	int m_maximumMark = 0;
 	int m_quizTime = 0;

@@ -4,14 +4,14 @@
 #include<thread>
 #include <chrono>
 
-class __declspec(dllexport) Timer
+class Timer
 {
 public:
-	void SetTimeout(const std::function<void()>& func,int waitTime);
-	int GetTimeLeft()const;
-	bool IsRunning();
-	void Start();
-	void Stop();
+	__declspec(dllexport) void SetTimeout(const std::function<void()>& func,int waitTime);
+	__declspec(dllexport) int GetTimeLeft()const;
+	__declspec(dllexport) bool IsRunning();
+	__declspec(dllexport) void Start();
+	__declspec(dllexport) void Stop();
 private:
 	std::function<void()> m_functionToRun;
 	int m_waitingTime = 0;
