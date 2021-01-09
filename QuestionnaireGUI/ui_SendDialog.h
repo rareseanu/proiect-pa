@@ -10,6 +10,7 @@
 #define UI_SENDDIALOG_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QHBoxLayout>
@@ -42,6 +43,9 @@ public:
         if (SendDialog->objectName().isEmpty())
             SendDialog->setObjectName(QString::fromUtf8("SendDialog"));
         SendDialog->resize(638, 365);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("images/icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        SendDialog->setWindowIcon(icon);
         thanksLabel = new QLabel(SendDialog);
         thanksLabel->setObjectName(QString::fromUtf8("thanksLabel"));
         thanksLabel->setGeometry(QRect(130, 60, 391, 41));
@@ -54,7 +58,7 @@ public:
         label->setPixmap(QPixmap(QString::fromUtf8("images/UNITBV_MI_logo.png")));
         layoutWidget = new QWidget(SendDialog);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(130, 140, 381, 92));
+        layoutWidget->setGeometry(QRect(130, 140, 381, 98));
         verticalLayout_3 = new QVBoxLayout(layoutWidget);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);

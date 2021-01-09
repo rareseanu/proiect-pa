@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Results</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>images/icon.png</normaloff>images/icon.png</iconset>
+  </property>
   <widget class="QLabel" name="thanksLabel">
    <property name="geometry">
     <rect>
@@ -61,7 +65,7 @@
      <x>130</x>
      <y>140</y>
      <width>381</width>
-     <height>92</height>
+     <height>98</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_3">

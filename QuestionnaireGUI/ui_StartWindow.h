@@ -10,6 +10,7 @@
 #define UI_STARTWINDOW_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -50,6 +51,9 @@ public:
         StartWindow->resize(450, 193);
         StartWindow->setMinimumSize(QSize(450, 193));
         StartWindow->setMaximumSize(QSize(450, 193));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("images/icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        StartWindow->setWindowIcon(icon);
         centralwidget = new QWidget(StartWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         centralwidget->setMinimumSize(QSize(450, 193));
@@ -83,7 +87,7 @@ public:
 
         layoutWidget1 = new QWidget(centralwidget);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 90, 431, 54));
+        layoutWidget1->setGeometry(QRect(10, 90, 431, 55));
         horizontalLayout_2 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -119,7 +123,7 @@ public:
 
         layoutWidget2 = new QWidget(centralwidget);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(10, 160, 431, 26));
+        layoutWidget2->setGeometry(QRect(10, 160, 431, 30));
         horizontalLayout = new QHBoxLayout(layoutWidget2);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);

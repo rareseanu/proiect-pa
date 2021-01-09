@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Cheating Detected</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>images/icon.png</normaloff>images/icon.png</iconset>
+  </property>
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>

@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Questionnaire</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>images/icon.png</normaloff>images/icon.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
@@ -57,6 +61,7 @@
         <font>
          <family>Segoe UI Semibold</family>
          <pointsize>16</pointsize>
+         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -71,6 +76,7 @@
         <font>
          <family>Segoe UI Semibold</family>
          <pointsize>12</pointsize>
+         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -87,7 +93,7 @@
       <x>10</x>
       <y>90</y>
       <width>431</width>
-      <height>54</height>
+      <height>55</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -127,7 +133,7 @@
       <x>10</x>
       <y>160</y>
       <width>431</width>
-      <height>26</height>
+      <height>30</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">

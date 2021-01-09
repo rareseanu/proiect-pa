@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>Questionnaire</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>images/icon.png</normaloff>images/icon.png</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <property name="minimumSize">
     <size>
@@ -83,7 +87,7 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>617</width>
+      <width>717</width>
       <height>54</height>
      </rect>
     </property>
@@ -225,8 +229,8 @@
      <rect>
       <x>340</x>
       <y>130</y>
-      <width>78</width>
-      <height>50</height>
+      <width>91</width>
+      <height>53</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">

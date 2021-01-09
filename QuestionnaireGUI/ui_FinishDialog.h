@@ -10,6 +10,7 @@
 #define UI_FINISHDIALOG_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QAbstractButton>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
@@ -31,6 +32,9 @@ public:
         if (FinishDialog->objectName().isEmpty())
             FinishDialog->setObjectName(QString::fromUtf8("FinishDialog"));
         FinishDialog->resize(354, 138);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("images/icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        FinishDialog->setWindowIcon(icon);
         verticalLayout = new QVBoxLayout(FinishDialog);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         label = new QLabel(FinishDialog);

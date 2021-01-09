@@ -10,6 +10,7 @@
 #define UI_FRAUDDIALOG_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
@@ -35,6 +36,9 @@ public:
         FraudDialog->resize(430, 175);
         FraudDialog->setMinimumSize(QSize(430, 175));
         FraudDialog->setMaximumSize(QSize(430, 175));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("images/icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        FraudDialog->setWindowIcon(icon);
         pushButton = new QPushButton(FraudDialog);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(170, 130, 93, 28));

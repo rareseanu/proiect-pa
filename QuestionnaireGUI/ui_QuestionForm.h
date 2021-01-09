@@ -10,6 +10,7 @@
 #define UI_QUESTIONFORM_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -56,6 +57,9 @@ public:
         QuestionWindow->resize(770, 499);
         QuestionWindow->setMinimumSize(QSize(600, 400));
         QuestionWindow->setMaximumSize(QSize(800, 800));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("images/icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        QuestionWindow->setWindowIcon(icon);
         centralwidget = new QWidget(QuestionWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         centralwidget->setMinimumSize(QSize(800, 800));
@@ -88,7 +92,7 @@ public:
 
         layoutWidget1 = new QWidget(centralwidget);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 10, 617, 54));
+        layoutWidget1->setGeometry(QRect(10, 10, 717, 54));
         horizontalLayout_4 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setSizeConstraint(QLayout::SetDefaultConstraint);
@@ -159,7 +163,7 @@ public:
 
         layoutWidget2 = new QWidget(centralwidget);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(340, 130, 78, 50));
+        layoutWidget2->setGeometry(QRect(340, 130, 91, 53));
         verticalLayout = new QVBoxLayout(layoutWidget2);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
