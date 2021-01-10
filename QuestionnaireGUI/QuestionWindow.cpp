@@ -7,18 +7,25 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     ui.setupUi(this);
     startWindow.show();
     startWindow.setFocus();
-    numberOfFocusLosses = 0;
-    connect(ui.finishButton, &QPushButton::pressed, this, &QuestionWindow::OpenDialog);
-    QObject::connect(qApp, &QGuiApplication::applicationStateChanged, this, [=](Qt::ApplicationState state) {
-           on_focusLoss(numberOfFocusLosses);
-           numberOfFocusLosses++;
-        });
+    quiz.SetQuizTime(10);
+    quiz.SetNumberOfQuestions(4);
+    try {
+        quiz.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
+    }
+    catch (std::string error) {
+        std::cout << error;
+        LOG_ERROR(error);
+        exit(0);
+    }
+    srand(time(NULL));
+    quiz.LoadQuestions("question", "answer");
+    quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
+    m_selectedQuestions = quiz.GetSelectedQuestions();
 }
 
 void QuestionWindow::OpenDialog() {
     finishDialog.exec();
     if (finishDialog.result() == QDialog::Accepted) {
-        numberOfFocusLosses = -2;
         on_btnClose_clicked();
     }
 }
@@ -33,24 +40,12 @@ void QuestionWindow::on_btnClose_clicked()
 
 void QuestionWindow::on_focusLoss(int numberOfFocusLosses)
 {
-    if (numberOfFocusLosses == 1)
-    {
         fraudDialog.exec();
-        if (fraudDialog.result() == QDialog::Accepted) {
-            close();
-            Ui::SendDialog sendDialogUi = sendDialog.GetUi();
-            sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
-            sendDialog.exec();
-        }
-    }
-    else
-        if (numberOfFocusLosses > 1)
-        {
-            close();
-            Ui::SendDialog sendDialogUi = sendDialog.GetUi();
-            sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
-            sendDialog.exec();
-        }
+}
+
+void QuestionWindow::StartQuiz()
+{
+    
 }
 
 Ui::QuestionWindow QuestionWindow::GetUi()

@@ -181,7 +181,9 @@ int QuestionnaireFramework::GetMaximumMark()const
 
 void QuestionnaireFramework::SetUser(const std::string& studentTable, const std::string& nameColumn)
 {
-	std::cin >> m_user;
+	if (m_isConsole) {
+		std::cin >> m_user;
+	}
 	std::string command = "insert into "+studentTable+"("+nameColumn+")"+ " values('" + m_user.GetName()+"')";
 	dh->RunCommand(command);
 	int id = stoi(dh->GetTableFromCommand("select max(s_id) from student").at(0).at(0));

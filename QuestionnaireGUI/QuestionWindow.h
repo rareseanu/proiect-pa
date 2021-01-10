@@ -5,6 +5,7 @@
 #include "StartWindow.h"
 #include "SendDialog.h"
 #include "FraudDialog.h"
+#include <QuestionnaireFramework.h>
 
 class QuestionWindow : public QMainWindow
 {
@@ -15,6 +16,7 @@ public:
     void OpenDialog();
     void on_btnClose_clicked();
     void on_focusLoss(int);
+    void StartQuiz();
     Ui::QuestionWindow GetUi();
  
 private:
@@ -22,6 +24,7 @@ private:
     FinishDialog finishDialog;
     StartWindow startWindow=StartWindow(this);
     SendDialog sendDialog;
-    int numberOfFocusLosses;
+    QuestionnaireFramework quiz = QuestionnaireFramework(true, false, L"Qt600dQWindowIcon");
+    std::vector<Question>* m_selectedQuestions;
     FraudDialog fraudDialog;
 };
