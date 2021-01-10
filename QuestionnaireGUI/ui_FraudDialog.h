@@ -60,7 +60,6 @@ public:
 
 
         retranslateUi(FraudDialog);
-        QObject::connect(pushButton, &QPushButton::clicked, FraudDialog, &QDialog::accept);
 
         QMetaObject::connectSlotsByName(FraudDialog);
     } // setupUi

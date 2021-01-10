@@ -2,13 +2,8 @@
 #include "ui_FraudDialog.h"
 
 FraudDialog::FraudDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::FraudDialog)
+    QDialog(parent)
 {
-    ui->setupUi(this);
-}
-
-FraudDialog::~FraudDialog()
-{
-    delete ui;
+    ui.setupUi(this);
+    QObject::connect(ui.pushButton, &QPushButton::clicked, this, &QDialog::accept);
 }

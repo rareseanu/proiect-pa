@@ -7,7 +7,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     ui.setupUi(this);
     startWindow.show();
     startWindow.setFocus();
-    m_quiz.SetQuizTime(10);
+    m_quiz.SetQuizTime(30);
     m_quiz.SetNumberOfQuestions(4);
     try {
         m_quiz.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
@@ -20,44 +20,55 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     m_quiz.LoadQuestions("question", "answer");
     m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
     m_selectedQuestions = m_quiz.GetSelectedQuestions();
-    connect(this, &QuestionWindow::WindowClosed, this, &QuestionWindow::StopQuiz);
+    ui.backButton->setEnabled(false);
+    connect(this, &QuestionWindow::WindowClosed, this, &QuestionWindow::FinishButtonClicked);
+    connect(ui.nextButton, &QPushButton::clicked, this, &QuestionWindow::NextButtonClicked);
+    connect(ui.backButton, &QPushButton::clicked, this, &QuestionWindow::BackButtonClicked);
+    connect(ui.clearButton, &QPushButton::clicked, this, &QuestionWindow::ClearButtonClicked);
+    connect(ui.finishButton, &QPushButton::clicked, this, &QuestionWindow::FinishButtonClicked);
 }
 
 void QuestionWindow::closeEvent(QCloseEvent* event)
 {
     emit WindowClosed();
-    event->accept();
-}
-
-void QuestionWindow::OpenDialog() {
-    finishDialog.exec();
     if (finishDialog.result() == QDialog::Accepted) {
-        on_btnClose_clicked();
+       event->accept();
     }
-}
-
-void QuestionWindow::on_btnClose_clicked()
-{
-    this->hide();
-    Ui::SendDialog sendDialogUi = sendDialog.GetUi();
-    sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
-    sendDialog.show();
+    event->ignore();
 }
 
 void QuestionWindow::StartQuiz()
 {
     m_quiz.GetUser().SetFirstName(ui.studentNume->text().toStdString());
     m_quiz.GetUser().SetLastName(ui.studentPrenume->text().toStdString());
+    m_quiz.SetUser("student", "nume");
     bool stillHasQuestions = true;
-    int currentQuestion = 0;
-    m_quiz.SetTimerFunction(std::bind(&QuestionWindow::StopQuiz, this));
+    m_quiz.SetTimerFunction(std::bind(&QuestionWindow::ForceStop, this));
     m_quiz.StartTimer();
-    ShowQuestion(0);
+    connect(&timer, &QTimer::timeout, this, &QuestionWindow::ShowTimeLeft);
+    timer.start(0);
+    ShowQuestion(currentQuestion);
 }
 
 void QuestionWindow::StopQuiz()
 {
-   m_quiz.StopTimer();
+    timer.stop();
+    m_quiz.SetCanAnswer(false);
+    m_quiz.CalculateFinalGrade();
+    /*if (m_quiz.CheatingDetected()) {
+        m_quiz.GetUser().SetGrade(1);
+    }*/
+    m_quiz.SendResult("student", "nota", "student_raspuns");
+    m_quiz.StopTimer();
+    if (m_quiz.GetWindowsHook() != NULL) {
+        UnhookWindowsHookEx(m_quiz.GetWindowsHook());
+    }
+    this->hide();
+    this->destroy();
+    Ui::SendDialog sendDialogUi = sendDialog.GetUi();
+    sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
+    sendDialogUi.actualMarkLabel->setText(QString::fromStdString(std::to_string(m_quiz.GetFinalGrade())));
+    sendDialog.show();
 }
 
 void QuestionWindow::CreateAnswerFrame(Question question)
@@ -96,21 +107,137 @@ void QuestionWindow::CreateAnswerFrame(Question question)
     }
 }
 
-void QuestionWindow::ShowQuestion(int questionNumber)
+void QuestionWindow::NextButtonClicked()
 {
-	/*if (m_quiz.CheatingDetected()) {
-		fraudDialog.exec();
-	}*/
     if (m_quiz.CanAnswer()) {
-        std::string textCurrentQuestion = "Question: " + std::to_string(questionNumber+1) + "/" + std::to_string(m_selectedQuestions->size());
-        ui.questionNumberLabel->setText(QString::fromStdString(textCurrentQuestion));
-        QString questionText = QString::fromStdString(m_selectedQuestions->at(questionNumber).GetText());
-        ui.questionLabel->setText(questionText);
-        CreateAnswerFrame(m_selectedQuestions->at(questionNumber));
+        ui.backButton->setEnabled(true);
+        SaveAnswer(currentQuestion);
+        ++currentQuestion;
+        ResetAnswerFrame();
+        ShowQuestion(currentQuestion);
+        LoadAnswer(currentQuestion);
+        if (currentQuestion == m_selectedQuestions->size() - 1) {
+            ui.nextButton->clearFocus();
+            ui.nextButton->setEnabled(false);
+        }
+    }
+}
+
+void QuestionWindow::BackButtonClicked()
+{
+    if (m_quiz.CanAnswer()) {
+        ui.nextButton->setEnabled(true);
+        SaveAnswer(currentQuestion);
+        --currentQuestion;
+        ResetAnswerFrame();
+        ShowQuestion(currentQuestion);
+        LoadAnswer(currentQuestion);
+        if (currentQuestion == 0) {
+            ui.backButton->clearFocus();
+            ui.backButton->setEnabled(false);
+        }
+    }
+}
+
+void QuestionWindow::FinishButtonClicked()
+{
+    finishDialog.exec();
+    if (finishDialog.result() == QDialog::Accepted) {
+        SaveAnswer(currentQuestion);
+        ResetAnswerFrame();
+        StopQuiz();
+    }
+}
+
+void QuestionWindow::SaveAnswer(int questionNumber)
+{
+    std::string answer="";
+    for (QAbstractButton* button : answerButtons) {
+        if (button->isChecked()) {
+            answer = answer + button->objectName().toStdString();
+        }
+    }
+    if (textAnswer) {
+        answer = answer + textAnswer->toPlainText().toStdString();
+    }
+    m_selectedQuestions->at(questionNumber).GiveAnswer(answer);
+}
+
+void QuestionWindow::LoadAnswer(int questionNumber)
+{
+    int i = 0;
+    if (answerButtons.size() != 0) {
+        for (Answer answer : m_selectedQuestions->at(questionNumber).GetAnswers()) {
+            if (answer.GetSelected()) {
+                answerButtons.at(i)->setChecked(true);
+            }
+            ++i;
+        }
     }
     else {
-        m_quiz.StopTimer();
+        textAnswer->setText(QString::fromStdString(m_selectedQuestions->at(questionNumber).GetGivenTextAnswer()));
     }
+}
+
+void QuestionWindow::ForceStop()
+{
+    SaveAnswer(currentQuestion);
+    m_quiz.SetCanAnswer(false);
+}
+
+void QuestionWindow::ClearButtonClicked()
+{
+    if (answerButtons.size() != 0) {
+        for (QAbstractButton* answer : answerButtons) {
+            answer->setChecked(false);
+        }
+    }
+    else {
+        textAnswer->setText("");
+    }
+}
+
+void QuestionWindow::ShowTimeLeft()
+{
+    int seconds = m_quiz.GetTimer().GetTimeLeft() % 60;
+    int minutes = (m_quiz.GetTimer().GetTimeLeft() / 60) % 60;
+    int hours = (m_quiz.GetTimer().GetTimeLeft() / 60 / 60) % 24;
+    std::stringstream stringStream;
+    stringStream << "Time left: " << std::setw(2) << std::setfill('0') << hours
+        << ":" << std::setw(2) << std::setfill('0') << minutes
+        << ":" << std::setw(2) << seconds << '\n';
+    ui.timeLabel->setText(QString::fromStdString(stringStream.str()));
+    /*if (m_quiz.CheatingDetected()) {
+        ForceStop();
+        fraudDialog.show();
+    }*/
+    if (!m_quiz.CanAnswer()) {
+        timer.stop();
+        StopQuiz();
+    }
+}
+
+void QuestionWindow::ResetAnswerFrame()
+{
+    for (QAbstractButton* button : answerButtons) {
+        button->parentWidget()->layout()->removeWidget(button);
+        delete button;
+    }
+    if (textAnswer) {
+       textAnswer->parentWidget()->layout()->removeWidget(textAnswer);
+       delete textAnswer;
+       textAnswer = NULL;
+    }
+    answerButtons.clear();
+}
+
+void QuestionWindow::ShowQuestion(int questionNumber)
+{
+    std::string textCurrentQuestion = "Question: " + std::to_string(questionNumber+1) + "/" + std::to_string(m_selectedQuestions->size());
+    ui.questionNumberLabel->setText(QString::fromStdString(textCurrentQuestion));
+    QString questionText = QString::fromStdString(m_selectedQuestions->at(questionNumber).GetText());
+    ui.questionLabel->setText(questionText);
+    CreateAnswerFrame(m_selectedQuestions->at(questionNumber));
 }
 
 Ui::QuestionWindow QuestionWindow::GetUi()

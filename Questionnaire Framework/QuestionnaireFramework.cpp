@@ -14,13 +14,15 @@ QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool is
 		m_isConsole = isConsole;
 		if (isConsole) {
 			SetConsoleTitle((LPCWSTR)windowTitle.c_str());
+			Sleep(500);
+			m_hook = SetupHook((LPCWSTR)windowTitle.c_str(), L"WindowsHooking.dll", isConsole, this);
 		}
 		else {
 			HWND windowHandle = GetHandlerFromTitle((LPCWSTR)oldTitle.c_str(), false);
-		}
-		Sleep(500);
-		std::cout << windowTitle.c_str();
-		m_hook = SetupHook((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", isConsole, this);
+			Sleep(500);
+			m_hook = SetupHook((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", isConsole, this);
+		}	
+		std::cout << windowTitle.c_str();		
 	}
 }
 

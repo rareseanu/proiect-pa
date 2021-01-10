@@ -2,21 +2,17 @@
 #define FRAUDDIALOG_H
 
 #include <QDialog>
-
-namespace Ui {
-class FraudDialog;
-}
+#include "ui_FraudDialog.h"
 
 class FraudDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit FraudDialog(QWidget *parent = nullptr);
-    ~FraudDialog();
+    FraudDialog(QWidget *parent = nullptr);
 
 private:
-    Ui::FraudDialog *ui;
+    Ui::FraudDialog ui;
 };
 
 #endif // FRAUDDIALOG_H

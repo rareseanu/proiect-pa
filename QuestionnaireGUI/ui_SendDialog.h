@@ -115,7 +115,6 @@ public:
 
 
         retranslateUi(SendDialog);
-        QObject::connect(pushButton, &QPushButton::clicked, SendDialog, &QDialog::close);
 
         QMetaObject::connectSlotsByName(SendDialog);
     } // setupUi

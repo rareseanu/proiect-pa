@@ -144,7 +144,6 @@ public:
         StartWindow->setCentralWidget(centralwidget);
 
         retranslateUi(StartWindow);
-        QObject::connect(closeButton, &QPushButton::clicked, StartWindow, &QMainWindow::close);
 
         QMetaObject::connectSlotsByName(StartWindow);
     } // setupUi

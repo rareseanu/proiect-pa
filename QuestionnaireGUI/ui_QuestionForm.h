@@ -29,7 +29,7 @@ public:
     QWidget *centralwidget;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
-    QPushButton *pushButton_2;
+    QPushButton *backButton;
     QPushButton *clearButton;
     QPushButton *nextButton;
     QPushButton *finishButton;
@@ -67,10 +67,10 @@ public:
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        pushButton_2 = new QPushButton(layoutWidget);
-        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        backButton = new QPushButton(layoutWidget);
+        backButton->setObjectName(QString::fromUtf8("backButton"));
 
-        horizontalLayout->addWidget(pushButton_2);
+        horizontalLayout->addWidget(backButton);
 
         clearButton = new QPushButton(layoutWidget);
         clearButton->setObjectName(QString::fromUtf8("clearButton"));
@@ -114,7 +114,7 @@ public:
         miLogo->setPixmap(QPixmap(QString::fromUtf8("images/miLogo.png")));
         timeLabel = new QLabel(centralwidget);
         timeLabel->setObjectName(QString::fromUtf8("timeLabel"));
-        timeLabel->setGeometry(QRect(1140, 30, 74, 22));
+        timeLabel->setGeometry(QRect(1100, 10, 161, 51));
         QFont font1;
         font1.setPointSize(12);
         timeLabel->setFont(font1);
@@ -174,7 +174,7 @@ public:
     void retranslateUi(QMainWindow *QuestionWindow)
     {
         QuestionWindow->setWindowTitle(QCoreApplication::translate("QuestionWindow", "Questionnaire", nullptr));
-        pushButton_2->setText(QCoreApplication::translate("QuestionWindow", "Back", nullptr));
+        backButton->setText(QCoreApplication::translate("QuestionWindow", "Back", nullptr));
         clearButton->setText(QCoreApplication::translate("QuestionWindow", "Clear Choice", nullptr));
         nextButton->setText(QCoreApplication::translate("QuestionWindow", "Next", nullptr));
         finishButton->setText(QCoreApplication::translate("QuestionWindow", "Finish Quiz", nullptr));

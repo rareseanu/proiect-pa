@@ -12,13 +12,11 @@ StartWindow::StartWindow(QMainWindow* source,QWidget *parent)
 
 void StartWindow::StartQuiz() {
     Ui::QuestionWindow sourceUi = dynamic_cast<QuestionWindow*>(source)->GetUi();
-    if (ui.lastNameEdit->text() != "") {
+    if (ui.lastNameEdit->text() != "" && ui.firstNameEdit->text() != "") {
         sourceUi.studentPrenume->setText(ui.lastNameEdit->text());
-    }
-    if (ui.firstNameEdit->text() != "") {
         sourceUi.studentNume->setText(ui.firstNameEdit->text());
+        source->show();
+        dynamic_cast<QuestionWindow*>(source)->StartQuiz();
+        close();
     }
-    source->show();
-    dynamic_cast<QuestionWindow*>(source)->StartQuiz();
-    close();
 }

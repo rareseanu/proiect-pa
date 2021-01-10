@@ -126,9 +126,6 @@ void Question::GiveAnswer(std::string string)
 				}
 				break;
 			}
-			else {
-				throw std::string("User entered an invalid answer for this type of question");
-			}
 		}
 	}
 }
