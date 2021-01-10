@@ -85,24 +85,25 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>570</x>
+      <x>20</x>
       <y>90</y>
-      <width>151</width>
-      <height>71</height>
+      <width>1241</width>
+      <height>82</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <widget class="QLabel" name="questionLabel">
-       <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Question&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+        </font>
        </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="answerLabel">
        <property name="text">
-        <string/>
+        <string>Question</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -173,12 +174,12 @@
      <string>Time left: ?</string>
     </property>
    </widget>
-   <widget class="QLabel" name="questionNumeLabel">
+   <widget class="QLabel" name="questionNumberLabel">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>501</x>
       <y>30</y>
-      <width>92</width>
+      <width>291</width>
       <height>22</height>
      </rect>
     </property>
@@ -190,8 +191,11 @@
     <property name="text">
      <string>Question: 0/?</string>
     </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>129</x>
@@ -237,6 +241,38 @@
        </property>
       </widget>
      </item>
+    </layout>
+   </widget>
+   <widget class="QGroupBox" name="answerChoiceBox">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>200</y>
+      <width>1241</width>
+      <height>441</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="layoutDirection">
+     <enum>Qt::LeftToRight</enum>
+    </property>
+    <property name="title">
+     <string>Choices</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="checkable">
+     <bool>false</bool>
+    </property>
+    <layout class="QGridLayout" name="answerChoiceLayout" rowstretch="0">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
     </layout>
    </widget>
   </widget>

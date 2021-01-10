@@ -19,5 +19,6 @@ void StartWindow::StartQuiz() {
         sourceUi.studentNume->setText(ui.firstNameEdit->text());
     }
     source->show();
+    dynamic_cast<QuestionWindow*>(source)->StartQuiz();
     close();
 }
