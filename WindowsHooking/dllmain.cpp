@@ -2,6 +2,8 @@
 #include <fstream>
 #include "../Questionnaire Framework/Logger.cpp"
 
+bool* cheatingDetected = new bool;
+
 BOOL APIENTRY DllMain(HMODULE hModule,
 	DWORD  ul_reason_for_call,
 	LPVOID lpReserved
@@ -23,6 +25,14 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	return true;
 }
 
+extern "C" __declspec(dllexport) bool GetCheating() {
+	std::fstream fileStream;
+	fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
+	fileStream << *cheatingDetected << '\n';
+	fileStream.close();
+	return *cheatingDetected;
+}
+
 extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARAM lParam) {
 	LPCWPSTRUCT pt_stMessage = (LPCWPSTRUCT)lParam;
 	std::fstream fileStream;
@@ -30,9 +40,8 @@ extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARA
 	{
 		if (pt_stMessage->message == WM_ACTIVATE && pt_stMessage->wParam == WA_INACTIVE)
 		{
-			fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
-			fileStream << "WA_INACTIVE called.\n";
-			fileStream.close();
+			*cheatingDetected = true;
+			
 		}
 	}
 	return(CallNextHookEx(NULL, code, wParam, lParam));

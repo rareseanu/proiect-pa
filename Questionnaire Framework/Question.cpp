@@ -204,6 +204,7 @@ std::string Question::ConvertQuestionTypeToString(const QuestionType& qType)
 		return "Multichoice";
 	else if (qType == QuestionType::Text)
 		return "Text";
+	return NULL;
 }
 
 std::ostream& operator<<(std::ostream& out, const Question& question)

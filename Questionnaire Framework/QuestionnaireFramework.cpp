@@ -11,16 +11,16 @@ QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool is
 	}
 	if (anticheatingEnabled) {
 		std::wstring windowTitle = GetUniqueWindowTitle();
+		m_isConsole = isConsole;
 		if (isConsole) {
 			SetConsoleTitle((LPCWSTR)windowTitle.c_str());
 		}
 		else {
 			HWND windowHandle = GetHandlerFromTitle((LPCWSTR)oldTitle.c_str(), false);
-			SetWindowTextW(windowHandle, (LPCWSTR)windowTitle.c_str());
-
 		}
-		Sleep(100);
-		m_hook = SetupHook((LPCWSTR)windowTitle.c_str(), L"WindowsHooking.dll", isConsole, this);
+		Sleep(500);
+		std::cout << windowTitle.c_str();
+		m_hook = SetupHook((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", isConsole, this);
 	}
 }
 
@@ -210,7 +210,12 @@ void QuestionnaireFramework::SetCheatingDetected() {
 
 bool QuestionnaireFramework::CheatingDetected()
 {
-	return cheatDetected;
+	if (m_isConsole) {
+		return cheatDetected;
+	}
+	else {
+		return CheckIfCheatingFromDll();
+	}
 }
 
 float QuestionnaireFramework::GetFinalGrade() const

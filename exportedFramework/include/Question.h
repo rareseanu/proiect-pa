@@ -4,7 +4,7 @@
 #include<algorithm>
 #include "Answer.h"
 
-class __declspec(dllexport) Question
+class  Question
 {
 public:
     enum class QuestionType {
@@ -12,29 +12,29 @@ public:
         Multichoice,
         Text
     };
-    Question();
-    Question(int id, const std::string& text, int points, const std::string& category, 
+    __declspec(dllexport) Question();
+    __declspec(dllexport) Question(int id, const std::string& text, int points, const std::string& category,
         const std::vector<Answer>& answers, const bool flagged, const QuestionType& type);
-    const std::string& GetText() const;
-    const int GetID() const;
-    void SetText(const std::string& question);
-    const std::vector<Answer>& GetAnswers() const;
-    void SetAnswers(const std::vector<Answer>& answers);
-    const int GetPoints() const;
-    float GetAquiredMark()const;
-    bool VerifyUserAnswer();
-    void GiveAnswer(std::string string);
-    void PrintSelected();
-    const std::string& GetGivenTextAnswer() const;
-    void ResetAnswer();
-    void Flag();
-    void Unflag();
-    bool GetFlag() const;
-    std::string GetCategory() const;
-    const QuestionType& GetQuestionType();
+    __declspec(dllexport) const std::string& GetText() const;
+    __declspec(dllexport) const int GetID() const;
+    __declspec(dllexport) void SetText(const std::string& question);
+    __declspec(dllexport) const std::vector<Answer>& GetAnswers() const;
+    __declspec(dllexport) void SetAnswers(const std::vector<Answer>& answers);
+    __declspec(dllexport) const int GetPoints() const;
+    __declspec(dllexport) float GetAquiredMark()const;
+    __declspec(dllexport) bool VerifyUserAnswer();
+    __declspec(dllexport) void GiveAnswer(std::string string);
+    __declspec(dllexport) void PrintSelected();
+    __declspec(dllexport) const std::string& GetGivenTextAnswer() const;
+    __declspec(dllexport) void ResetAnswer();
+    __declspec(dllexport) void Flag();
+    __declspec(dllexport) void Unflag();
+    __declspec(dllexport) bool GetFlag() const;
+    __declspec(dllexport) std::string GetCategory() const;
+    __declspec(dllexport) const QuestionType& GetQuestionType();
     friend __declspec(dllexport) std::ostream& operator<<(std::ostream& out, const Question& question);
-    static QuestionType ConvertStringToQuestionType(const std::string& qType);
-    static std::string  ConvertQuestionTypeToString(const QuestionType& qType);
+    __declspec(dllexport) static QuestionType ConvertStringToQuestionType(const std::string& qType);
+    __declspec(dllexport) static std::string  ConvertQuestionTypeToString(const QuestionType& qType);
 private:
     int m_id = 0;
     std::string m_text;

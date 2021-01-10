@@ -1,6 +1,8 @@
 #include "WindowsAPIUtils.h"
 #include "QuestionnaireFramework.h"
 
+HMODULE dll;
+
 HWND GetHandlerFromTitle(LPCWSTR windowTitle, bool isConsole)
 {
 	HWND windowHandle;
@@ -44,10 +46,16 @@ std::wstring GetUniqueWindowTitle() {
 	return title;
 }
 
+bool CheckIfCheatingFromDll() {
+	bool(*isCheating)() = (bool(*)())GetProcAddress(dll, "GetCheating");
+	return isCheating();
+}
+
 HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, QuestionnaireFramework* quiz)
 {
 	HWND windowHandle = GetHandlerFromTitle(windowTitle, isConsole);
 	const std::wstring consoleClassName(L"ConsoleWindowClass");
+	
 	MinimizeOtherApps(windowHandle);
 	char className[256];
 	if (!GetClassName(windowHandle, (LPWSTR) className, 256)) {
@@ -57,7 +65,7 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 
 	DWORD processId;
 	DWORD tid = GetWindowThreadProcessId(windowHandle, &processId);
-	HWND messageOnlyHandle;
+	//HWND messageOnlyHandle;
 	//TODO: Research other ways to receive messages from console apps. Polling inefficient.
 	if (consoleClassName == (LPWSTR)className) {
 		std::thread checkFocus([quiz]() {
@@ -102,7 +110,7 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 	std::wstring pathDll = modulePath.substr(0, modulePath.find_last_of('\\') + 1) + nameDll;
 	LPWSTR lpFullPath = (LPWSTR)(pathDll.c_str());
 
-	HMODULE dll = LoadLibrary(lpFullPath);
+	dll = LoadLibrary(lpFullPath);
 	if (dll == NULL) {
 		std::cout << "DLL not found.\n";
 		return NULL;
@@ -117,7 +125,7 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 		FreeLibrary(dll);
 		return NULL;
 	}
-
+	
 	return hook;
 
 }

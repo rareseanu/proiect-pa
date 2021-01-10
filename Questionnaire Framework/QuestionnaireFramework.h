@@ -54,5 +54,6 @@ private:
 	DatabaseHandler* dh = NULL;
 	std::vector<Question> m_selectedQuestions;
 	HHOOK m_hook = NULL;
-	boolean cheatDetected = false;
+	bool cheatDetected = false;
+	bool m_isConsole;
 };
