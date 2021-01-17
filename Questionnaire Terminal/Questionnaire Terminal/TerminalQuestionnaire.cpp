@@ -1,12 +1,12 @@
 #include "TerminalQuestionnaire.h"
 #include "Logger.h"
 
-TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int quizTime)
+TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int m_quizTime)
 {
-	quiz.SetQuizTime(quizTime);
-	quiz.SetNumberOfQuestions(numberOfQuestionsNeeded);
+	m_quiz.SetQuizTime(m_quizTime);
+	m_quiz.SetNumberOfQuestions(numberOfQuestionsNeeded);
 	try {
-		quiz.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
+		m_quiz.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
 	}
 	catch (std::string error) {
 		std::cout << error;
@@ -14,22 +14,24 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int qu
 		exit(0);
 	}
 	srand(time(NULL));
-	quiz.LoadQuestions("question", "answer");
-	quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
-	m_selectedQuestions = quiz.GetSelectedQuestions();
+	m_quiz.SetQuestionsTable("question", "q_id", "text", "points", "category", "type");
+	m_quiz.SetAnswersTable("answer", "a_id", "text", "percentage", "q_id");
+	m_quiz.LoadQuestions();
+	m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
+	m_selectedQuestions = m_quiz.GetSelectedQuestions();
 }
 
 void TerminalQuestionnaire::Start()
 {
-	quiz.SetUser("student", "nume");
+	m_quiz.SetUser("student", "nume");
 	std::cin.ignore();
 	bool stillHasQuestions = true;
 	int currentQuestion = 0;
-	quiz.SetTimerFunction(std::bind(&TerminalQuestionnaire::Stop, this));
-	quiz.StartTimer();
-	for (int i = 0; i < m_selectedQuestions->size() && quiz.CanAnswer(); i++) {
+	m_quiz.SetTimerFunction(std::bind(&TerminalQuestionnaire::Stop, this));
+	m_quiz.StartTimer();
+	for (int i = 0; i < m_selectedQuestions->size() && m_quiz.CanAnswer(); i++) {
 		system("cls");
-		if (quiz.CheatingDetected()) {
+		if (m_quiz.CheatingDetected()) {
 			break;
 		}
 		std::string string;
@@ -80,12 +82,12 @@ void TerminalQuestionnaire::Start()
 	std::string choice, answer;
 	while (choice != "F") {
 		system("cls");
-		if (quiz.CheatingDetected()) {
+		if (m_quiz.CheatingDetected()) {
 			break;
 		}
 		PrintTimeLeft();
 		PrintSelectedQuestions();
-		std::cout << "Enter the question's number if you want to change its answer or 'F' to finish the quiz: ";
+		std::cout << "Enter the question's number if you want to change its answer or 'F' to finish the m_quiz: ";
 		std::cin >> choice;
 		int questionNumber;
 		system("cls");
@@ -127,9 +129,9 @@ void TerminalQuestionnaire::Start()
 		}
 
 	}
-	if (quiz.CanAnswer()) {
-		quiz.StopTimer();
-		LOG_INFO("Timer stopped. Remaining time: " + std::to_string(quiz.GetTimer().GetTimeLeft()));
+	if (m_quiz.CanAnswer()) {
+		m_quiz.StopTimer();
+		LOG_INFO("Timer stopped. Remaining time: " + std::to_string(m_quiz.GetTimer().GetTimeLeft()));
 		Stop();
 	}
 }
@@ -137,19 +139,19 @@ void TerminalQuestionnaire::Start()
 void TerminalQuestionnaire::Stop()
 {
 	//to be replaced with some useful functionality
-	std::cout << "Quiz finished" << '\n';
-	quiz.CalculateFinalGrade();
-	LOG_INFO("Quiz finished. Final grade: " + std::to_string(quiz.GetFinalGrade()));
-	quiz.SetCanAnswer(false);
-	if (quiz.CheatingDetected()) {
-		quiz.GetUser().SetGrade(1);
+	std::cout << "m_quiz finished" << '\n';
+	m_quiz.CalculateFinalGrade();
+	LOG_INFO("m_quiz finished. Final grade: " + std::to_string(m_quiz.GetFinalGrade()));
+	m_quiz.SetCanAnswer(false);
+	if (m_quiz.CheatingDetected()) {
+		m_quiz.GetUser().SetGrade(1);
 	}
 	PrintResults();
-	std::cout << "User: " << quiz.GetUser().GetName() << '\n';
-	std::cout << "\nFinal grade:" << quiz.GetFinalGrade();
-	quiz.SendResult("student", "nota", "student_raspuns");
-	if (quiz.GetWindowsHook() != NULL) {
-		UnhookWindowsHookEx(quiz.GetWindowsHook());
+	std::cout << "User: " << m_quiz.GetUser().GetName() << '\n';
+	std::cout << "\nFinal grade:" << m_quiz.GetFinalGrade();
+	m_quiz.SendResult("student", "nota", "student_raspuns");
+	if (m_quiz.GetWindowsHook() != NULL) {
+		UnhookWindowsHookEx(m_quiz.GetWindowsHook());
 	}
 	system("pause");
 	exit(0);
@@ -158,7 +160,7 @@ void TerminalQuestionnaire::Stop()
 void TerminalQuestionnaire::PrintAllQuestions() const
 {
 	int questionSymbol = 1;
-	for (auto& category : quiz.GetAllQuestions()) {
+	for (auto& category : m_quiz.GetAllQuestions()) {
 		std::cout << category.first << " => ";
 		for (auto& question : category.second) {
 			std::cout << questionSymbol++ << ". " << question << '\n';
@@ -171,7 +173,7 @@ void TerminalQuestionnaire::PrintQuestionsFromCategory(const std::string& catego
 	int questionSymbol = 1;
 	std::vector<Question> questions;
 	try {
-		questions = quiz.GetQuestionsFromCategory(category);
+		questions = m_quiz.GetQuestionsFromCategory(category);
 	}
 	catch (std::string error) {
 		LOG_ERROR(error);
@@ -185,7 +187,7 @@ void TerminalQuestionnaire::PrintQuestionsFromCategory(const std::string& catego
 void TerminalQuestionnaire::PrintSelectedQuestions() const
 {
 	int questionSymbol = 0;
-	for (auto question : quiz.GetSelectedQuestions()) {
+	for (auto question : m_quiz.GetSelectedQuestions()) {
 		std::cout << questionSymbol++ << '.' << question;
 		if (question.GetAnswers().empty()) {
 			std::cout << "Question unanswered!";
@@ -200,9 +202,9 @@ void TerminalQuestionnaire::PrintSelectedQuestions() const
 
 void TerminalQuestionnaire::PrintTimeLeft() const
 {
-	int seconds = quiz.GetTimer().GetTimeLeft() % 60;
-	int minutes = (quiz.GetTimer().GetTimeLeft() / 60) % 60;
-	int hours = (quiz.GetTimer().GetTimeLeft() / 60 / 60) % 24;
+	int seconds = m_quiz.GetTimer().GetTimeLeft() % 60;
+	int minutes = (m_quiz.GetTimer().GetTimeLeft() / 60) % 60;
+	int hours = (m_quiz.GetTimer().GetTimeLeft() / 60 / 60) % 24;
 	std::cout << "Time left: " << std::setw(2) << std::setfill('0') << hours
 		<< ":" << std::setw(2) << std::setfill('0') << minutes
 		<< ":" << std::setw(2) << seconds << '\n';
@@ -210,7 +212,7 @@ void TerminalQuestionnaire::PrintTimeLeft() const
 
 void TerminalQuestionnaire::PrintResults() const
 {
-	for (auto& question : quiz.GetSelectedQuestions()) {
+	for (auto& question : m_quiz.GetSelectedQuestions()) {
 		std::cout << question.GetText() << " Marks: " << question.GetAquiredMark()
 			<< '/' << question.GetPoints() << '\n';
 		for (auto& answer : question.GetAnswers()) {
