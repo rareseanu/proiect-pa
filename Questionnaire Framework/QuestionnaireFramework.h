@@ -13,7 +13,7 @@
 class QuestionnaireFramework
 {
 public:
-	__declspec(dllexport) QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, std::wstring oldTitle, bool loggerEnabled = true);
+	__declspec(dllexport) QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, bool loggerEnabled = true);
 	__declspec(dllexport) void LoadQuestions();
 	__declspec(dllexport) void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
 											const  std::string& databaseUser, const std::string& databasePassword);
@@ -45,6 +45,7 @@ public:
 	__declspec(dllexport) void SetTimerFunction(const std::function<void()>& funcToRun);
 	__declspec(dllexport) void SendResult(const std::string& resultTable, const std::string& gradeColumn, const std::string& studentAnswerTable)const;
 	__declspec(dllexport) const HHOOK& GetWindowsHook();
+	__declspec(dllexport) void SetupAnticheating(const std::wstring& oldTitle);
 private:
 	int  m_numberOfQuestionsNeeded = 0;
 	int m_totalNumberOfQuestions = 0;

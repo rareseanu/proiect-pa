@@ -4,26 +4,11 @@
 #include <thread>
 #include "Logger.h"
 
-QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, std::wstring oldTitle,
-		bool loggerEnabled) {
+QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, bool loggerEnabled) {
 	if (loggerEnabled) {
 		Logger::ActivateLogger();
 	}
-	if (anticheatingEnabled) {
-		std::wstring windowTitle = GetUniqueWindowTitle();
-		m_isConsole = isConsole;
-		if (isConsole) {
-			SetConsoleTitle((LPCWSTR)windowTitle.c_str());
-			Sleep(500);
-			m_hook = SetupHook((LPCWSTR)windowTitle.c_str(), L"WindowsHooking.dll", isConsole, this);
-		}
-		else {
-			HWND windowHandle = GetHandlerFromTitle((LPCWSTR)oldTitle.c_str(), false);
-			Sleep(500);
-			m_hook = SetupHook((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", isConsole, this);
-		}	
-		std::cout << windowTitle.c_str();		
-	}
+	m_isConsole = isConsole;
 }
 
 void QuestionnaireFramework::LoadQuestions() {
@@ -214,12 +199,7 @@ void QuestionnaireFramework::SetCheatingDetected() {
 
 bool QuestionnaireFramework::CheatingDetected()
 {
-	if (m_isConsole) {
-		return cheatDetected;
-	}
-	else {
-		return CheckIfCheatingFromDll();
-	}
+	return cheatDetected;
 }
 
 float QuestionnaireFramework::GetFinalGrade() const
@@ -289,4 +269,18 @@ void QuestionnaireFramework::SendResult(const std::string & resultTable, const s
 const HHOOK& QuestionnaireFramework::GetWindowsHook()
 {
 	return m_hook;
+}
+
+void QuestionnaireFramework::SetupAnticheating(const std::wstring &oldTitle)
+{
+	std::wstring windowTitle = GetUniqueWindowTitle();
+
+	if (m_isConsole) {
+		SetConsoleTitle((LPCWSTR)windowTitle.c_str());
+		Sleep(1000);
+		m_hook = SetupHook((LPCWSTR)windowTitle.c_str(), L"WindowsHooking.dll", m_isConsole, this);
+	}
+	else {
+		m_hook = SetupHook((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", m_isConsole, this);
+	}
 }

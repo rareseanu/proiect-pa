@@ -10,4 +10,3 @@ __declspec(dllexport) std::string GetLastErrorString();
 __declspec(dllexport) void MinimizeOtherApps(HWND questionnaireHandle);
 __declspec(dllexport) std::wstring GetUniqueWindowTitle();
 __declspec(dllexport) HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, QuestionnaireFramework* quiz);
-__declspec(dllexport) bool CheckIfCheatingFromDll();

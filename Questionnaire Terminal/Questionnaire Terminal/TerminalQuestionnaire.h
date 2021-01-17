@@ -13,7 +13,7 @@ public:
 	void PrintTimeLeft() const;
 	void PrintResults() const;
 private:
-	QuestionnaireFramework m_quiz = QuestionnaireFramework(true, true, L"Questionnaire", true);
+	QuestionnaireFramework m_quiz = QuestionnaireFramework(true, true, true);
 	std::vector<Question>* m_selectedQuestions;
 };
 

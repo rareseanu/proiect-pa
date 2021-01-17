@@ -19,6 +19,7 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int m_
 	m_quiz.LoadQuestions();
 	m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
 	m_selectedQuestions = m_quiz.GetSelectedQuestions();
+	m_quiz.SetupAnticheating(L"Quiz");
 }
 
 void TerminalQuestionnaire::Start()

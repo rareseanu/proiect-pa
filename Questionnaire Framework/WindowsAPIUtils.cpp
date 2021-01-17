@@ -46,11 +46,6 @@ std::wstring GetUniqueWindowTitle() {
 	return title;
 }
 
-bool CheckIfCheatingFromDll() {
-	bool(*isCheating)() = (bool(*)())GetProcAddress(dll, "GetCheating");
-	return isCheating();
-}
-
 HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, QuestionnaireFramework* quiz)
 {
 	HWND windowHandle = GetHandlerFromTitle(windowTitle, isConsole);
@@ -71,7 +66,7 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 		std::thread checkFocus([quiz]() {
 			while (true) {
 				if (GetForegroundWindow() != GetConsoleWindow()) {
-					quiz->SetCheatingDetected();
+					//quiz->SetCheatingDetected();
 					return NULL;
 				}
 			}
@@ -108,6 +103,7 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 	std::wstring modulePath(path);
 	std::wstring nameDll(dllName);
 	std::wstring pathDll = modulePath.substr(0, modulePath.find_last_of('\\') + 1) + nameDll;
+	std::wcout << pathDll << '\n';
 	LPWSTR lpFullPath = (LPWSTR)(pathDll.c_str());
 
 	dll = LoadLibrary(lpFullPath);
@@ -115,6 +111,11 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 		std::cout << "DLL not found.\n";
 		return NULL;
 	}
+
+	std::function<void()> getMax = std::bind(&QuestionnaireFramework::SetCheatingDetected, quiz);
+	void(*setQuiz)(std::function<void()>*) = (void(*)(std::function<void()>*))GetProcAddress(dll, "SetQuiz");
+	setQuiz(&getMax);
+
 	HOOKPROC addr = (HOOKPROC)GetProcAddress(dll, "HookFunction");
 	if (addr == NULL) {
 		std::cout << "There was an error while calling HookFunction.\n";

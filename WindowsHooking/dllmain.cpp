@@ -1,8 +1,9 @@
 #include <windows.h>
 #include <fstream>
 #include "../Questionnaire Framework/Logger.cpp"
-
+#include <functional>
 bool* cheatingDetected = new bool;
+std::function<void()> *m_x;
 
 BOOL APIENTRY DllMain(HMODULE hModule,
 	DWORD  ul_reason_for_call,
@@ -26,23 +27,24 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 }
 
 extern "C" __declspec(dllexport) bool GetCheating() {
-	std::fstream fileStream;
-	fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
-	fileStream << *cheatingDetected << '\n';
-	fileStream.close();
 	return *cheatingDetected;
+}
+
+extern  "C" __declspec(dllexport) void SetQuiz(std::function<void()> *x) {
+	m_x = x;
 }
 
 extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARAM lParam) {
 	LPCWPSTRUCT pt_stMessage = (LPCWPSTRUCT)lParam;
-	std::fstream fileStream;
 	if (code >= 0)
 	{
 		if (pt_stMessage->message == WM_ACTIVATE && pt_stMessage->wParam == WA_INACTIVE)
 		{
-			*cheatingDetected = true;
-			
+			std::fstream fileStream;
+			fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
+			fileStream << "INTRAT" << '\n';
+			fileStream.close();
 		}
+		return(CallNextHookEx(NULL, code, wParam, lParam));
 	}
-	return(CallNextHookEx(NULL, code, wParam, lParam));
 }
