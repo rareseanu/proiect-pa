@@ -126,31 +126,33 @@ public:
         questionNumberLabel->setAlignment(Qt::AlignCenter);
         layoutWidget2 = new QWidget(centralwidget);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(129, 13, 151, 51));
+        layoutWidget2->setGeometry(QRect(130, 30, 131, 24));
         gridLayout = new QGridLayout(layoutWidget2);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        gridLayout->setSizeConstraint(QLayout::SetFixedSize);
+        gridLayout->setHorizontalSpacing(6);
+        gridLayout->setVerticalSpacing(0);
         gridLayout->setContentsMargins(0, 0, 0, 0);
         studentNume = new QLabel(layoutWidget2);
         studentNume->setObjectName(QString::fromUtf8("studentNume"));
-        QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::MinimumExpanding);
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(studentNume->sizePolicy().hasHeightForWidth());
         studentNume->setSizePolicy(sizePolicy);
+        studentNume->setMaximumSize(QSize(150, 16777215));
         studentNume->setFont(font1);
 
-        gridLayout->addWidget(studentNume, 0, 0, 1, 1);
+        gridLayout->addWidget(studentNume, 0, 0, 1, 1, Qt::AlignLeft);
 
         studentPrenume = new QLabel(layoutWidget2);
         studentPrenume->setObjectName(QString::fromUtf8("studentPrenume"));
-        QSizePolicy sizePolicy1(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(studentPrenume->sizePolicy().hasHeightForWidth());
-        studentPrenume->setSizePolicy(sizePolicy1);
+        sizePolicy.setHeightForWidth(studentPrenume->sizePolicy().hasHeightForWidth());
+        studentPrenume->setSizePolicy(sizePolicy);
+        studentPrenume->setMaximumSize(QSize(150, 16777215));
         studentPrenume->setFont(font1);
 
-        gridLayout->addWidget(studentPrenume, 0, 1, 1, 1);
+        gridLayout->addWidget(studentPrenume, 0, 1, 1, 1, Qt::AlignLeft);
 
         answerChoiceBox = new QGroupBox(centralwidget);
         answerChoiceBox->setObjectName(QString::fromUtf8("answerChoiceBox"));

@@ -49,6 +49,10 @@ public:
         thanksLabel = new QLabel(SendDialog);
         thanksLabel->setObjectName(QString::fromUtf8("thanksLabel"));
         thanksLabel->setGeometry(QRect(130, 60, 391, 41));
+        QFont font;
+        font.setPointSize(16);
+        thanksLabel->setFont(font);
+        thanksLabel->setAlignment(Qt::AlignCenter);
         pushButton = new QPushButton(SendDialog);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
         pushButton->setGeometry(QRect(230, 310, 171, 28));
@@ -65,6 +69,10 @@ public:
         whereLabel = new QLabel(layoutWidget);
         whereLabel->setObjectName(QString::fromUtf8("whereLabel"));
         whereLabel->setMaximumSize(QSize(16777215, 30));
+        QFont font1;
+        font1.setPointSize(12);
+        whereLabel->setFont(font1);
+        whereLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_3->addWidget(whereLabel);
 
@@ -74,16 +82,14 @@ public:
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         studentLabel = new QLabel(layoutWidget);
         studentLabel->setObjectName(QString::fromUtf8("studentLabel"));
-        QFont font;
-        font.setPointSize(12);
-        studentLabel->setFont(font);
+        studentLabel->setFont(font1);
         studentLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(studentLabel);
 
         markLabel = new QLabel(layoutWidget);
         markLabel->setObjectName(QString::fromUtf8("markLabel"));
-        markLabel->setFont(font);
+        markLabel->setFont(font1);
         markLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(markLabel);
@@ -95,14 +101,14 @@ public:
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         nameLabel = new QLabel(layoutWidget);
         nameLabel->setObjectName(QString::fromUtf8("nameLabel"));
-        nameLabel->setFont(font);
+        nameLabel->setFont(font1);
         nameLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(nameLabel);
 
         actualMarkLabel = new QLabel(layoutWidget);
         actualMarkLabel->setObjectName(QString::fromUtf8("actualMarkLabel"));
-        actualMarkLabel->setFont(font);
+        actualMarkLabel->setFont(font1);
         actualMarkLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(actualMarkLabel);
@@ -115,6 +121,7 @@ public:
 
 
         retranslateUi(SendDialog);
+        QObject::connect(pushButton, &QPushButton::clicked, SendDialog, &QDialog::close);
 
         QMetaObject::connectSlotsByName(SendDialog);
     } // setupUi
@@ -122,10 +129,10 @@ public:
     void retranslateUi(QDialog *SendDialog)
     {
         SendDialog->setWindowTitle(QCoreApplication::translate("SendDialog", "Results", nullptr));
-        thanksLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:16pt;\">Thank you for your time! :)</span></p></body></html>", nullptr));
+        thanksLabel->setText(QCoreApplication::translate("SendDialog", "Thank you for your time! :)", nullptr));
         pushButton->setText(QCoreApplication::translate("SendDialog", "Close", nullptr));
         label->setText(QString());
-        whereLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">The results were sent into the database.</span></p><p align=\"center\"><br/></p></body></html>", nullptr));
+        whereLabel->setText(QCoreApplication::translate("SendDialog", "The results were sent into the database.", nullptr));
         studentLabel->setText(QCoreApplication::translate("SendDialog", "Student:", nullptr));
         markLabel->setText(QCoreApplication::translate("SendDialog", "Mark:", nullptr));
         nameLabel->setText(QCoreApplication::translate("SendDialog", "[name]", nullptr));

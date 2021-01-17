@@ -72,6 +72,7 @@ public:
         font.setPointSize(16);
         font.setBold(true);
         welcomeLabel->setFont(font);
+        welcomeLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_3->addWidget(welcomeLabel);
 
@@ -82,6 +83,7 @@ public:
         font1.setPointSize(12);
         font1.setBold(true);
         enterNameLabel->setFont(font1);
+        enterNameLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_3->addWidget(enterNameLabel);
 
@@ -95,11 +97,15 @@ public:
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         firstNameLabel = new QLabel(layoutWidget1);
         firstNameLabel->setObjectName(QString::fromUtf8("firstNameLabel"));
+        QFont font2;
+        font2.setPointSize(10);
+        firstNameLabel->setFont(font2);
 
         verticalLayout_2->addWidget(firstNameLabel);
 
         lastNameLabel = new QLabel(layoutWidget1);
         lastNameLabel->setObjectName(QString::fromUtf8("lastNameLabel"));
+        lastNameLabel->setFont(font2);
 
         verticalLayout_2->addWidget(lastNameLabel);
 
@@ -144,6 +150,7 @@ public:
         StartWindow->setCentralWidget(centralwidget);
 
         retranslateUi(StartWindow);
+        QObject::connect(closeButton, &QPushButton::clicked, StartWindow, &QMainWindow::close);
 
         QMetaObject::connectSlotsByName(StartWindow);
     } // setupUi
@@ -151,10 +158,10 @@ public:
     void retranslateUi(QMainWindow *StartWindow)
     {
         StartWindow->setWindowTitle(QCoreApplication::translate("StartWindow", "Questionnaire", nullptr));
-        welcomeLabel->setText(QCoreApplication::translate("StartWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Welcome!</span></p></body></html>", nullptr));
-        enterNameLabel->setText(QCoreApplication::translate("StartWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Enter your name below:</span></p></body></html>", nullptr));
-        firstNameLabel->setText(QCoreApplication::translate("StartWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">First name:</span></p></body></html>", nullptr));
-        lastNameLabel->setText(QCoreApplication::translate("StartWindow", "<html><head/><body><p><span style=\" font-size:10pt;\">Last name:</span></p></body></html>", nullptr));
+        welcomeLabel->setText(QCoreApplication::translate("StartWindow", "Welcome!", nullptr));
+        enterNameLabel->setText(QCoreApplication::translate("StartWindow", "Enter your name below:", nullptr));
+        firstNameLabel->setText(QCoreApplication::translate("StartWindow", "First name:", nullptr));
+        lastNameLabel->setText(QCoreApplication::translate("StartWindow", "Last name:", nullptr));
         startQuizButton->setText(QCoreApplication::translate("StartWindow", "Start Quiz", nullptr));
         closeButton->setText(QCoreApplication::translate("StartWindow", "Close", nullptr));
         label->setText(QString());

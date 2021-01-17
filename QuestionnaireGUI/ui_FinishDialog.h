@@ -39,15 +39,30 @@ public:
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         label = new QLabel(FinishDialog);
         label->setObjectName(QString::fromUtf8("label"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(label->sizePolicy().hasHeightForWidth());
+        label->setSizePolicy(sizePolicy);
+        QFont font;
+        font.setPointSize(16);
+        label->setFont(font);
+        label->setAlignment(Qt::AlignCenter);
 
         verticalLayout->addWidget(label);
 
         buttonBox = new QDialogButtonBox(FinishDialog);
         buttonBox->setObjectName(QString::fromUtf8("buttonBox"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(buttonBox->sizePolicy().hasHeightForWidth());
+        buttonBox->setSizePolicy(sizePolicy1);
         buttonBox->setOrientation(Qt::Horizontal);
         buttonBox->setStandardButtons(QDialogButtonBox::Cancel|QDialogButtonBox::Ok);
+        buttonBox->setCenterButtons(false);
 
-        verticalLayout->addWidget(buttonBox);
+        verticalLayout->addWidget(buttonBox, 0, Qt::AlignHCenter);
 
 
         retranslateUi(FinishDialog);
@@ -61,7 +76,7 @@ public:
     void retranslateUi(QDialog *FinishDialog)
     {
         FinishDialog->setWindowTitle(QCoreApplication::translate("FinishDialog", "Confirm", nullptr));
-        label->setText(QCoreApplication::translate("FinishDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Are you sure you want to finish the quiz and </span></p><p align=\"center\"><span style=\" font-size:10pt;\">send the results?</span></p></body></html>", nullptr));
+        label->setText(QCoreApplication::translate("FinishDialog", "Send the results?", nullptr));
     } // retranslateUi
 
 };

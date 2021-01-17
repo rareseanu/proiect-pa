@@ -17,7 +17,9 @@ QuestionWindow::QuestionWindow(QWidget* parent)
         exit(0);
     }
     srand(time(NULL));
-    m_quiz.LoadQuestions("question", "answer");
+    m_quiz.SetQuestionsTable("question", "q_id", "text", "points", "category", "type");
+    m_quiz.SetAnswersTable("answer", "a_id", "text", "percentage", "q_id");
+    m_quiz.LoadQuestions();
     m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
     m_selectedQuestions = m_quiz.GetSelectedQuestions();
     ui.backButton->setEnabled(false);
