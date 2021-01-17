@@ -5,7 +5,7 @@ class TerminalQuestionnaire
 {
 public:
 	TerminalQuestionnaire(int numberOfQuestionsNeeded, int quizTime);
-	void Start();
+	void Start();	
 	void Stop();
 	void PrintAllQuestions() const;
 	void PrintQuestionsFromCategory(const std::string& category) const;

@@ -34,14 +34,22 @@ extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARA
 	LPCWPSTRUCT pt_stMessage = (LPCWPSTRUCT)lParam;
 	if (code >= 0)
 	{
-		if(GetProcessId((HANDLE) pt_stMessage->lParam) != GetCurrentProcessId()) {
+		DWORD processID;
+		LPARAM messageLparam = pt_stMessage->lParam;
+		GetWindowThreadProcessId((HWND) messageLparam, &processID);
+		DWORD errorID = GetLastError();
+		LPSTR errorBuffer = nullptr;
+		size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+			NULL, errorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&errorBuffer, 0, NULL);
+		std::string message(errorBuffer, size);
+		if(processID != GetCurrentProcessId()) {
 			if ((pt_stMessage->message == WM_ACTIVATE && pt_stMessage->wParam == WA_INACTIVE) || 
 				(pt_stMessage->message == WM_SIZE && pt_stMessage->wParam == SIZE_MINIMIZED))
 			{
-				(*functionToCall)();
 				std::fstream fileStream;
 				fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
-				fileStream << GetProcessId((HWND)lParam) << " " << GetCurrentProcessId() << '\n';
+				fileStream << "ERROR: " << message << '\n';
+				fileStream << processID << " " << GetCurrentProcessId() << '\n';
 				fileStream.close();
 			}
 		}
