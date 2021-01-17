@@ -192,6 +192,7 @@
     </QtMoc>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EmptyNameDialog.cpp" />
     <ClCompile Include="FinishDialog.cpp" />
     <ClCompile Include="FraudDialog.cpp" />
     <ClCompile Include="main.cpp" />
@@ -223,6 +224,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="EmptyNameDialog.ui" />
     <QtUic Include="FinishDialog.ui" />
     <QtUic Include="FraudDialog.ui" />
     <QtUic Include="QuestionForm.ui" />
@@ -243,6 +245,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="FraudDialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="EmptyNameDialog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

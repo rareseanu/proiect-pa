@@ -55,6 +55,9 @@
     <ClCompile Include="FraudDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EmptyNameDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QuestionWindow.h">
@@ -70,6 +73,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="FraudDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="EmptyNameDialog.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -95,6 +101,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="FraudDialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="EmptyNameDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
