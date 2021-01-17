@@ -26,9 +26,9 @@ QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool is
 	}
 }
 
-void QuestionnaireFramework::LoadQuestions(const std::string& questionTable, const std::string& answerTable) {
-
-	for (auto questionRow : dh->GetTable(questionTable)) {
+void QuestionnaireFramework::LoadQuestions() {
+	std::string command = "select "+m_qIdColumn+","+ m_qTextColumn + "," + m_qPointsColumn + "," + m_qCategoryColumn + "," + m_qQuestionTypeColumn + " from " + m_qTable +";";
+	for (auto questionRow : dh->GetTableFromCommand(command)) {
 		int id = std::stoi(questionRow[0]);
 		std::string text = questionRow[1];
 		int points = std::stoi(questionRow[2]);
@@ -41,7 +41,7 @@ void QuestionnaireFramework::LoadQuestions(const std::string& questionTable, con
 			LOG_ERROR(error);
 			questionType = Question::QuestionType::Multichoice;
 		}
-		std::string command = "select * from " + answerTable + " where q_id = " + std::to_string(id);
+		command = "select " + m_aIdColumn + "," + m_aTextColumn + "," + m_aPercentageColumn + " from " + m_aTable + " where " + m_aQuestionId +" = " + std::to_string(id) + ";";
 		std::vector<std::vector<std::string>> answerTable = dh->GetTableFromCommand(command);
 		std::vector<Answer> answers;
 
@@ -232,6 +232,25 @@ void QuestionnaireFramework::StartTimer()
 	std::thread timerThread(&Timer::Start, std::ref(m_timer));
 	timerThread.detach();
 	m_canAnswer = true;
+}
+
+void QuestionnaireFramework::SetQuestionsTable(const std::string& qTable, const std::string& qIdColumn, const std::string& qTextColumn, const std::string& qPointsColumn, const std::string& qCategoryColumn, const std::string& qQuestionTypeColumn)
+{
+	m_qTable = qTable;
+	m_qIdColumn = qIdColumn;
+	m_qTextColumn = qTextColumn;
+	m_qPointsColumn = qPointsColumn;
+	m_qCategoryColumn = qCategoryColumn;
+	m_qQuestionTypeColumn = qQuestionTypeColumn;
+}
+
+void QuestionnaireFramework::SetAnswersTable(const std::string& aTable, const std::string& aIdColumn, const std::string& aTextColumn, const std::string& aPercentageColumn, const std::string& aQuestionId)
+{
+	m_aTable = aTable;
+	m_aIdColumn = aIdColumn;
+	m_aTextColumn = aTextColumn;
+	m_aPercentageColumn = aPercentageColumn;
+	m_aQuestionId = aQuestionId;
 }
 
 void QuestionnaireFramework::StopTimer()

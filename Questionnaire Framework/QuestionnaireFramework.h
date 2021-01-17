@@ -14,7 +14,7 @@ class QuestionnaireFramework
 {
 public:
 	__declspec(dllexport) QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, std::wstring oldTitle, bool loggerEnabled = true);
-	__declspec(dllexport) void LoadQuestions(const std::string& questionTable, const std::string& answerTable);
+	__declspec(dllexport) void LoadQuestions();
 	__declspec(dllexport) void OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
 											const  std::string& databaseUser, const std::string& databasePassword);
 	__declspec(dllexport) const std::vector<Question>& GetQuestionsFromCategory(const std::string& category) const;
@@ -36,6 +36,10 @@ public:
 	__declspec(dllexport) bool CheatingDetected();
 	__declspec(dllexport) float GetFinalGrade()const;
 	__declspec(dllexport) void StartTimer();
+	__declspec(dllexport) void SetQuestionsTable(const std::string& qTable, const std::string& qIdColumn, const std::string& qTextColumn,
+												const std::string& qPointsColumn, const std::string& qCategoryColumn, const std::string& qQuestionTypeColumn);
+	__declspec(dllexport) void SetAnswersTable(const std::string& aTable, const std::string& aIdColumn, const std::string& aTextColumn, 
+												const std::string& aPercentageColumn, const std::string& aQuestionId);
 	__declspec(dllexport) void StopTimer();
 	__declspec(dllexport) const Timer& GetTimer()const;
 	__declspec(dllexport) void SetTimerFunction(const std::function<void()>& funcToRun);
@@ -50,10 +54,21 @@ private:
 	bool m_canAnswer = false;
 	Timer m_timer;
 	User m_user;
+	std::string m_qIdColumn;
+	std::string m_qTable;
+	std::string m_qTextColumn;
+	std::string m_qPointsColumn;
+	std::string m_qCategoryColumn;
+	std::string m_qQuestionTypeColumn;
+	std::string m_aTable;
+	std::string m_aIdColumn;
+	std::string m_aTextColumn;
+	std::string m_aPercentageColumn;
+	std::string m_aQuestionId;
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
 	DatabaseHandler* dh = NULL;
 	std::vector<Question> m_selectedQuestions;
 	HHOOK m_hook = NULL;
 	bool cheatDetected = false;
-	bool m_isConsole;
+	bool m_isConsole = false;
 };
