@@ -1,22 +1,14 @@
-#ifndef EMPTYNAMEDIALOG_H
-#define EMPTYNAMEDIALOG_H
+#pragma once
+#include <QtWidgets/QMainWindow>
+#include "ui_EmptyNameDialog.h"
 
-#include <QDialog>
 
-namespace Ui {
-class EmptyNameDialog;
-}
-
-class EmptyNameDialog : public QDialog
+class EmptyNameDialog :public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit EmptyNameDialog(QWidget *parent = nullptr);
-    ~EmptyNameDialog();
-
+    EmptyNameDialog(QWidget* parent = nullptr);
 private:
-    Ui::EmptyNameDialog *ui;
+    Ui::EmptyNameDialog ui;
 };
-
-#endif // EMPTYNAMEDIALOG_H

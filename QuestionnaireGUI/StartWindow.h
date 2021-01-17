@@ -1,6 +1,7 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
 #include "ui_StartWindow.h"
+#include "EmptyNameDialog.h"
 
 class StartWindow : public QMainWindow
 {
@@ -11,5 +12,6 @@ public:
     void StartQuiz();
 private:
     Ui::StartWindow ui;
+    EmptyNameDialog emptyNameDialog;
     QMainWindow* source;
 };

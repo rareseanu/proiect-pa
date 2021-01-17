@@ -19,4 +19,8 @@ void StartWindow::StartQuiz() {
         dynamic_cast<QuestionWindow*>(source)->StartQuiz();
         close();
     }
+    else
+    {
+        emptyNameDialog.show();
+    }
 }
