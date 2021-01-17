@@ -2,8 +2,8 @@
 #include <fstream>
 #include "../Questionnaire Framework/Logger.cpp"
 #include <functional>
-bool* cheatingDetected = new bool;
-std::function<void()> *m_x;
+
+std::function<void()> *functionToCall;
 
 BOOL APIENTRY DllMain(HMODULE hModule,
 	DWORD  ul_reason_for_call,
@@ -26,24 +26,24 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	return true;
 }
 
-extern "C" __declspec(dllexport) bool GetCheating() {
-	return *cheatingDetected;
-}
-
-extern  "C" __declspec(dllexport) void SetQuiz(std::function<void()> *x) {
-	m_x = x;
+extern  "C" __declspec(dllexport) void SetQuiz(std::function<void()> *function) {
+	functionToCall = function;
 }
 
 extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARAM lParam) {
 	LPCWPSTRUCT pt_stMessage = (LPCWPSTRUCT)lParam;
 	if (code >= 0)
 	{
-		if (pt_stMessage->message == WM_ACTIVATE && pt_stMessage->wParam == WA_INACTIVE)
-		{
-			std::fstream fileStream;
-			fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
-			fileStream << "INTRAT" << '\n';
-			fileStream.close();
+		if(GetProcessId((HANDLE) pt_stMessage->lParam) != GetCurrentProcessId()) {
+			if ((pt_stMessage->message == WM_ACTIVATE && pt_stMessage->wParam == WA_INACTIVE) || 
+				(pt_stMessage->message == WM_SIZE && pt_stMessage->wParam == SIZE_MINIMIZED))
+			{
+				(*functionToCall)();
+				std::fstream fileStream;
+				fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
+				fileStream << GetProcessId((HWND)lParam) << " " << GetCurrentProcessId() << '\n';
+				fileStream.close();
+			}
 		}
 		return(CallNextHookEx(NULL, code, wParam, lParam));
 	}

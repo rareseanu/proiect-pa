@@ -6,5 +6,4 @@ int main() {
 	TerminalQuestionnaire test(4, 3670);
 
 	test.Start();
-
 }
