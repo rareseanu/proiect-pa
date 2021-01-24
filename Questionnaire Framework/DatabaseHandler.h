@@ -3,6 +3,7 @@
 #include <vector>
 #include <libpq-fe.h>
 #include "Question.h"
+#include <memory>
 class DatabaseHandler
 {
 public:
@@ -17,6 +18,6 @@ public:
 	__declspec(dllexport) bool IsConnected();
 
 private:
-	PGconn* conn;
+	std::shared_ptr<PGconn> conn;
 };
 

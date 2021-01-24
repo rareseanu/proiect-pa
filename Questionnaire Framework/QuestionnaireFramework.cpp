@@ -58,7 +58,7 @@ void QuestionnaireFramework::LoadQuestions() {
 void QuestionnaireFramework::OpenDatabase(const std::string& databaseName, const std::string& databaseHost, const std::string& databasePort,
 	const  std::string& databaseUser, const std::string& databasePassword)
 {
-	dh = new DatabaseHandler(databaseName, databaseHost, databasePort, databaseUser, databasePassword);
+	dh.reset(new DatabaseHandler(databaseName, databaseHost, databasePort, databaseUser, databasePassword));
 	if (!dh->IsConnected()) {
 		throw std::string("Connection to the database failed.");
 	}
@@ -129,7 +129,7 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 			while (remainingNumberOfQuestions != 0) {
 				int tempRand = rand() % tempQuestions.size();
 				m_maximumMark += tempQuestions.at(tempRand).GetPoints();
-				m_selectedQuestions.push_back(tempQuestions.at(tempRand));
+				m_selectedQuestions.get()->push_back(tempQuestions.at(tempRand));
 				tempQuestions.erase(tempQuestions.begin() + tempRand);
 				--remainingNumberOfQuestions;
 			}
@@ -138,27 +138,27 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 		else { // Add the entire category when it has less questions than the necessary ammount.
 			for (auto question : tempQuestions) {
 				m_maximumMark += question.GetPoints();
-				m_selectedQuestions.push_back(question);
+				m_selectedQuestions.get()->push_back(question);
 			}
 		}
 	}
 	// Add randomly chosen questions from the unchosen ones if needed.
-	while (m_selectedQuestions.size() < m_numberOfQuestionsNeeded) {
+	while (m_selectedQuestions.get()->size() < m_numberOfQuestionsNeeded) {
 		int tempRand = rand() % unchosenQuestions.size();
 		m_maximumMark += unchosenQuestions.at(tempRand).GetPoints();
-		m_selectedQuestions.push_back(unchosenQuestions.at(tempRand));
+		m_selectedQuestions.get()->push_back(unchosenQuestions.at(tempRand));
 		unchosenQuestions.erase(unchosenQuestions.begin() + tempRand);
 	}
 }
 
-const std::vector<Question>& QuestionnaireFramework::GetSelectedQuestions()const
+const std::shared_ptr<std::vector<Question>> QuestionnaireFramework::GetSelectedQuestions()const
 {
 	return m_selectedQuestions;
 }
 
-std::vector<Question>* QuestionnaireFramework::GetSelectedQuestions()
+std::shared_ptr<std::vector<Question>> QuestionnaireFramework::GetSelectedQuestions()
 {
-	return &m_selectedQuestions;
+	return m_selectedQuestions;
 }
 
 int QuestionnaireFramework::GetMaximumMark()const
@@ -186,7 +186,7 @@ void QuestionnaireFramework::CalculateFinalGrade()
 {
 	float percentage;
 	float mark = 0;
-	for (const Question& question : m_selectedQuestions) {
+	for (const Question& question : *m_selectedQuestions) {
 		mark = mark + question.GetAquiredMark();
 	}
 	percentage = mark / m_maximumMark;
@@ -251,7 +251,7 @@ void QuestionnaireFramework::SetTimerFunction(const std::function<void()>& funcT
 void QuestionnaireFramework::SendResult(const std::string & resultTable, const std::string& gradeColumn, const std::string& studentAnswerTable) const
 {
 	std::string command="update "+resultTable+" set "+gradeColumn+"="+ std::to_string(m_user.GetGrade())+" where s_id="+ std::to_string(m_user.GetId())+";";
-	for (Question question : m_selectedQuestions) {
+	for (Question question : *m_selectedQuestions) {
 		if (question.GetQuestionType() == Question::QuestionType::Text) {
 			command =command+ "insert into " + studentAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'" + question.GetGivenTextAnswer() + "'," + std::to_string(question.GetID()) + ");";
 		}

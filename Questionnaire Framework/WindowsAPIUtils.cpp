@@ -34,10 +34,9 @@ void MinimizeOtherApps(HWND questionnaireHandle) {
 		SendMessage(hwnd, WM_COMMAND, (WPARAM)419, 0); //minimize all
 	});
 	thread.join();
+	Sleep(500);
 	SetForegroundWindow(questionnaireHandle);
 	ShowWindow(questionnaireHandle, SW_SHOWMAXIMIZED);
-	//SendMessage(questionnaireHandle, WM_SYSCOMMAND, SC_RESTORE, 0);
-	//SendMessage(questionnaireHandle, WM_SYSCOMMAND, SC_MAXIMIZE, 0); //maximize questionnaire window
 }
 
 std::wstring GetUniqueWindowTitle() {

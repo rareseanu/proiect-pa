@@ -19,7 +19,7 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int m_
 	m_quiz.LoadQuestions();
 	m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
 	m_selectedQuestions = m_quiz.GetSelectedQuestions();
-	m_quiz.SetupAnticheating(L"Notepad");
+	m_quiz.SetupAnticheating(L"Useless");
 }
 
 void TerminalQuestionnaire::Start()
@@ -188,7 +188,8 @@ void TerminalQuestionnaire::PrintQuestionsFromCategory(const std::string& catego
 void TerminalQuestionnaire::PrintSelectedQuestions() const
 {
 	int questionSymbol = 0;
-	for (auto question : m_quiz.GetSelectedQuestions()) {
+	
+	for (auto question : *(m_selectedQuestions)) {
 		std::cout << questionSymbol++ << '.' << question;
 		if (question.GetAnswers().empty()) {
 			std::cout << "Question unanswered!";
@@ -213,7 +214,7 @@ void TerminalQuestionnaire::PrintTimeLeft() const
 
 void TerminalQuestionnaire::PrintResults() const
 {
-	for (auto& question : m_quiz.GetSelectedQuestions()) {
+	for (auto& question : *(m_selectedQuestions)) {
 		std::cout << question.GetText() << " Marks: " << question.GetAquiredMark()
 			<< '/' << question.GetPoints() << '\n';
 		for (auto& answer : question.GetAnswers()) {

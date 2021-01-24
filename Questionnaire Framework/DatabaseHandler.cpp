@@ -4,20 +4,20 @@ DatabaseHandler::DatabaseHandler(const std::string& databaseName, const std::str
 								const  std::string &databaseUser, const std::string &databasePassword) {
 	std::string connectString="";
 	connectString = connectString + "dbname = " + databaseName + " host = " + databaseHost +" port = "+ databasePort+ " user = " + databaseUser +" password = " + databasePassword;
-	conn = PQconnectdb(connectString.c_str());
+	conn.reset(PQconnectdb(connectString.c_str()));
 }
 DatabaseHandler::DatabaseHandler(const std::string& databaseName, const std::string& databaseHost,
 								const  std::string& databaseUser, const std::string& databasePassword) {
 	std::string connectString = "";
 	connectString = connectString + "dbname = " + databaseName + " host = " + databaseHost +" user = " + databaseUser +" password = " + databasePassword;
-	conn = PQconnectdb(connectString.c_str());
+	conn.reset(PQconnectdb(connectString.c_str()));
 }
 std::vector<std::vector<std::string>> DatabaseHandler::GetTable(const std::string& tableName) {
 
     std::vector<std::vector<std::string>> table;
     std::string sqlCommand = "select * from ";
     sqlCommand = sqlCommand + tableName;
-    PGresult* res = PQexec(conn, sqlCommand.c_str());
+    PGresult* res = PQexec(conn.get(), sqlCommand.c_str());
     int recCount = PQntuples(res);
     int colNumber = PQnfields(res);
     for (int row = 0; row < recCount; row++) {
@@ -34,7 +34,7 @@ std::vector<std::vector<std::string>> DatabaseHandler::GetTableFromCommand(const
 
     std::vector<std::vector<std::string>> table;
     std::string sqlCommand = command;
-    PGresult* res = PQexec(conn, sqlCommand.c_str());
+    PGresult* res = PQexec(conn.get(), sqlCommand.c_str());
     int recCount = PQntuples(res);
     int colNumber = PQnfields(res);
     for (int row = 0; row < recCount; row++) {
@@ -48,7 +48,7 @@ std::vector<std::vector<std::string>> DatabaseHandler::GetTableFromCommand(const
 }
 void DatabaseHandler::RunCommand(const std::string& command)
 {
-    PQexec(conn, command.c_str());
+    PQexec(conn.get(), command.c_str());
 }
 void DatabaseHandler::PrintTable(const std::vector<std::vector<std::string>>& table) const {
     for (std::vector<std::string> i : table) {
@@ -60,7 +60,7 @@ void DatabaseHandler::PrintTable(const std::vector<std::vector<std::string>>& ta
 }
 bool DatabaseHandler::IsConnected()
 {
-	if(PQstatus(conn)==CONNECTION_OK){
+	if(PQstatus(conn.get())==CONNECTION_OK){
 		return true;
 	}
 	return false;

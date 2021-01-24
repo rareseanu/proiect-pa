@@ -35,24 +35,24 @@ extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARA
 	if (code >= 0)
 	{
 		DWORD processID;
-		LPARAM messageLparam = pt_stMessage->lParam;
-		GetWindowThreadProcessId((HWND) messageLparam, &processID);
-		DWORD errorID = GetLastError();
-		LPSTR errorBuffer = nullptr;
-		size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-			NULL, errorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&errorBuffer, 0, NULL);
-		std::string message(errorBuffer, size);
-		if(processID != GetCurrentProcessId()) {
-			if ((pt_stMessage->message == WM_ACTIVATE && pt_stMessage->wParam == WA_INACTIVE) || 
-				(pt_stMessage->message == WM_SIZE && pt_stMessage->wParam == SIZE_MINIMIZED))
-			{
-				std::fstream fileStream;
-				fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
-				fileStream << "ERROR: " << message << '\n';
-				fileStream << processID << " " << GetCurrentProcessId() << '\n';
-				fileStream.close();
-			}
+		//DWORD currentProcessID = GetCurrentProcessId();
+		GetWindowThreadProcessId(pt_stMessage->hwnd, &processID);
+		//DWORD errorID = GetLastError();
+		//LPSTR errorBuffer = nullptr;
+		//size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		//	NULL, errorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&errorBuffer, 0, NULL);
+		//std::string message(errorBuffer, size);
+		//
+		//if (processID != currentProcessID) {
+		if (pt_stMessage->message == WM_ACTIVATEAPP && pt_stMessage->wParam == FALSE) {
+		//	|| (pt_stMessage->message == WM_SIZE && pt_stMessage->wParam == SIZE_MINIMIZED))
+			std::fstream fileStream;
+			fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
+			fileStream << "PRIMIT " << '\n';
+			fileStream << processID << " " << GetCurrentProcessId() << '\n';
+			fileStream.close();
 		}
+
 		return(CallNextHookEx(NULL, code, wParam, lParam));
 	}
 }

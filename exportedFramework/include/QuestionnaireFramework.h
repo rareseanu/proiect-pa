@@ -8,6 +8,7 @@
 #include "Logger.h"
 #include <unordered_map>
 #include <vector>
+#include <memory>
 #include "WindowsAPIUtils.h"
 
 class QuestionnaireFramework
@@ -26,8 +27,8 @@ public:
 	__declspec(dllexport) bool CanAnswer();
 	__declspec(dllexport) const std::unordered_map<std::string, std::vector<Question>>& GetAllQuestions() const;
 	__declspec(dllexport) void SelectQuestions(const std::vector<std::string>& categories);
-	__declspec(dllexport) const std::vector<Question>& GetSelectedQuestions()const;
-	__declspec(dllexport) std::vector<Question>* GetSelectedQuestions();
+	__declspec(dllexport) const std::shared_ptr<std::vector<Question>> GetSelectedQuestions()const;
+	__declspec(dllexport) std::shared_ptr <std::vector<Question>> GetSelectedQuestions();
 	__declspec(dllexport) int GetMaximumMark()const;
 	__declspec(dllexport) void SetUser(const std::string& studentTable, const std::string& nameColumn);
 	__declspec(dllexport) User& GetUser();
@@ -67,8 +68,8 @@ private:
 	std::string m_aPercentageColumn;
 	std::string m_aQuestionId;
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
-	DatabaseHandler* dh = NULL;
-	std::vector<Question> m_selectedQuestions;
+	std::unique_ptr<DatabaseHandler> dh = NULL;
+	std::shared_ptr<std::vector<Question>> m_selectedQuestions;
 	HHOOK m_hook = NULL;
 	bool cheatDetected = false;
 	bool m_isConsole = false;
