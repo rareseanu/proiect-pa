@@ -43,6 +43,6 @@ private:
     int currentQuestion = 0;
     QTimer timer;
     QuestionnaireFramework m_quiz = QuestionnaireFramework(true, false);
-    std::vector<Question>* m_selectedQuestions;
+    std::shared_ptr<std::vector<Question>> m_selectedQuestions;
     FraudDialog fraudDialog;
 };

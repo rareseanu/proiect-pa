@@ -30,7 +30,7 @@ public:
 	__declspec(dllexport) const std::shared_ptr<std::vector<Question>> GetSelectedQuestions()const;
 	__declspec(dllexport) std::shared_ptr <std::vector<Question>> GetSelectedQuestions();
 	__declspec(dllexport) int GetMaximumMark()const;
-	__declspec(dllexport) void SetUser(const std::string& studentTable, const std::string& nameColumn);
+	__declspec(dllexport) void SetUser(const std::string& studentTable, const std::string& nameColumn, const std::string& startTimeColumn);
 	__declspec(dllexport) User& GetUser();
 	__declspec(dllexport) void CalculateFinalGrade();
 	__declspec(dllexport) void SetCheatingDetected();
@@ -44,7 +44,7 @@ public:
 	__declspec(dllexport) void StopTimer();
 	__declspec(dllexport) const Timer& GetTimer()const;
 	__declspec(dllexport) void SetTimerFunction(const std::function<void()>& funcToRun);
-	__declspec(dllexport) void SendResult(const std::string& resultTable, const std::string& gradeColumn, const std::string& studentAnswerTable)const;
+	__declspec(dllexport) void SendResult(const std::string& resultTable, const std::string& gradeColumn, const std::string& endTimeColumn, const std::string& studentAnswerTable);
 	__declspec(dllexport) const HHOOK& GetWindowsHook();
 	__declspec(dllexport) void SetupAnticheating(const std::wstring& oldTitle);
 private:
@@ -67,6 +67,7 @@ private:
 	std::string m_aTextColumn;
 	std::string m_aPercentageColumn;
 	std::string m_aQuestionId;
+	time_t m_currentTime;
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
 	std::unique_ptr<DatabaseHandler> dh = NULL;
 	std::shared_ptr<std::vector<Question>> m_selectedQuestions = std::make_shared< std::vector<Question>>();

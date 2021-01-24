@@ -46,7 +46,7 @@ void QuestionWindow::StartQuiz()
     show();
     m_quiz.GetUser().SetFirstName(ui.studentNume->text().toStdString());
     m_quiz.GetUser().SetLastName(ui.studentPrenume->text().toStdString());
-    m_quiz.SetUser("student", "nume");
+    m_quiz.SetUser("student", "nume", "time_start");
     bool stillHasQuestions = true;
     m_quiz.SetTimerFunction(std::bind(&QuestionWindow::ForceStop, this));
     m_quiz.StartTimer();   
@@ -63,7 +63,7 @@ void QuestionWindow::StopQuiz()
     if (m_quiz.CheatingDetected()) {
         m_quiz.GetUser().SetGrade(1);
     }
-    m_quiz.SendResult("student", "nota", "student_raspuns");
+    m_quiz.SendResult("student", "nota", "time_end", "student_raspuns");
     m_quiz.StopTimer();
     if (m_quiz.GetWindowsHook() != NULL) {
         UnhookWindowsHookEx(m_quiz.GetWindowsHook());
