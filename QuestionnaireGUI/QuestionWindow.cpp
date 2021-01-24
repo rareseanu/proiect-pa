@@ -55,6 +55,9 @@ void QuestionWindow::StartQuiz()
     m_quiz.StartTimer();   
     connect(&timer, &QTimer::timeout, this, &QuestionWindow::ShowTimeLeft);
     timer.start(0);
+    std::time_t now = std::time(NULL);
+    std::tm* ptm_start = std::localtime(&now);
+    std::strftime(startTime, 32, "%H:%M:%S", ptm_start);
     ShowQuestion(currentQuestion);
 }
 
@@ -76,11 +79,20 @@ void QuestionWindow::StopQuiz()
     Ui::SendDialog sendDialogUi = sendDialog.GetUi();
     sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
     sendDialogUi.actualMarkLabel->setText(QString::fromStdString(std::to_string(m_quiz.GetFinalGrade())));
+    sendDialogUi.time1Label->setText(QString::fromStdString(startTime));
+
     std::time_t now = std::time(NULL);
     std::tm* ptm = std::localtime(&now);
-    char stopTime[32];
     std::strftime(stopTime, 32, "%H:%M:%S", ptm);
     sendDialogUi.time2Label->setText(QString::fromStdString(stopTime));
+
+    QFont font = sendDialogUi.time2Label->font();
+    font.setPointSize(12);
+    sendDialogUi.time1Label->setFont(font);
+    sendDialogUi.time1Label->setAlignment(Qt::AlignCenter);
+    sendDialogUi.time2Label->setFont(font);
+    sendDialogUi.time2Label->setAlignment(Qt::AlignCenter);
+
     sendDialog.show();
     if (m_quiz.CheatingDetected()) {
         fraudDialog.show();

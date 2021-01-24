@@ -66,7 +66,7 @@ public:
         label->setPixmap(QPixmap(QString::fromUtf8("images/UNITBV_MI_logo.png")));
         layoutWidget = new QWidget(SendDialog);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(130, 120, 381, 154));
+        layoutWidget->setGeometry(QRect(130, 110, 381, 154));
         verticalLayout_3 = new QVBoxLayout(layoutWidget);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
