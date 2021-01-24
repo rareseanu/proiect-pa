@@ -34,23 +34,29 @@ extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARA
 	LPCWPSTRUCT pt_stMessage = (LPCWPSTRUCT)lParam;
 	if (code >= 0)
 	{
+		TCHAR path[MAX_PATH];
+		DWORD dwRes = GetModuleFileName(NULL, (LPWSTR)path, MAX_PATH);
+		std::wstring modulePath(path);
+		std::wstring fileName(L"logDLL");
+		std::wstring pathDll = modulePath.substr(0, modulePath.find_last_of('\\') + 1) + fileName;
 		DWORD processID;
-		//DWORD currentProcessID = GetCurrentProcessId();
+		DWORD currentProcessID = GetCurrentProcessId();
 		GetWindowThreadProcessId(pt_stMessage->hwnd, &processID);
-		//DWORD errorID = GetLastError();
-		//LPSTR errorBuffer = nullptr;
-		//size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-		//	NULL, errorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&errorBuffer, 0, NULL);
-		//std::string message(errorBuffer, size);
-		//
-		//if (processID != currentProcessID) {
+		DWORD errorID = GetLastError();
+		LPSTR errorBuffer = nullptr;
+		size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+			NULL, errorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&errorBuffer, 0, NULL);
+		std::string message(errorBuffer, size);
+
 		if (pt_stMessage->message == WM_ACTIVATEAPP && pt_stMessage->wParam == FALSE) {
-		//	|| (pt_stMessage->message == WM_SIZE && pt_stMessage->wParam == SIZE_MINIMIZED))
+
 			std::fstream fileStream;
-			fileStream.open("C:\\temp\\test.txt", std::fstream::out | std::fstream::app);
-			fileStream << "PRIMIT " << '\n';
+			fileStream.open(pathDll, std::fstream::out | std::fstream::app);
+			fileStream << "processID" << processID << '\n';
 			fileStream << processID << " " << GetCurrentProcessId() << '\n';
 			fileStream.close();
+
+			(*functionToCall)();
 		}
 
 		return(CallNextHookEx(NULL, code, wParam, lParam));

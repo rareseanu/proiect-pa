@@ -40,7 +40,7 @@ void MinimizeOtherApps(HWND questionnaireHandle) {
 }
 
 std::wstring GetUniqueWindowTitle() {
-	DWORD tickCount = GetTickCount();
+	DWORD tickCount = GetTickCount64();
 	DWORD processID = GetCurrentProcessId();
 	std::wstring title = std::to_wstring(tickCount);
 	title.push_back('/');
@@ -54,8 +54,8 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 	const std::wstring consoleClassName(L"ConsoleWindowClass");
 	
 	MinimizeOtherApps(windowHandle);
-	char className[256];
-	if (!GetClassName(windowHandle, (LPWSTR) className, 256)) {
+	char className[MAX_CLASS_NAME];
+	if (!GetClassNameA(windowHandle, className, MAX_CLASS_NAME)) {
 		std::cout << "ClassName not found!\n";
 		return NULL;
 	}
@@ -106,7 +106,7 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 		std::wstring modulePath(path);
 		std::wstring nameDll(dllName);
 		std::wstring pathDll = modulePath.substr(0, modulePath.find_last_of('\\') + 1) + nameDll;
-		std::wcout << pathDll << '\n';
+
 		LPWSTR lpFullPath = (LPWSTR)(pathDll.c_str());
 
 		HMODULE dll = LoadLibrary(lpFullPath);
