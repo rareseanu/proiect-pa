@@ -289,9 +289,9 @@ void QuestionnaireFramework::SetupAnticheating(const std::wstring &oldTitle)
 	if (m_isConsole) {
 		SetConsoleTitle((LPCWSTR)windowTitle.c_str());
 		Sleep(1000);
-		m_hook = SetupHook((LPCWSTR)windowTitle.c_str(), L"WindowsHooking.dll", m_isConsole, this);
+		SetupConsoleAnticheat(this);
 	}
 	else {
-		m_hook = SetupHook((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", m_isConsole, this);
+		m_hook = SetupGUIAnticheat((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", this);
 	}
 }

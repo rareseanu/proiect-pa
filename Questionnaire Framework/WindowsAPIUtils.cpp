@@ -32,7 +32,7 @@ void MinimizeOtherApps(HWND questionnaireHandle) {
 	std::thread thread([]() {
 		HWND hwnd = FindWindow(L"Shell_TrayWnd", NULL);
 		SendMessage(hwnd, WM_COMMAND, (WPARAM)419, 0); //minimize all
-	});
+		});
 	thread.join();
 	Sleep(500);
 	SetForegroundWindow(questionnaireHandle);
@@ -48,11 +48,10 @@ std::wstring GetUniqueWindowTitle() {
 	return title;
 }
 
-HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, QuestionnaireFramework* quiz)
+HHOOK SetupGUIAnticheat(LPCWSTR windowTitle, std::wstring dllName, QuestionnaireFramework* quiz)
 {
-	HWND windowHandle = GetHandlerFromTitle(windowTitle, isConsole);
-	const std::wstring consoleClassName(L"ConsoleWindowClass");
-	
+	HWND windowHandle = GetHandlerFromTitle(windowTitle, false);
+
 	MinimizeOtherApps(windowHandle);
 	char className[MAX_CLASS_NAME];
 	if (!GetClassNameA(windowHandle, className, MAX_CLASS_NAME)) {
@@ -60,75 +59,56 @@ HHOOK SetupHook(LPCWSTR windowTitle, std::wstring dllName, bool isConsole, Quest
 		return NULL;
 	}
 
-	DWORD processId;
-	DWORD tid = GetWindowThreadProcessId(windowHandle, &processId);
-	//HWND messageOnlyHandle;
-	//TODO: Research other ways to receive messages from console apps. Polling inefficient.
-	if (consoleClassName == (LPWSTR)className) {
-		std::thread checkFocus([quiz]() {
-			while (true) {
-				if (GetForegroundWindow() != GetConsoleWindow()) {
-					quiz->SetCheatingDetected();
-					return NULL;
-				}
+	DWORD processID;
+	DWORD tid = GetWindowThreadProcessId(windowHandle, &processID);
+
+	TCHAR path[MAX_PATH];
+	DWORD dwRes = GetModuleFileName(NULL, (LPWSTR)path, MAX_PATH);
+	if (!dwRes) {
+		std::cout << "Directory not found.\n";
+		return NULL;
+	}
+	std::wstring modulePath(path);
+	std::wstring nameDll(dllName);
+	std::wstring pathDll = modulePath.substr(0, modulePath.find_last_of('\\') + 1) + nameDll;
+
+	LPWSTR lpFullPath = (LPWSTR)(pathDll.c_str());
+
+	HMODULE dll = LoadLibrary(lpFullPath);
+	if (dll == NULL) {
+		std::cout << "DLL not found.\n";
+		return NULL;
+	}
+
+	std::function<void()> getMax = std::bind(&QuestionnaireFramework::SetCheatingDetected, quiz);
+	void(*setQuiz)(std::function<void()>*) = (void(*)(std::function<void()>*))GetProcAddress(dll, "SetQuiz");
+	setQuiz(&getMax);
+
+	HOOKPROC addr = (HOOKPROC)GetProcAddress(dll, "HookFunction");
+	if (addr == NULL) {
+		std::cout << "There was an error while calling HookFunction.\n";
+		return NULL;
+	}
+	HHOOK hook = SetWindowsHookEx(WH_CALLWNDPROC, addr, dll, tid);
+	if (hook == NULL) {
+		FreeLibrary(dll);
+		return NULL;
+	}
+	return hook;
+}
+
+void SetupConsoleAnticheat(QuestionnaireFramework* quiz)
+{
+	HWND consoleHWND = GetConsoleWindow();
+	MinimizeOtherApps(consoleHWND);
+
+	std::thread checkFocus([quiz]() {
+		while (true) {
+			if (GetForegroundWindow() != GetConsoleWindow()) {
+				quiz->SetCheatingDetected();
+				return NULL;
 			}
+		}
 		});
-		checkFocus.detach();
-		/*WNDCLASSEX wc = { 0 };
-		wc.cbSize = sizeof(wc);
-		wc.lpfnWndProc = WindowProc;
-		wc.hInstance = GetModuleHandle(NULL);
-		wc.lpszClassName = L"messageOnly";
-
-		if (!RegisterClassEx(&wc)) {
-			std::cout << "Error while registering the message-only window class.\n";
-			return NULL;
-		}
-
-		messageOnlyHandle = CreateWindowEx(0, L"messageOnly", NULL, 0, 0, 0,0, 0,
-			HWND_MESSAGE, NULL, GetModuleHandle(NULL), NULL);
-		if (!messageOnlyHandle) {
-			std::cout << GetLastErrorString();
-			return NULL;
-		}*/
-		//tid = GetWindowThreadProcessId(messageOnlyHandle, &processId);
-		//ChangeWindowMessageFilterEx(messageOnlyHandle, WM_KILLFOCUS, MSGFLT_ALLOW, 0);
-		//std::cout << "Message-only window created\n";
-		//ShowWindow(messageOnlyHandle, 5);
-	}
-	else {
-		TCHAR path[MAX_PATH];
-		DWORD dwRes = GetModuleFileName(NULL, (LPWSTR)path, MAX_PATH);
-		if (!dwRes) {
-			std::cout << "Directory not found.\n";
-			return NULL;
-		}
-		std::wstring modulePath(path);
-		std::wstring nameDll(dllName);
-		std::wstring pathDll = modulePath.substr(0, modulePath.find_last_of('\\') + 1) + nameDll;
-
-		LPWSTR lpFullPath = (LPWSTR)(pathDll.c_str());
-
-		HMODULE dll = LoadLibrary(lpFullPath);
-		if (dll == NULL) {
-			std::cout << "DLL not found.\n";
-			return NULL;
-		}
-
-		std::function<void()> getMax = std::bind(&QuestionnaireFramework::SetCheatingDetected, quiz);
-		void(*setQuiz)(std::function<void()>*) = (void(*)(std::function<void()>*))GetProcAddress(dll, "SetQuiz");
-		setQuiz(&getMax);
-
-		HOOKPROC addr = (HOOKPROC)GetProcAddress(dll, "HookFunction");
-		if (addr == NULL) {
-			std::cout << "There was an error while calling HookFunction.\n";
-			return NULL;
-		}
-		HHOOK hook = SetWindowsHookEx(WH_CALLWNDPROC, addr, dll, tid);
-		if (hook == NULL) {
-			FreeLibrary(dll);
-			return NULL;
-		}
-		return hook;
-	}
+	checkFocus.detach();
 }
