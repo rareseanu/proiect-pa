@@ -42,7 +42,7 @@ private:
     QTextEdit* textAnswer = NULL;
     int currentQuestion = 0;
     QTimer timer;
-    QuestionnaireFramework m_quiz = QuestionnaireFramework(true, false, L"Qt600dQWindowIcon");
+    QuestionnaireFramework m_quiz = QuestionnaireFramework(true, false);
     std::vector<Question>* m_selectedQuestions;
     FraudDialog fraudDialog;
 };

@@ -41,12 +41,15 @@ void QuestionWindow::closeEvent(QCloseEvent* event)
 
 void QuestionWindow::StartQuiz()
 {
+    hide();
+    m_quiz.SetupAnticheating(L"Qt600dQWindowIcon");
+    show();
     m_quiz.GetUser().SetFirstName(ui.studentNume->text().toStdString());
     m_quiz.GetUser().SetLastName(ui.studentPrenume->text().toStdString());
     m_quiz.SetUser("student", "nume");
     bool stillHasQuestions = true;
     m_quiz.SetTimerFunction(std::bind(&QuestionWindow::ForceStop, this));
-    m_quiz.StartTimer();
+    m_quiz.StartTimer();   
     connect(&timer, &QTimer::timeout, this, &QuestionWindow::ShowTimeLeft);
     timer.start(0);
     ShowQuestion(currentQuestion);
@@ -57,9 +60,9 @@ void QuestionWindow::StopQuiz()
     timer.stop();
     m_quiz.SetCanAnswer(false);
     m_quiz.CalculateFinalGrade();
-    /*if (m_quiz.CheatingDetected()) {
+    if (m_quiz.CheatingDetected()) {
         m_quiz.GetUser().SetGrade(1);
-    }*/
+    }
     m_quiz.SendResult("student", "nota", "student_raspuns");
     m_quiz.StopTimer();
     if (m_quiz.GetWindowsHook() != NULL) {
@@ -209,10 +212,10 @@ void QuestionWindow::ShowTimeLeft()
         << ":" << std::setw(2) << std::setfill('0') << minutes
         << ":" << std::setw(2) << seconds << '\n';
     ui.timeLabel->setText(QString::fromStdString(stringStream.str()));
-    /*if (m_quiz.CheatingDetected()) {
+    if (m_quiz.CheatingDetected()) {
         ForceStop();
         fraudDialog.show();
-    }*/
+    }
     if (!m_quiz.CanAnswer()) {
         timer.stop();
         StopQuiz();

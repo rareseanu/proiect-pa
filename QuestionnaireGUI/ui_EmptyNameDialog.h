@@ -51,7 +51,6 @@ public:
 
 
         retranslateUi(EmptyNameDialog);
-        QObject::connect(pushButton, &QPushButton::clicked, EmptyNameDialog, &QDialog::accept);
 
         QMetaObject::connectSlotsByName(EmptyNameDialog);
     } // setupUi

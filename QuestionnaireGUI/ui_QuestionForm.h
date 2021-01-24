@@ -52,6 +52,11 @@ public:
         if (QuestionWindow->objectName().isEmpty())
             QuestionWindow->setObjectName(QString::fromUtf8("QuestionWindow"));
         QuestionWindow->resize(1280, 720);
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(QuestionWindow->sizePolicy().hasHeightForWidth());
+        QuestionWindow->setSizePolicy(sizePolicy);
         QuestionWindow->setMinimumSize(QSize(1280, 720));
         QuestionWindow->setMaximumSize(QSize(1280, 720));
         QIcon icon;
@@ -126,7 +131,7 @@ public:
         questionNumberLabel->setAlignment(Qt::AlignCenter);
         layoutWidget2 = new QWidget(centralwidget);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(130, 30, 131, 24));
+        layoutWidget2->setGeometry(QRect(130, 30, 134, 24));
         gridLayout = new QGridLayout(layoutWidget2);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         gridLayout->setSizeConstraint(QLayout::SetFixedSize);
@@ -135,11 +140,11 @@ public:
         gridLayout->setContentsMargins(0, 0, 0, 0);
         studentNume = new QLabel(layoutWidget2);
         studentNume->setObjectName(QString::fromUtf8("studentNume"));
-        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
-        sizePolicy.setHeightForWidth(studentNume->sizePolicy().hasHeightForWidth());
-        studentNume->setSizePolicy(sizePolicy);
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(studentNume->sizePolicy().hasHeightForWidth());
+        studentNume->setSizePolicy(sizePolicy1);
         studentNume->setMaximumSize(QSize(150, 16777215));
         studentNume->setFont(font1);
 
@@ -147,8 +152,8 @@ public:
 
         studentPrenume = new QLabel(layoutWidget2);
         studentPrenume->setObjectName(QString::fromUtf8("studentPrenume"));
-        sizePolicy.setHeightForWidth(studentPrenume->sizePolicy().hasHeightForWidth());
-        studentPrenume->setSizePolicy(sizePolicy);
+        sizePolicy1.setHeightForWidth(studentPrenume->sizePolicy().hasHeightForWidth());
+        studentPrenume->setSizePolicy(sizePolicy1);
         studentPrenume->setMaximumSize(QSize(150, 16777215));
         studentPrenume->setFont(font1);
 
