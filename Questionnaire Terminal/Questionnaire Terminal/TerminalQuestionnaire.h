@@ -14,6 +14,6 @@ public:
 	void PrintResults() const;
 private:
 	QuestionnaireFramework m_quiz = QuestionnaireFramework(true, true, true);
-	std::shared_ptr<std::vector<Question>> m_selectedQuestions = std::make_shared<std::vector<Question>>();
+	std::shared_ptr<std::vector<Question>> m_selectedQuestions;
 };
 

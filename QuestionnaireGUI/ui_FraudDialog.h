@@ -16,18 +16,17 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
-#include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
 
 class Ui_FraudDialog
 {
 public:
-    QPushButton *pushButton;
-    QWidget *layoutWidget;
+    QVBoxLayout *verticalLayout_2;
     QVBoxLayout *verticalLayout;
     QLabel *oopsLabel;
     QLabel *sendLabel;
+    QPushButton *pushButton;
 
     void setupUi(QDialog *FraudDialog)
     {
@@ -39,27 +38,31 @@ public:
         QIcon icon;
         icon.addFile(QString::fromUtf8("images/icon.png"), QSize(), QIcon::Normal, QIcon::Off);
         FraudDialog->setWindowIcon(icon);
-        pushButton = new QPushButton(FraudDialog);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(170, 130, 93, 28));
-        layoutWidget = new QWidget(FraudDialog);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 20, 411, 84));
-        verticalLayout = new QVBoxLayout(layoutWidget);
+        verticalLayout_2 = new QVBoxLayout(FraudDialog);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        oopsLabel = new QLabel(layoutWidget);
+        verticalLayout->setSizeConstraint(QLayout::SetFixedSize);
+        oopsLabel = new QLabel(FraudDialog);
         oopsLabel->setObjectName(QString::fromUtf8("oopsLabel"));
+        QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(oopsLabel->sizePolicy().hasHeightForWidth());
+        oopsLabel->setSizePolicy(sizePolicy);
+        oopsLabel->setMaximumSize(QSize(800, 16777215));
         QFont font;
         font.setPointSize(10);
         oopsLabel->setFont(font);
         oopsLabel->setAlignment(Qt::AlignCenter);
 
-        verticalLayout->addWidget(oopsLabel);
+        verticalLayout->addWidget(oopsLabel, 0, Qt::AlignHCenter);
 
-        sendLabel = new QLabel(layoutWidget);
+        sendLabel = new QLabel(FraudDialog);
         sendLabel->setObjectName(QString::fromUtf8("sendLabel"));
-        sendLabel->setMaximumSize(QSize(300, 16777215));
+        sizePolicy.setHeightForWidth(sendLabel->sizePolicy().hasHeightForWidth());
+        sendLabel->setSizePolicy(sizePolicy);
+        sendLabel->setMaximumSize(QSize(600, 16777215));
         sendLabel->setFont(font);
         sendLabel->setContextMenuPolicy(Qt::NoContextMenu);
         sendLabel->setAcceptDrops(false);
@@ -72,6 +75,17 @@ public:
         verticalLayout->addWidget(sendLabel, 0, Qt::AlignHCenter);
 
 
+        verticalLayout_2->addLayout(verticalLayout);
+
+        pushButton = new QPushButton(FraudDialog);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        sizePolicy.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
+        pushButton->setSizePolicy(sizePolicy);
+        pushButton->setMinimumSize(QSize(150, 0));
+
+        verticalLayout_2->addWidget(pushButton, 0, Qt::AlignHCenter);
+
+
         retranslateUi(FraudDialog);
         QObject::connect(pushButton, &QPushButton::clicked, FraudDialog, &QDialog::accept);
 
@@ -81,9 +95,9 @@ public:
     void retranslateUi(QDialog *FraudDialog)
     {
         FraudDialog->setWindowTitle(QCoreApplication::translate("FraudDialog", "Cheating Detected", nullptr));
-        pushButton->setText(QCoreApplication::translate("FraudDialog", "Ok", nullptr));
         oopsLabel->setText(QCoreApplication::translate("FraudDialog", "Oops! You clicked outside of the app window. :(", nullptr));
         sendLabel->setText(QCoreApplication::translate("FraudDialog", "Doing this while the quiz is running will stop the quiz and send the current results.", nullptr));
+        pushButton->setText(QCoreApplication::translate("FraudDialog", "Ok", nullptr));
     } // retranslateUi
 
 };

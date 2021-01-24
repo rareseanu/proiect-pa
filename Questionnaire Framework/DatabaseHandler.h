@@ -18,6 +18,6 @@ public:
 	__declspec(dllexport) bool IsConnected();
 
 private:
-	std::shared_ptr<PGconn> conn;
+	PGconn* conn;
 };
 

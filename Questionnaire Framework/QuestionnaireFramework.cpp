@@ -129,7 +129,7 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 			while (remainingNumberOfQuestions != 0) {
 				int tempRand = rand() % tempQuestions.size();
 				m_maximumMark += tempQuestions.at(tempRand).GetPoints();
-				m_selectedQuestions.get()->push_back(tempQuestions.at(tempRand));
+				m_selectedQuestions->push_back(tempQuestions.at(tempRand));
 				tempQuestions.erase(tempQuestions.begin() + tempRand);
 				--remainingNumberOfQuestions;
 			}
@@ -138,15 +138,15 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 		else { // Add the entire category when it has less questions than the necessary ammount.
 			for (auto question : tempQuestions) {
 				m_maximumMark += question.GetPoints();
-				m_selectedQuestions.get()->push_back(question);
+				m_selectedQuestions->push_back(question);
 			}
 		}
 	}
 	// Add randomly chosen questions from the unchosen ones if needed.
-	while (m_selectedQuestions.get()->size() < m_numberOfQuestionsNeeded) {
+	while (m_selectedQuestions->size() < m_numberOfQuestionsNeeded) {
 		int tempRand = rand() % unchosenQuestions.size();
 		m_maximumMark += unchosenQuestions.at(tempRand).GetPoints();
-		m_selectedQuestions.get()->push_back(unchosenQuestions.at(tempRand));
+		m_selectedQuestions->push_back(unchosenQuestions.at(tempRand));
 		unchosenQuestions.erase(unchosenQuestions.begin() + tempRand);
 	}
 }

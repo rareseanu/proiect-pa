@@ -80,9 +80,9 @@ HHOOK SetupGUIAnticheat(LPCWSTR windowTitle, std::wstring dllName, Questionnaire
 		return NULL;
 	}
 
-	std::function<void()> getMax = std::bind(&QuestionnaireFramework::SetCheatingDetected, quiz);
+	std::function<void()>* getMax = new std::function<void()>(std::bind(&QuestionnaireFramework::SetCheatingDetected, quiz));
 	void(*setQuiz)(std::function<void()>*) = (void(*)(std::function<void()>*))GetProcAddress(dll, "SetQuiz");
-	setQuiz(&getMax);
+	setQuiz(getMax);
 
 	HOOKPROC addr = (HOOKPROC)GetProcAddress(dll, "HookFunction");
 	if (addr == NULL) {

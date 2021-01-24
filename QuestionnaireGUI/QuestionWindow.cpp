@@ -66,7 +66,7 @@ void QuestionWindow::StopQuiz()
     m_quiz.SendResult("student", "nota", "time_end", "student_raspuns");
     m_quiz.StopTimer();
     if (m_quiz.GetWindowsHook() != NULL) {
-        UnhookWindowsHookEx(m_quiz.GetWindowsHook());
+       UnhookWindowsHookEx(m_quiz.GetWindowsHook());
     }
     this->hide();
     this->destroy();
@@ -74,6 +74,9 @@ void QuestionWindow::StopQuiz()
     sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
     sendDialogUi.actualMarkLabel->setText(QString::fromStdString(std::to_string(m_quiz.GetFinalGrade())));
     sendDialog.show();
+    if (m_quiz.CheatingDetected()) {
+        fraudDialog.show();
+    }
 }
 
 void QuestionWindow::CreateAnswerFrame(Question question)
@@ -214,7 +217,6 @@ void QuestionWindow::ShowTimeLeft()
     ui.timeLabel->setText(QString::fromStdString(stringStream.str()));
     if (m_quiz.CheatingDetected()) {
         ForceStop();
-        fraudDialog.show();
     }
     if (!m_quiz.CanAnswer()) {
         timer.stop();
