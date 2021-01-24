@@ -1,0 +1,8 @@
+[24-04-2021 17:56:28] [WARNING] Question has no answers: Test no answers
+[24-04-2021 17:56:28] [WARNING] Answer aleady existent: 3
+[24-04-2021 17:56:49] [INFO]    User answered 'ab' to question ID 1
+[24-04-2021 17:56:52] [INFO]    User answered 'da' to question ID 4
+[24-04-2021 17:57:09] [INFO]    User answered 'a' to question ID 0
+[24-04-2021 17:57:13] [INFO]    User answered 'a' to question ID 2
+[24-04-2021 17:57:20] [INFO]    Timer stopped. Remaining time: 3632
+[24-04-2021 17:57:20] [INFO]    m_quiz finished. Final grade: 7.134671

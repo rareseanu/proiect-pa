@@ -1,5 +1,8 @@
 #include "QuestionWindow.h"
 #include <QtWidgets/QMessageBox>
+#include <chrono>
+#include <ctime>
+#include <time.h>
 
 QuestionWindow::QuestionWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -73,6 +76,11 @@ void QuestionWindow::StopQuiz()
     Ui::SendDialog sendDialogUi = sendDialog.GetUi();
     sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
     sendDialogUi.actualMarkLabel->setText(QString::fromStdString(std::to_string(m_quiz.GetFinalGrade())));
+    std::time_t now = std::time(NULL);
+    std::tm* ptm = std::localtime(&now);
+    char stopTime[32];
+    std::strftime(stopTime, 32, "%H:%M:%S", ptm);
+    sendDialogUi.time2Label->setText(QString::fromStdString(stopTime));
     sendDialog.show();
     if (m_quiz.CheatingDetected()) {
         fraudDialog.show();

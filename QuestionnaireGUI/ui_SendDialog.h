@@ -34,9 +34,13 @@ public:
     QVBoxLayout *verticalLayout;
     QLabel *studentLabel;
     QLabel *markLabel;
+    QLabel *timerStartedLabel;
+    QLabel *timerStoppedLabel;
     QVBoxLayout *verticalLayout_2;
     QLabel *nameLabel;
     QLabel *actualMarkLabel;
+    QLabel *time1Label;
+    QLabel *time2Label;
 
     void setupUi(QDialog *SendDialog)
     {
@@ -62,7 +66,7 @@ public:
         label->setPixmap(QPixmap(QString::fromUtf8("images/UNITBV_MI_logo.png")));
         layoutWidget = new QWidget(SendDialog);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(130, 140, 381, 98));
+        layoutWidget->setGeometry(QRect(130, 120, 381, 154));
         verticalLayout_3 = new QVBoxLayout(layoutWidget);
         verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
         verticalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -94,6 +98,16 @@ public:
 
         verticalLayout->addWidget(markLabel);
 
+        timerStartedLabel = new QLabel(layoutWidget);
+        timerStartedLabel->setObjectName(QString::fromUtf8("timerStartedLabel"));
+
+        verticalLayout->addWidget(timerStartedLabel);
+
+        timerStoppedLabel = new QLabel(layoutWidget);
+        timerStoppedLabel->setObjectName(QString::fromUtf8("timerStoppedLabel"));
+
+        verticalLayout->addWidget(timerStoppedLabel);
+
 
         horizontalLayout->addLayout(verticalLayout);
 
@@ -112,6 +126,16 @@ public:
         actualMarkLabel->setAlignment(Qt::AlignCenter);
 
         verticalLayout_2->addWidget(actualMarkLabel);
+
+        time1Label = new QLabel(layoutWidget);
+        time1Label->setObjectName(QString::fromUtf8("time1Label"));
+
+        verticalLayout_2->addWidget(time1Label);
+
+        time2Label = new QLabel(layoutWidget);
+        time2Label->setObjectName(QString::fromUtf8("time2Label"));
+
+        verticalLayout_2->addWidget(time2Label);
 
 
         horizontalLayout->addLayout(verticalLayout_2);
@@ -135,8 +159,12 @@ public:
         whereLabel->setText(QCoreApplication::translate("SendDialog", "The results were sent into the database.", nullptr));
         studentLabel->setText(QCoreApplication::translate("SendDialog", "Student:", nullptr));
         markLabel->setText(QCoreApplication::translate("SendDialog", "Mark:", nullptr));
+        timerStartedLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Timer started at:</span></p></body></html>", nullptr));
+        timerStoppedLabel->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Timer stopped at:</span></p></body></html>", nullptr));
         nameLabel->setText(QCoreApplication::translate("SendDialog", "[name]", nullptr));
         actualMarkLabel->setText(QCoreApplication::translate("SendDialog", "[mark]", nullptr));
+        time1Label->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">[time1]</span></p></body></html>", nullptr));
+        time2Label->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">[time2]</span></p></body></html>", nullptr));
     } // retranslateUi
 
 };
