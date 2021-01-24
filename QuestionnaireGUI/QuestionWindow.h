@@ -28,6 +28,7 @@ public:
     void ShowTimeLeft();
     void ResetAnswerFrame();
     void ShowQuestion(int questionNumber);
+    void LaunchCalculatorButtonClicked();
     Ui::QuestionWindow GetUi();
 
 signals:

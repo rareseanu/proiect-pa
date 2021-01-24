@@ -31,6 +31,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     connect(ui.backButton, &QPushButton::clicked, this, &QuestionWindow::BackButtonClicked);
     connect(ui.clearButton, &QPushButton::clicked, this, &QuestionWindow::ClearButtonClicked);
     connect(ui.finishButton, &QPushButton::clicked, this, &QuestionWindow::FinishButtonClicked);
+    connect(ui.calculatorButton, &QPushButton::clicked, this, &QuestionWindow::LaunchCalculatorButtonClicked);
 }
 
 void QuestionWindow::closeEvent(QCloseEvent* event)
@@ -265,6 +266,12 @@ void QuestionWindow::ShowQuestion(int questionNumber)
     QString questionText = QString::fromStdString(m_selectedQuestions->at(questionNumber).GetText());
     ui.questionLabel->setText(questionText);
     CreateAnswerFrame(m_selectedQuestions->at(questionNumber));
+}
+
+void QuestionWindow::LaunchCalculatorButtonClicked()
+{
+    QProcess *process = new QProcess(this);
+    process->start("C:\\Windows\\SysWOW64\\calc.exe");
 }
 
 Ui::QuestionWindow QuestionWindow::GetUi()
