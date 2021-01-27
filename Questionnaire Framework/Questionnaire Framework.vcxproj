@@ -164,6 +164,7 @@
   <ItemGroup>
     <ClInclude Include="Answer.h" />
     <ClInclude Include="DatabaseHandler.h" />
+    <ClInclude Include="Handler.v2.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Question.h" />
     <ClInclude Include="QuestionnaireFramework.h" />
