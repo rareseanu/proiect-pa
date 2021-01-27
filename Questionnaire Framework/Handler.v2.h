@@ -29,6 +29,27 @@ int main()
 
     if (SQL_SUCCESS != SQLAllocHandle(SQL_HANDLE_DBC, sqlEnvHandle, &sqlConnHandle))
         goto COMPLETED;
+
+    switch (SQLDriverConnect(sqlConnHandle,
+        NULL,
+        (SQLWCHAR*)L"DRIVER={SQL Server};SERVER=localhost, 1433;DATABASE=master;Trusted=true;",
+        SQL_NTS,
+        retconstring,
+        1024,
+        NULL,
+        SQL_DRIVER_NOPROMPT)) {
+    case SQL_SUCCESS:
+        cout << "Successfully connected to SQL Server";
+        cout << "\n";
+        break;
+    case SQL_SUCCESS_WITH_INFO:
+        cout << "Successfully connected to SQL Server";
+        cout << "\n";
+        break;
+    default:
+        break;
+    }
+
 COMPLETED:
     SQLFreeHandle(SQL_HANDLE_STMT, sqlStmtHandle);
     SQLDisconnect(sqlConnHandle);
