@@ -30,6 +30,9 @@ int main()
     if (SQL_SUCCESS != SQLAllocHandle(SQL_HANDLE_DBC, sqlEnvHandle, &sqlConnHandle))
         goto COMPLETED;
 
+    cout << "Attempting connection to SQL Server...";
+    cout << "\n";
+
     switch (SQLDriverConnect(sqlConnHandle,
         NULL,
         (SQLWCHAR*)L"DRIVER={SQL Server};SERVER=localhost, 1433;DATABASE=master;Trusted=true;",
@@ -46,6 +49,15 @@ int main()
         cout << "Successfully connected to SQL Server";
         cout << "\n";
         break;
+    case SQL_INVALID_HANDLE:
+        cout << "Could not connect to SQL Server";
+        cout << "\n";
+        goto COMPLETED;
+    case SQL_ERROR:
+        cout << "Could not connect to SQL Server";
+        cout << "\n";
+        goto COMPLETED;
+
     default:
         break;
     }
