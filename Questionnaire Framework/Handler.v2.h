@@ -69,6 +69,26 @@ int main()
     cout << "Executing T-SQL query...";
     cout << "\n";
 
+    if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLWCHAR*)L"SELECT @@VERSION", SQL_NTS))
+    {
+        cout << "Error querying SQL Server";
+        cout << "\n";
+        goto COMPLETED;
+    }
+    else 
+    {
+        SQLCHAR sqlVersion[SQL_RESULT_LEN];
+        SQLINTEGER ptrSqlVersion;
+
+        while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
+        {
+            SQLGetData(sqlStmtHandle, 1, SQL_CHAR, sqlVersion, SQL_RESULT_LEN, &ptrSqlVersion);
+
+            cout << "\nQuery Result:\n\n";
+            cout << sqlVersion << endl;
+        }
+    }
+
 COMPLETED:
     SQLFreeHandle(SQL_HANDLE_STMT, sqlStmtHandle);
     SQLDisconnect(sqlConnHandle);
