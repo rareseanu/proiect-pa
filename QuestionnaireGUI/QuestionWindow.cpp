@@ -27,6 +27,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     m_selectedQuestions = m_quiz.GetSelectedQuestions();
     ui.backButton->setEnabled(false);
     connect(this, &QuestionWindow::WindowClosed, this, &QuestionWindow::FinishButtonClicked);
+    connect(ui.helpButton, &QPushButton::clicked, this, &QuestionWindow::HelpButtonClicked);
     connect(ui.nextButton, &QPushButton::clicked, this, &QuestionWindow::NextButtonClicked);
     connect(ui.backButton, &QPushButton::clicked, this, &QuestionWindow::BackButtonClicked);
     connect(ui.clearButton, &QPushButton::clicked, this, &QuestionWindow::ClearButtonClicked);
@@ -135,6 +136,11 @@ void QuestionWindow::CreateAnswerFrame(Question question)
         textAnswer->setObjectName(QString::fromStdString("textAnswer"));
         ((QGridLayout*)ui.answerChoiceBox->layout())->addWidget(textAnswer, 0, 0);
     }
+}
+
+void QuestionWindow::HelpButtonClicked()
+{
+    helpDialog.exec();
 }
 
 void QuestionWindow::NextButtonClicked()

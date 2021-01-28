@@ -10,6 +10,7 @@
 #define UI_HELPDIALOG_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QLabel>
@@ -38,6 +39,9 @@ public:
         HelpDialog->resize(550, 500);
         HelpDialog->setMinimumSize(QSize(550, 500));
         HelpDialog->setMaximumSize(QSize(550, 500));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("images/help.png"), QSize(), QIcon::Normal, QIcon::Off);
+        HelpDialog->setWindowIcon(icon);
         calculatorIconLabel = new QLabel(HelpDialog);
         calculatorIconLabel->setObjectName(QString::fromUtf8("calculatorIconLabel"));
         calculatorIconLabel->setGeometry(QRect(170, 120, 41, 39));
@@ -90,7 +94,7 @@ public:
 
     void retranslateUi(QDialog *HelpDialog)
     {
-        HelpDialog->setWindowTitle(QCoreApplication::translate("HelpDialog", "Dialog", nullptr));
+        HelpDialog->setWindowTitle(QCoreApplication::translate("HelpDialog", "Help", nullptr));
         calculatorIconLabel->setText(QString());
         calculatorInfoLabel->setText(QCoreApplication::translate("HelpDialog", "<html><head/><body><p><span style=\" font-size:10pt;\">- launches a calculator.</span></p></body></html>", nullptr));
         previousIconLabel->setText(QString());

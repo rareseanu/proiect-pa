@@ -1,6 +1,7 @@
 #pragma once
 #include <QtWidgets/QMainWindow>
 #include "ui_QuestionForm.h"
+#include "HelpDialog.h"
 #include "FinishDialog.h"
 #include "StartWindow.h"
 #include "SendDialog.h"
@@ -18,6 +19,7 @@ public:
     void StartQuiz();
     void StopQuiz();
     void CreateAnswerFrame(Question question);
+    void HelpButtonClicked();
     void NextButtonClicked();
     void BackButtonClicked();
     void FinishButtonClicked();
@@ -36,6 +38,7 @@ signals:
  
 private:
     Ui::QuestionWindow ui;
+    HelpDialog helpDialog;
     FinishDialog finishDialog;
     StartWindow startWindow=StartWindow(this);
     SendDialog sendDialog;

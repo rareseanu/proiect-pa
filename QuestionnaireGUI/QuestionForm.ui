@@ -54,35 +54,123 @@
       <x>20</x>
       <y>660</y>
       <width>1241</width>
-      <height>31</height>
+      <height>51</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QPushButton" name="backButton">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="text">
-        <string>Back</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/backButton.png</normaloff>images/backButton.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="clearButton">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="text">
-        <string>Clear Choice</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/clearButton.png</normaloff>images/clearButton.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="nextButton">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="text">
-        <string>Next</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/nextButton.png</normaloff>images/nextButton.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QPushButton" name="finishButton">
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
+       </property>
        <property name="text">
-        <string>Finish Quiz</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>images/finishButton.png</normaloff>images/finishButton.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>40</width>
+         <height>40</height>
+        </size>
        </property>
       </widget>
      </item>
@@ -312,7 +400,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="helpButton">
          <property name="minimumSize">
           <size>
            <width>45</width>
@@ -364,9 +452,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>helpButton</sender>
+   <signal>clicked()</signal>
+   <receiver>QuestionWindow</receiver>
+   <slot>HelpButtonClicked()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1244</x>
+     <y>47</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1267</x>
+     <y>85</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <signal>si()</signal>
   <slot>LaunchCalculatorButtonClicked()</slot>
+  <slot>HelpButtonClicked()</slot>
  </slots>
 </ui>

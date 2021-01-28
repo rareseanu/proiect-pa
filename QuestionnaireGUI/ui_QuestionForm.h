@@ -49,7 +49,7 @@ public:
     QLabel *questionNumberLabel;
     QLabel *timeLabel;
     QPushButton *calculatorButton;
-    QPushButton *pushButton;
+    QPushButton *helpButton;
 
     void setupUi(QMainWindow *QuestionWindow)
     {
@@ -72,27 +72,51 @@ public:
         centralwidget->setMaximumSize(QSize(1280, 720));
         layoutWidget = new QWidget(centralwidget);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(20, 660, 1241, 31));
+        layoutWidget->setGeometry(QRect(20, 660, 1241, 51));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
         backButton = new QPushButton(layoutWidget);
         backButton->setObjectName(QString::fromUtf8("backButton"));
+        backButton->setMinimumSize(QSize(40, 40));
+        backButton->setMaximumSize(QSize(40, 40));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8("images/backButton.png"), QSize(), QIcon::Normal, QIcon::Off);
+        backButton->setIcon(icon1);
+        backButton->setIconSize(QSize(40, 40));
 
         horizontalLayout->addWidget(backButton);
 
         clearButton = new QPushButton(layoutWidget);
         clearButton->setObjectName(QString::fromUtf8("clearButton"));
+        clearButton->setMinimumSize(QSize(40, 40));
+        clearButton->setMaximumSize(QSize(40, 40));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8("images/clearButton.png"), QSize(), QIcon::Normal, QIcon::Off);
+        clearButton->setIcon(icon2);
+        clearButton->setIconSize(QSize(40, 40));
 
         horizontalLayout->addWidget(clearButton);
 
         nextButton = new QPushButton(layoutWidget);
         nextButton->setObjectName(QString::fromUtf8("nextButton"));
+        nextButton->setMinimumSize(QSize(40, 40));
+        nextButton->setMaximumSize(QSize(40, 40));
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8("images/nextButton.png"), QSize(), QIcon::Normal, QIcon::Off);
+        nextButton->setIcon(icon3);
+        nextButton->setIconSize(QSize(40, 40));
 
         horizontalLayout->addWidget(nextButton);
 
         finishButton = new QPushButton(layoutWidget);
         finishButton->setObjectName(QString::fromUtf8("finishButton"));
+        finishButton->setMinimumSize(QSize(40, 40));
+        finishButton->setMaximumSize(QSize(40, 40));
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8("images/finishButton.png"), QSize(), QIcon::Normal, QIcon::Off);
+        finishButton->setIcon(icon4);
+        finishButton->setIconSize(QSize(40, 40));
 
         horizontalLayout->addWidget(finishButton);
 
@@ -194,23 +218,23 @@ public:
         calculatorButton->setObjectName(QString::fromUtf8("calculatorButton"));
         calculatorButton->setMinimumSize(QSize(39, 50));
         calculatorButton->setMaximumSize(QSize(39, 50));
-        QIcon icon1;
-        icon1.addFile(QString::fromUtf8("images/calculator.png"), QSize(), QIcon::Normal, QIcon::Off);
-        calculatorButton->setIcon(icon1);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8("images/calculator.png"), QSize(), QIcon::Normal, QIcon::Off);
+        calculatorButton->setIcon(icon5);
         calculatorButton->setIconSize(QSize(50, 49));
 
         horizontalLayout_2->addWidget(calculatorButton);
 
-        pushButton = new QPushButton(layoutWidget2);
-        pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setMinimumSize(QSize(45, 45));
-        pushButton->setMaximumSize(QSize(45, 45));
-        QIcon icon2;
-        icon2.addFile(QString::fromUtf8("images/help.png"), QSize(), QIcon::Normal, QIcon::Off);
-        pushButton->setIcon(icon2);
-        pushButton->setIconSize(QSize(45, 45));
+        helpButton = new QPushButton(layoutWidget2);
+        helpButton->setObjectName(QString::fromUtf8("helpButton"));
+        helpButton->setMinimumSize(QSize(45, 45));
+        helpButton->setMaximumSize(QSize(45, 45));
+        QIcon icon6;
+        icon6.addFile(QString::fromUtf8("images/help.png"), QSize(), QIcon::Normal, QIcon::Off);
+        helpButton->setIcon(icon6);
+        helpButton->setIconSize(QSize(45, 45));
 
-        horizontalLayout_2->addWidget(pushButton);
+        horizontalLayout_2->addWidget(helpButton);
 
 
         horizontalLayout_3->addLayout(horizontalLayout_2);
@@ -219,6 +243,7 @@ public:
 
         retranslateUi(QuestionWindow);
         QObject::connect(calculatorButton, SIGNAL(clicked()), QuestionWindow, SLOT(LaunchCalculatorButtonClicked()));
+        QObject::connect(helpButton, SIGNAL(clicked()), QuestionWindow, SLOT(HelpButtonClicked()));
 
         QMetaObject::connectSlotsByName(QuestionWindow);
     } // setupUi
@@ -226,10 +251,10 @@ public:
     void retranslateUi(QMainWindow *QuestionWindow)
     {
         QuestionWindow->setWindowTitle(QCoreApplication::translate("QuestionWindow", "Questionnaire", nullptr));
-        backButton->setText(QCoreApplication::translate("QuestionWindow", "Back", nullptr));
-        clearButton->setText(QCoreApplication::translate("QuestionWindow", "Clear Choice", nullptr));
-        nextButton->setText(QCoreApplication::translate("QuestionWindow", "Next", nullptr));
-        finishButton->setText(QCoreApplication::translate("QuestionWindow", "Finish Quiz", nullptr));
+        backButton->setText(QString());
+        clearButton->setText(QString());
+        nextButton->setText(QString());
+        finishButton->setText(QString());
         questionLabel->setText(QCoreApplication::translate("QuestionWindow", "Question", nullptr));
         answerChoiceBox->setTitle(QCoreApplication::translate("QuestionWindow", "Choices", nullptr));
         unitbvLogo->setText(QString());
@@ -239,7 +264,7 @@ public:
         questionNumberLabel->setText(QCoreApplication::translate("QuestionWindow", "Question: 0/?", nullptr));
         timeLabel->setText(QCoreApplication::translate("QuestionWindow", "Time left: ?", nullptr));
         calculatorButton->setText(QString());
-        pushButton->setText(QString());
+        helpButton->setText(QString());
     } // retranslateUi
 
 };
