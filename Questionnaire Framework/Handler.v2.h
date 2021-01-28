@@ -62,6 +62,13 @@ int main()
         break;
     }
 
+    if (SQL_SUCCESS != SQLAllocHandle(SQL_HANDLE_STMT, sqlConnHandle, &sqlStmtHandle))
+        goto COMPLETED;
+
+    cout << "\n";
+    cout << "Executing T-SQL query...";
+    cout << "\n";
+
 COMPLETED:
     SQLFreeHandle(SQL_HANDLE_STMT, sqlStmtHandle);
     SQLDisconnect(sqlConnHandle);
