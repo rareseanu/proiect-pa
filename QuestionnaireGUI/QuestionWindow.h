@@ -46,6 +46,7 @@ private:
     QuestionnaireFramework m_quiz = QuestionnaireFramework(true, false);
     std::shared_ptr<std::vector<Question>> m_selectedQuestions;
     FraudDialog fraudDialog;
+    bool calculatorOpened;
     char startTime[32];
     char stopTime[32];
 };

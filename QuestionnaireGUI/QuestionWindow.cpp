@@ -32,6 +32,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     connect(ui.clearButton, &QPushButton::clicked, this, &QuestionWindow::ClearButtonClicked);
     connect(ui.finishButton, &QPushButton::clicked, this, &QuestionWindow::FinishButtonClicked);
     connect(ui.calculatorButton, &QPushButton::clicked, this, &QuestionWindow::LaunchCalculatorButtonClicked);
+    calculatorOpened = false;
 }
 
 void QuestionWindow::closeEvent(QCloseEvent* event)
@@ -270,8 +271,12 @@ void QuestionWindow::ShowQuestion(int questionNumber)
 
 void QuestionWindow::LaunchCalculatorButtonClicked()
 {
-    QProcess *process = new QProcess(this);
+    QProcess* process = new QProcess(this);
     process->start("C:\\Windows\\SysWOW64\\calc.exe");
+    if (!calculatorOpened)
+    {
+        calculatorOpened = true;
+    }
 }
 
 Ui::QuestionWindow QuestionWindow::GetUi()

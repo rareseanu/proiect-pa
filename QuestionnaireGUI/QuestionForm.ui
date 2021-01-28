@@ -147,13 +147,13 @@
      </property>
     </layout>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>20</y>
       <width>1241</width>
-      <height>52</height>
+      <height>63</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -284,8 +284,30 @@
        </item>
        <item>
         <widget class="QPushButton" name="calculatorButton">
+         <property name="minimumSize">
+          <size>
+           <width>39</width>
+           <height>50</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>39</width>
+           <height>50</height>
+          </size>
+         </property>
          <property name="text">
-          <string>Launch Calculator</string>
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>images/calculator.png</normaloff>images/calculator.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>50</width>
+           <height>49</height>
+          </size>
          </property>
         </widget>
        </item>
