@@ -49,6 +49,7 @@ public:
     QLabel *questionNumberLabel;
     QLabel *timeLabel;
     QPushButton *calculatorButton;
+    QPushButton *pushButton;
 
     void setupUi(QMainWindow *QuestionWindow)
     {
@@ -200,6 +201,17 @@ public:
 
         horizontalLayout_2->addWidget(calculatorButton);
 
+        pushButton = new QPushButton(layoutWidget2);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setMinimumSize(QSize(45, 45));
+        pushButton->setMaximumSize(QSize(45, 45));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8("images/help.png"), QSize(), QIcon::Normal, QIcon::Off);
+        pushButton->setIcon(icon2);
+        pushButton->setIconSize(QSize(45, 45));
+
+        horizontalLayout_2->addWidget(pushButton);
+
 
         horizontalLayout_3->addLayout(horizontalLayout_2);
 
@@ -227,6 +239,7 @@ public:
         questionNumberLabel->setText(QCoreApplication::translate("QuestionWindow", "Question: 0/?", nullptr));
         timeLabel->setText(QCoreApplication::translate("QuestionWindow", "Time left: ?", nullptr));
         calculatorButton->setText(QString());
+        pushButton->setText(QString());
     } // retranslateUi
 
 };

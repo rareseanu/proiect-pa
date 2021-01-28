@@ -41,6 +41,11 @@ public:
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         label = new QLabel(EmptyNameDialog);
         label->setObjectName(QString::fromUtf8("label"));
+        QFont font;
+        font.setPointSize(12);
+        label->setFont(font);
+        label->setAlignment(Qt::AlignCenter);
+        label->setWordWrap(true);
 
         gridLayout->addWidget(label, 0, 0, 1, 1);
 
@@ -51,6 +56,7 @@ public:
 
 
         retranslateUi(EmptyNameDialog);
+        QObject::connect(pushButton, &QPushButton::clicked, EmptyNameDialog, &QDialog::accept);
 
         QMetaObject::connectSlotsByName(EmptyNameDialog);
     } // setupUi
@@ -58,7 +64,7 @@ public:
     void retranslateUi(QDialog *EmptyNameDialog)
     {
         EmptyNameDialog->setWindowTitle(QCoreApplication::translate("EmptyNameDialog", "Enter Name", nullptr));
-        label->setText(QCoreApplication::translate("EmptyNameDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">You must enter your full name </span></p><p align=\"center\"><span style=\" font-size:12pt;\">before starting the quiz.</span></p></body></html>", nullptr));
+        label->setText(QCoreApplication::translate("EmptyNameDialog", "You must enter your full name                            before starting the quiz.", nullptr));
         pushButton->setText(QCoreApplication::translate("EmptyNameDialog", "Ok", nullptr));
     } // retranslateUi
 

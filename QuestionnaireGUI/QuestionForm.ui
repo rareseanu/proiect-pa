@@ -311,6 +311,35 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="minimumSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset>
+           <normaloff>images/help.png</normaloff>images/help.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>45</width>
+           <height>45</height>
+          </size>
+         </property>
+        </widget>
+       </item>
       </layout>
      </item>
     </layout>
@@ -326,8 +355,8 @@
    <slot>LaunchCalculatorButtonClicked()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1144</x>
-     <y>34</y>
+     <x>1206</x>
+     <y>40</y>
     </hint>
     <hint type="destinationlabel">
      <x>1099</x>

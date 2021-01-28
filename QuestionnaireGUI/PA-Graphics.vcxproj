@@ -195,6 +195,7 @@
     <ClCompile Include="EmptyNameDialog.cpp" />
     <ClCompile Include="FinishDialog.cpp" />
     <ClCompile Include="FraudDialog.cpp" />
+    <ClCompile Include="HelpDialog.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="QuestionWindow.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
@@ -227,6 +228,7 @@
     <QtUic Include="EmptyNameDialog.ui" />
     <QtUic Include="FinishDialog.ui" />
     <QtUic Include="FraudDialog.ui" />
+    <QtUic Include="HelpDialog.ui" />
     <QtUic Include="QuestionForm.ui" />
     <QtUic Include="SendDialog.ui" />
     <QtUic Include="StartWindow.ui" />
@@ -248,6 +250,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="EmptyNameDialog.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="HelpDialog.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
