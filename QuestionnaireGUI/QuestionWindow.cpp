@@ -59,8 +59,13 @@ void QuestionWindow::StartQuiz()
     connect(&timer, &QTimer::timeout, this, &QuestionWindow::ShowTimeLeft);
     timer.start(0);
     std::time_t now = std::time(NULL);
-    std::tm* ptm_start = std::localtime(&now);
-    std::strftime(startTime, 32, "%H:%M:%S", ptm_start);
+    std::tm ptm = *std::localtime(&now);
+    std::stringstream stream;
+    stream << std::setfill('0') << std::setw(2) << std::to_string(ptm.tm_hour) << ":" 
+            << std::setw(2) << std::to_string(ptm.tm_min) << ":" 
+            << std::setw(2) << std::to_string(ptm.tm_sec);
+    std::setfill(' ');
+    startTime = stream.str();
     ShowQuestion(currentQuestion);
 }
 
@@ -85,8 +90,13 @@ void QuestionWindow::StopQuiz()
     sendDialogUi.time1Label->setText(QString::fromStdString(startTime));
 
     std::time_t now = std::time(NULL);
-    std::tm* ptm = std::localtime(&now);
-    std::strftime(stopTime, 32, "%H:%M:%S", ptm);
+    std::tm ptm = *std::localtime(&now);
+    std::stringstream stream;
+    stream << std::setfill('0') << std::setw(2) << std::to_string(ptm.tm_hour) << ":" 
+            << std::setw(2) << std::to_string(ptm.tm_min) << ":" 
+            << std::setw(2) << std::to_string(ptm.tm_sec);
+    std::setfill(' ');
+    stopTime = stream.str();
     sendDialogUi.time2Label->setText(QString::fromStdString(stopTime));
 
     QFont font = sendDialogUi.time2Label->font();
@@ -240,8 +250,9 @@ void QuestionWindow::ShowTimeLeft()
     int hours = (m_quiz.GetTimer().GetTimeLeft() / 60 / 60) % 24;
     std::stringstream stringStream;
     stringStream << "Time left: " << std::setw(2) << std::setfill('0') << hours
-        << ":" << std::setw(2) << std::setfill('0') << minutes
+        << ":" << std::setw(2) << minutes
         << ":" << std::setw(2) << seconds << '\n';
+    std::setfill(' ');
     ui.timeLabel->setText(QString::fromStdString(stringStream.str()));
     if (m_quiz.CheatingDetected()) {
         ForceStop();
@@ -269,7 +280,9 @@ void QuestionWindow::ResetAnswerFrame()
 void QuestionWindow::ShowQuestion(int questionNumber)
 {
     std::string textCurrentQuestion = "Question: " + std::to_string(questionNumber+1) + "/" + std::to_string(m_selectedQuestions->size());
+    std::string categoryText = "Category: " + m_selectedQuestions->at(questionNumber).GetCategory();
     ui.questionNumberLabel->setText(QString::fromStdString(textCurrentQuestion));
+    ui.categoryLabel->setText(QString::fromStdString(categoryText));
     QString questionText = QString::fromStdString(m_selectedQuestions->at(questionNumber).GetText());
     ui.questionLabel->setText(questionText);
     CreateAnswerFrame(m_selectedQuestions->at(questionNumber));

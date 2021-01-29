@@ -50,6 +50,6 @@ private:
     std::shared_ptr<std::vector<Question>> m_selectedQuestions;
     FraudDialog fraudDialog;
     bool calculatorOpened;
-    char startTime[32];
-    char stopTime[32];
+    std::string startTime;
+    std::string stopTime;
 };
