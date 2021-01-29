@@ -22,13 +22,19 @@ int main()
     sqlStmtHandle = NULL;
 
     if (SQL_SUCCESS != SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &sqlEnvHandle))
+    {
         goto COMPLETED;
+    }
 
     if (SQL_SUCCESS != SQLSetEnvAttr(sqlEnvHandle, SQL_ATTR_ODBC_VERSION, (SQLPOINTER)SQL_OV_ODBC3, 0))
+    {
         goto COMPLETED;
+    }
 
     if (SQL_SUCCESS != SQLAllocHandle(SQL_HANDLE_DBC, sqlEnvHandle, &sqlConnHandle))
+    {
         goto COMPLETED;
+    }
 
     cout << "Attempting connection to SQL Server...";
     cout << "\n";
@@ -94,4 +100,7 @@ COMPLETED:
     SQLDisconnect(sqlConnHandle);
     SQLFreeHandle(SQL_HANDLE_DBC, sqlConnHandle);
     SQLFreeHandle(SQL_HANDLE_ENV, sqlEnvHandle);
+
+    cout << "\nPress any key to exit...";
+    getchar();
 }   
