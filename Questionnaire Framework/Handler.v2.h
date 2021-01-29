@@ -22,6 +22,18 @@ int main()
     {
         cout << DAM << ": Successfully connected to database. Data source name:\n  "
             << pConn->GetConnectionString() << endl;
+
+        _bstr_t query = "SELECT Customers.[Company], Customers.[First Name] FROM "
+            "Customers;";
+        cout << DAM << ": SQL query \n  " << query << endl;
+
+        // Execute
+        ADODB::_RecordsetPtr pRS("ADODB.Recordset");
+        hr = pRS->Open(query,
+            _variant_t((IDispatch*)pConn, true),
+            ADODB::adOpenUnspecified,
+            ADODB::adLockUnspecified,
+            ADODB::adCmdText);
     }
     else
     {
