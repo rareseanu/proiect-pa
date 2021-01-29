@@ -1,5 +1,6 @@
 #pragma once
 #include "QuestionnaireFramework.h"
+#include <optional>
 
 class TerminalQuestionnaire
 {
@@ -13,7 +14,7 @@ public:
 	void PrintTimeLeft() const;
 	void PrintResults() const;
 private:
-	QuestionnaireFramework m_quiz = QuestionnaireFramework(true, true, true);
+	QuestionnaireFramework m_quiz = QuestionnaireFramework(10, true, true, true);
 	std::shared_ptr<std::vector<Question>> m_selectedQuestions;
 };
 

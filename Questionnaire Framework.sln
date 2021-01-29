@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Questionnaire Framework", "
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WindowsHooking", "WindowsHooking\WindowsHooking.vcxproj", "{907CA158-5461-44C8-B451-A5E2F1811896}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "QuestionnaireFrameworkTests", "QuestionnaireFrameworkTest\QuestionnaireFrameworkTest.vcxproj", "{51117757-59FB-4C43-AD75-066035744C6F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{907CA158-5461-44C8-B451-A5E2F1811896}.Release|x64.Build.0 = Release|x64
 		{907CA158-5461-44C8-B451-A5E2F1811896}.Release|x86.ActiveCfg = Release|Win32
 		{907CA158-5461-44C8-B451-A5E2F1811896}.Release|x86.Build.0 = Release|Win32
+		{51117757-59FB-4C43-AD75-066035744C6F}.Debug|x64.ActiveCfg = Debug|x64
+		{51117757-59FB-4C43-AD75-066035744C6F}.Debug|x64.Build.0 = Debug|x64
+		{51117757-59FB-4C43-AD75-066035744C6F}.Debug|x86.ActiveCfg = Debug|Win32
+		{51117757-59FB-4C43-AD75-066035744C6F}.Debug|x86.Build.0 = Debug|Win32
+		{51117757-59FB-4C43-AD75-066035744C6F}.Release|x64.ActiveCfg = Release|x64
+		{51117757-59FB-4C43-AD75-066035744C6F}.Release|x64.Build.0 = Release|x64
+		{51117757-59FB-4C43-AD75-066035744C6F}.Release|x86.ActiveCfg = Release|Win32
+		{51117757-59FB-4C43-AD75-066035744C6F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

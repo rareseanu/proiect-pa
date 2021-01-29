@@ -4,15 +4,17 @@
 #include <thread>
 #include "Logger.h"
 
-QuestionnaireFramework::QuestionnaireFramework(bool anticheatingEnabled, bool isConsole, bool loggerEnabled) {
+QuestionnaireFramework::QuestionnaireFramework(int defaultGrade, bool anticheatingEnabled, bool isConsole, bool loggerEnabled)
+	: m_isConsole(isConsole), m_defaultGrade(defaultGrade)
+{
 	if (loggerEnabled) {
 		Logger::ActivateLogger();
 	}
-	m_isConsole = isConsole;
 }
 
 void QuestionnaireFramework::LoadQuestions() {
-	std::string command = "select "+m_qIdColumn+","+ m_qTextColumn + "," + m_qPointsColumn + "," + m_qCategoryColumn + "," + m_qQuestionTypeColumn + " from " + m_qTable +";";
+	std::string command = "select "+m_qIdColumn+","+ m_qTextColumn + "," + m_qPointsColumn 
+		+ "," + m_qCategoryColumn + "," + m_qQuestionTypeColumn + " from " + m_qTable +";";
 	for (auto questionRow : dh->GetTableFromCommand(command)) {
 		int id = std::stoi(questionRow[0]);
 		std::string text = questionRow[1];
@@ -26,7 +28,8 @@ void QuestionnaireFramework::LoadQuestions() {
 			LOG_ERROR(error);
 			questionType = Question::QuestionType::Multichoice;
 		}
-		command = "select " + m_aIdColumn + "," + m_aTextColumn + "," + m_aPercentageColumn + " from " + m_aTable + " where " + m_aQuestionId +" = " + std::to_string(id) + ";";
+		command = "select " + m_aIdColumn + "," + m_aTextColumn + "," + m_aPercentageColumn 
+			+ " from " + m_aTable + " where " + m_aQuestionId +" = " + std::to_string(id) + ";";
 		std::vector<std::vector<std::string>> answerTable = dh->GetTableFromCommand(command);
 		std::vector<Answer> answers;
 
@@ -34,7 +37,8 @@ void QuestionnaireFramework::LoadQuestions() {
 			int id = std::stoi(answerRow[0]);
 			std::string text = answerRow[1];
 			float percentage = std::stof(answerRow[2]);
-			if (std::find_if(answers.begin(), answers.end(), [&text](const Answer& answer) { return answer.GetAnswer() == text; }) == answers.end()) {
+			if (std::find_if(answers.begin(), answers.end(), [&text](const Answer& answer) {  
+					return answer.GetAnswer() == text; }) == answers.end()) {
 				answers.push_back(Answer(id, text, percentage, false));
 			}
 			else {
@@ -93,6 +97,21 @@ void QuestionnaireFramework::SetQuizTime(int seconds)
 int QuestionnaireFramework::GetQuizTime()
 {
 	return m_quizTime;
+}
+
+int QuestionnaireFramework::GetMaximumGrade()
+{
+	return m_maximumGrade;
+}
+
+int QuestionnaireFramework::GetDefaultGrade()
+{
+	return m_defaultGrade;
+}
+
+void QuestionnaireFramework::SetMaximumGrade(int maxGrade)
+{
+	m_maximumGrade = maxGrade;
 }
 
 void QuestionnaireFramework::SetCanAnswer(bool canAnswer)
@@ -166,7 +185,8 @@ int QuestionnaireFramework::GetMaximumMark()const
 	return m_maximumMark;
 }
 
-void QuestionnaireFramework::SetUser(const std::string& studentTable, const std::string& nameColumn, const std::string& startTimeColumn)
+void QuestionnaireFramework::SetUser(const std::string& userTable, const std::string& nameColumn
+	, const std::optional<std::string>& startTimeColumn)
 {
 	if (m_isConsole) {
 		std::cin >> m_user;
@@ -174,7 +194,15 @@ void QuestionnaireFramework::SetUser(const std::string& studentTable, const std:
 	m_currentTime = time(NULL);
 	tm convertedTime;
 	localtime_s(&convertedTime, &m_currentTime);
-	std::string command = "insert into "+studentTable+"("+nameColumn+","+startTimeColumn+")"+ " values('" + m_user.GetName()+"','"+std::to_string(convertedTime.tm_hour)+":"+std::to_string(convertedTime.tm_min)+ ":" + std::to_string(convertedTime.tm_sec) +"')";
+	std::string command;
+	if (startTimeColumn.has_value()) {
+		command = "insert into " + userTable + "(" + nameColumn + "," + startTimeColumn.value() + ")"
+			+ " values('" + m_user.GetName() + "','" + std::to_string(convertedTime.tm_hour)
+			+ ":" + std::to_string(convertedTime.tm_min) + ":" + std::to_string(convertedTime.tm_sec) + "')";
+	}
+	else {
+		command = "insert into " + userTable + "(" + nameColumn + ")" + " values('" + m_user.GetName() + "')";
+	}
 	dh->RunCommand(command);
 	int id = stoi(dh->GetTableFromCommand("select max(s_id) from student").at(0).at(0));
 	m_user.SetId(id);
@@ -193,7 +221,7 @@ void QuestionnaireFramework::CalculateFinalGrade()
 		mark = mark + question.GetAquiredMark();
 	}
 	percentage = mark / m_maximumMark;
-	m_user.SetGrade(10 * percentage);
+	m_user.SetGrade((m_maximumGrade - m_defaultGrade) * percentage + m_defaultGrade);
 }
 
 void QuestionnaireFramework::SetCheatingDetected() {
@@ -217,7 +245,8 @@ void QuestionnaireFramework::StartTimer()
 	m_canAnswer = true;
 }
 
-void QuestionnaireFramework::SetQuestionsTable(const std::string& qTable, const std::string& qIdColumn, const std::string& qTextColumn, const std::string& qPointsColumn, const std::string& qCategoryColumn, const std::string& qQuestionTypeColumn)
+void QuestionnaireFramework::SetQuestionsTable(const std::string& qTable, const std::string& qIdColumn, const std::string& qTextColumn,
+	const std::string& qPointsColumn, const std::string& qCategoryColumn, const std::string& qQuestionTypeColumn)
 {
 	m_qTable = qTable;
 	m_qIdColumn = qIdColumn;
@@ -227,7 +256,8 @@ void QuestionnaireFramework::SetQuestionsTable(const std::string& qTable, const 
 	m_qQuestionTypeColumn = qQuestionTypeColumn;
 }
 
-void QuestionnaireFramework::SetAnswersTable(const std::string& aTable, const std::string& aIdColumn, const std::string& aTextColumn, const std::string& aPercentageColumn, const std::string& aQuestionId)
+void QuestionnaireFramework::SetAnswersTable(const std::string& aTable, const std::string& aIdColumn, 
+	const std::string& aTextColumn, const std::string& aPercentageColumn, const std::string& aQuestionId)
 {
 	m_aTable = aTable;
 	m_aIdColumn = aIdColumn;
@@ -251,26 +281,47 @@ void QuestionnaireFramework::SetTimerFunction(const std::function<void()>& funcT
 	m_timer.SetTimeout(funcToRun, m_quizTime);
 }
 
-void QuestionnaireFramework::SendResult(const std::string & resultTable, const std::string& gradeColumn,const std::string& endTimeColumn, const std::string& studentAnswerTable)
+void QuestionnaireFramework::SendResult(const std::string& userAnswerTable, const std::optional<std::string> &userTable,
+	const std::optional <std::string>& gradeColumn, const std::optional <std::string>& endTimeColumn)
 {
 	m_currentTime = time(NULL);
 	tm convertedTime;
 	localtime_s(&convertedTime, &m_currentTime);
-	std::string command="update "+resultTable+" set "+gradeColumn+"="+ std::to_string(m_user.GetGrade())+","+endTimeColumn+"='"+std::to_string(convertedTime.tm_hour)+":"+ std::to_string(convertedTime.tm_min)+":"+ std::to_string(convertedTime.tm_sec) +"' where s_id="+ std::to_string(m_user.GetId())+";";
+	std::string command;
+	if(userTable.has_value()) {
+		if (gradeColumn.has_value() && endTimeColumn.has_value()) {
+			command = "update " + userTable.value() + " set " + gradeColumn.value() + "=" + std::to_string(m_user.GetGrade()) + ","
+				+ endTimeColumn.value() + "='" + std::to_string(convertedTime.tm_hour) + ":" + std::to_string(convertedTime.tm_min) + ":"
+				+ std::to_string(convertedTime.tm_sec) + "' where s_id=" + std::to_string(m_user.GetId()) + ";";
+		}
+		else if (gradeColumn.has_value()) {
+			command = "update " + userTable.value() + " set " + gradeColumn.value()
+				+ "=" + std::to_string(m_user.GetGrade()) + " where s_id=" + std::to_string(m_user.GetId()) + ";";
+		}
+		else if (endTimeColumn.has_value()) {
+			command = "update " + userTable.value() + " set "
+				+ endTimeColumn.value() + "='" + std::to_string(convertedTime.tm_hour) + ":" + std::to_string(convertedTime.tm_min) + ":"
+				+ std::to_string(convertedTime.tm_sec) + "' where s_id=" + std::to_string(m_user.GetId()) + ";";
+		}
+	}
+
 	for (Question question : *m_selectedQuestions) {
 		if (question.GetQuestionType() == Question::QuestionType::Text) {
-			command =command+ "insert into " + studentAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'" + question.GetGivenTextAnswer() + "'," + std::to_string(question.GetID()) + ");";
+			command =command+ "insert into " + userAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'"
+				+ question.GetGivenTextAnswer() + "'," + std::to_string(question.GetID()) + ");";
 		}
 		else {
 			bool anythingAnswered = false;
 			for (Answer answer : question.GetAnswers()) {
 				if (answer.GetSelected()) {
-					command = command + "insert into " + studentAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'" + answer.GetAnswer() + "'," + std::to_string(question.GetID()) + ");";
+					command = command + "insert into " + userAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'" 
+						+ answer.GetAnswer() + "'," + std::to_string(question.GetID()) + ");";
 					anythingAnswered = true;
 				}
 			}
 			if (anythingAnswered == false) {
-				command = command + "insert into " + studentAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'" + "" + "'," + std::to_string(question.GetID()) + ");";
+				command = command + "insert into " + userAnswerTable + " values(" + std::to_string(m_user.GetId()) 
+					+ ",'" + "" + "'," + std::to_string(question.GetID()) + ");";
 			}
 		}
 	}

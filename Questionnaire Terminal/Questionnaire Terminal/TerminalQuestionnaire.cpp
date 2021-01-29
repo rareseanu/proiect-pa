@@ -19,6 +19,7 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int m_
 	m_quiz.LoadQuestions();
 	m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
 	m_selectedQuestions = m_quiz.GetSelectedQuestions();
+	m_quiz.SetMaximumGrade(100);
 }
 
 void TerminalQuestionnaire::Start()
@@ -144,12 +145,12 @@ void TerminalQuestionnaire::Stop()
 	LOG_INFO("m_quiz finished. Final grade: " + std::to_string(m_quiz.GetFinalGrade()));
 	m_quiz.SetCanAnswer(false);
 	if (m_quiz.CheatingDetected()) {
-		m_quiz.GetUser().SetGrade(1);
+		m_quiz.GetUser().SetGrade(m_quiz.GetDefaultGrade());
 	}
 	PrintResults();
 	std::cout << "User: " << m_quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << m_quiz.GetFinalGrade();
-	m_quiz.SendResult("student", "nota", "time_end", "student_raspuns");
+	m_quiz.SendResult("student_raspuns", "student", "nota", "time_end");
 	if (m_quiz.GetWindowsHook() != NULL) {
 		UnhookWindowsHookEx(m_quiz.GetWindowsHook());
 	}
