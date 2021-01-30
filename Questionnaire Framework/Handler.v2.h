@@ -5,81 +5,60 @@
 #include <iomanip>
 #include <vector>
 #include <limits>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include <fcntl.h>
+#include <string.h>
+#include <ctype.h>
+#include <icrsint.h>
+#include <atldbsch.h>
+#include <atldbcli.h>
 
 using namespace std;
 
-#import C:\\Program Files\\Common Files\\system\\ado\\msado15.dll rename("EOF",
-"AdoNSEOF")
-
-_bstr_t bstrConnect = "Provider=Microsoft.ACE.OLEDB.12.0;Data "
-"Source=C:\\Users\\lriley\\Documents\\Northwind 2007.mdb;";
-
-HRESULT hr;
+LPCOLESTR lpcOleConnect = L"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\Northwind 2007.accdb;User Id=admin;Password=;";
 
 int main()
 {
-    ::CoInitialize(NULL);
+    CDataSource dbDataSource;
+    CSession dbSession;
+
+    USES_CONVERSION;
+
+    HRESULT hr;
     const char* DAM = "ADO";
-
-    ADODB::_ConnectionPtr pConn("ADODB.Connection");
-    hr = pConn->Open(bstrConnect, "admin", "", ADODB::adConnectUnspecified);
-    if (SUCCEEDED(hr))
+    hr = dbDataSource.OpenFromInitializationString(lpcOleConnect);
+    if (FAILED(hr))
     {
-        cout << DAM << ": Successfully connected to database. Data source name:\n  "
-            << pConn->GetConnectionString() << endl;
-
-        _bstr_t query = "SELECT Customers.[Company], Customers.[First Name] FROM "
-            "Customers;";
-        cout << DAM << ": SQL query \n  " << query << endl;
-
-        // Execute
-        ADODB::_RecordsetPtr pRS("ADODB.Recordset");
-        hr = pRS->Open(query,
-            _variant_t((IDispatch*)pConn, true),
-            ADODB::adOpenUnspecified,
-            ADODB::adLockUnspecified,
-            ADODB::adCmdText);
-
-        if (SUCCEEDED(hr))
-        {
-            cout << DAM << ": Retrieve schema info for the given result set: " << endl;
-            ADODB::Fields* pFields = NULL;
-            hr = pRS->get_Fields(&pFields);
-            if (SUCCEEDED(hr) && pFields && pFields->GetCount() > 0)
-            {
-                for (long nIndex = 0; nIndex < pFields->GetCount(); nIndex++)
-                {
-                    cout << " | " << _bstr_t(pFields->GetItem(nIndex)->GetName());
-                }
-                cout << endl;
-            }
-            else
-            {
-                cout << DAM << ": Error: Number of fields in the " <<
-                    "result is set to zero." << endl;
-            }
-            cout << DAM << ": Fetch the actual data: " << endl;
-            int rowCount = 0;
-            while (!pRS->AdoNSEOF)
-            {
-                for (long nIndex = 0; nIndex < pFields->GetCount(); nIndex++)
-                {
-                    cout << " | " << _bstr_t(pFields->GetItem(nIndex)->GetValue());
-                }
-                cout << endl;
-                pRS->MoveNext();
-                rowCount++;
-            }
-            cout << DAM << ": Total Row Count:  " << rowCount << endl;
-        }
-        pRS->Close();
-        pConn->Close();
-        cout << DAM << ": Cleanup Done" << endl;
+        cout << DAM << ": Unable to connect to data source " << OLE2T(lpcOleConnect) << endl;
     }
     else
     {
-        cout << DAM << " : Unable to connect to data source: " << bstrConnect << endl;
+        hr = dbSession.Open(dbDataSource);
+        if (FAILED(hr))
+        {
+            cout << DAM << ": Couldn't create session on data source " << OLE2T(lpcOleConnect) << endl;
+        }
+        else
+        {
+            CComVariant var;
+            hr = dbDataSource.GetProperty(DBPROPSET_DATASOURCEINFO, DBPROP_DATASOURCENAME, &var);
+            if (FAILED(hr) || (var.vt == VT_EMPTY))
+            {
+                cout << DAM << ": No Data Source Name Specified." << endl;
+            }
+            else
+            {
+                cout << DAM << ": Successfully connected to database. Data source name:\n  "
+                    << COLE2T(var.bstrVal) << endl;
+            }
+        }
     }
-    ::CoUninitialize();
+
+    dbDataSource.Close();
+    dbSession.Close();
+    cout << DAM << ": Cleanup. Done." << endl;
+
     return 0;
 }
