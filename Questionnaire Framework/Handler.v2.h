@@ -34,6 +34,20 @@ int main()
             ADODB::adOpenUnspecified,
             ADODB::adLockUnspecified,
             ADODB::adCmdText);
+
+        if (SUCCEEDED(hr))
+        {
+            cout << DAM << ": Retrieve schema info for the given result set: " << endl;
+            ADODB::Fields* pFields = NULL;
+            hr = pRS->get_Fields(&pFields);
+            if (SUCCEEDED(hr) && pFields && pFields->GetCount() > 0)
+            {
+                for (long nIndex = 0; nIndex < pFields->GetCount(); nIndex++)
+                {
+                    cout << " | " << _bstr_t(pFields->GetItem(nIndex)->GetName());
+                }
+                cout << endl;
+            }
     }
     else
     {
