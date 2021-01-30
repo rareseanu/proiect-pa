@@ -59,7 +59,22 @@ int main()
                     "result is set to zero." << endl;
             }
             cout << DAM << ": Fetch the actual data: " << endl;
+            int rowCount = 0;
+            while (!pRS->AdoNSEOF)
+            {
+                for (long nIndex = 0; nIndex < pFields->GetCount(); nIndex++)
+                {
+                    cout << " | " << _bstr_t(pFields->GetItem(nIndex)->GetValue());
+                }
+                cout << endl;
+                pRS->MoveNext();
+                rowCount++;
+            }
+            cout << DAM << ": Total Row Count:  " << rowCount << endl;
         }
+        pRS->Close();
+        pConn->Close();
+        cout << DAM << ": Cleanup Done" << endl;
     }
     else
     {
