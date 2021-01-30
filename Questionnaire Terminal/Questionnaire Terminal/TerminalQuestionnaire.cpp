@@ -16,6 +16,7 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int m_
 	srand(time(NULL));
 	m_quiz.SetQuestionsTable("question", "q_id", "text", "points", "category", "type");
 	m_quiz.SetAnswersTable("answer", "a_id", "text", "percentage", "q_id");
+	m_quiz.SetUserAnswerTable("student_raspuns", "s_id", "raspuns", "q_id");
 	m_quiz.LoadQuestions();
 	m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
 	m_selectedQuestions = m_quiz.GetSelectedQuestions();
@@ -150,7 +151,7 @@ void TerminalQuestionnaire::Stop()
 	PrintResults();
 	std::cout << "User: " << m_quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << m_quiz.GetFinalGrade();
-	m_quiz.SendResult("student_raspuns", "student", "nota", "time_end");
+	m_quiz.SendResult("student", "nota", "time_end");
 	if (m_quiz.GetWindowsHook() != NULL) {
 		UnhookWindowsHookEx(m_quiz.GetWindowsHook());
 	}

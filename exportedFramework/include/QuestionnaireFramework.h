@@ -50,11 +50,12 @@ public:
 	__declspec(dllexport) void StopTimer();
 	__declspec(dllexport) const Timer& GetTimer()const;
 	__declspec(dllexport) void SetTimerFunction(const std::function<void()>& funcToRun);
-	__declspec(dllexport) void SendResult(const std::string& userAnswerTable, const std::optional <std::string>& userTable = std::nullopt, 
+	__declspec(dllexport) void SendResult(const std::optional <std::string>& userTable = std::nullopt, 
 										  const std::optional <std::string>& gradeColumn = std::nullopt,
 										  const std::optional <std::string>& endTimeColumn = std::nullopt);
 	__declspec(dllexport) const HHOOK& GetWindowsHook();
 	__declspec(dllexport) void SetupAnticheating(const std::wstring& oldTitle);
+	__declspec(dllexport) void SetUserAnswerTable(const std::string& uaTable, const std::string& uaUserIdColumn, const std::string& uaGivenAnswerColumn, const std::string& uaQuestionIdColumn);
 private:
 	int m_numberOfQuestionsNeeded = 0;
 	int m_totalNumberOfQuestions = 0;
@@ -76,7 +77,11 @@ private:
 	std::string m_aIdColumn;
 	std::string m_aTextColumn;
 	std::string m_aPercentageColumn;
-	std::string m_aQuestionId;
+	std::string m_aQuestionIdColumn;
+	std::string m_uaTable;
+	std::string m_uaUserIdColumn;
+	std::string m_uaGivenAnswerColumn;
+	std::string m_uaQuestionIdColumn;
 	time_t m_currentTime = NULL;
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
 	std::unique_ptr<DatabaseHandler> dh = NULL;

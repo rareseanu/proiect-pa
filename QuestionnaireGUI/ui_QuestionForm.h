@@ -195,7 +195,7 @@ public:
         miLogo->setPixmap(QPixmap(QString::fromUtf8("images/miLogo.png")));
         timeLabel = new QLabel(centralwidget);
         timeLabel->setObjectName(QString::fromUtf8("timeLabel"));
-        timeLabel->setGeometry(QRect(1000, 40, 161, 31));
+        timeLabel->setGeometry(QRect(1000, 40, 161, 41));
         sizePolicy1.setHeightForWidth(timeLabel->sizePolicy().hasHeightForWidth());
         timeLabel->setSizePolicy(sizePolicy1);
         timeLabel->setFont(font2);

@@ -12,6 +12,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     startWindow.setFocus();
     m_quiz.SetQuizTime(30);
     m_quiz.SetNumberOfQuestions(4);
+    m_quiz.SetMaximumGrade(100);
     try {
         m_quiz.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
     }
@@ -22,6 +23,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     srand(time(NULL));
     m_quiz.SetQuestionsTable("question", "q_id", "text", "points", "category", "type");
     m_quiz.SetAnswersTable("answer", "a_id", "text", "percentage", "q_id");
+    m_quiz.SetUserAnswerTable("student_raspuns", "s_id", "raspuns", "q_id");
     m_quiz.LoadQuestions();
     m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
     m_selectedQuestions = m_quiz.GetSelectedQuestions();
@@ -73,9 +75,9 @@ void QuestionWindow::StopQuiz()
     m_quiz.SetCanAnswer(false);
     m_quiz.CalculateFinalGrade();
     if (m_quiz.CheatingDetected()) {
-        m_quiz.GetUser().SetGrade(1);
+        m_quiz.GetUser().SetGrade(m_quiz.GetDefaultGrade());
     }
-    m_quiz.SendResult("student", "nota", "time_end", "student_raspuns");
+    m_quiz.SendResult("student", "nota", "time_end");
     m_quiz.StopTimer();
     if (m_quiz.GetWindowsHook() != NULL) {
        UnhookWindowsHookEx(m_quiz.GetWindowsHook());
@@ -84,7 +86,7 @@ void QuestionWindow::StopQuiz()
     this->destroy();
     Ui::SendDialog sendDialogUi = sendDialog.GetUi();
     sendDialogUi.nameLabel->setText(ui.studentNume->text() + " " + ui.studentPrenume->text());
-    sendDialogUi.actualMarkLabel->setText(QString::fromStdString(std::to_string(m_quiz.GetFinalGrade())));
+    sendDialogUi.actualMarkLabel->setText(QString::fromStdString(std::to_string(m_quiz.GetFinalGrade()).substr(0,6) + "/" + std::to_string(m_quiz.GetMaximumGrade())));
     sendDialogUi.time1Label->setText(QString::fromStdString(startTime));
 
     std::time_t now = std::time(NULL);

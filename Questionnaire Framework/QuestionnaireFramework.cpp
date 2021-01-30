@@ -29,7 +29,7 @@ void QuestionnaireFramework::LoadQuestions() {
 			questionType = Question::QuestionType::Multichoice;
 		}
 		command = "select " + m_aIdColumn + "," + m_aTextColumn + "," + m_aPercentageColumn 
-			+ " from " + m_aTable + " where " + m_aQuestionId +" = " + std::to_string(id) + ";";
+			+ " from " + m_aTable + " where " + m_aQuestionIdColumn +" = " + std::to_string(id) + ";";
 		std::vector<std::vector<std::string>> answerTable = dh->GetTableFromCommand(command);
 		std::vector<Answer> answers;
 
@@ -263,7 +263,7 @@ void QuestionnaireFramework::SetAnswersTable(const std::string& aTable, const st
 	m_aIdColumn = aIdColumn;
 	m_aTextColumn = aTextColumn;
 	m_aPercentageColumn = aPercentageColumn;
-	m_aQuestionId = aQuestionId;
+	m_aQuestionIdColumn = aQuestionId;
 }
 
 void QuestionnaireFramework::StopTimer()
@@ -281,7 +281,7 @@ void QuestionnaireFramework::SetTimerFunction(const std::function<void()>& funcT
 	m_timer.SetTimeout(funcToRun, m_quizTime);
 }
 
-void QuestionnaireFramework::SendResult(const std::string& userAnswerTable, const std::optional<std::string> &userTable,
+void QuestionnaireFramework::SendResult(const std::optional<std::string> &userTable,
 	const std::optional <std::string>& gradeColumn, const std::optional <std::string>& endTimeColumn)
 {
 	m_currentTime = time(NULL);
@@ -307,20 +307,20 @@ void QuestionnaireFramework::SendResult(const std::string& userAnswerTable, cons
 
 	for (Question question : *m_selectedQuestions) {
 		if (question.GetQuestionType() == Question::QuestionType::Text) {
-			command =command+ "insert into " + userAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'"
+			command =command+ "insert into " + m_uaTable +"("+ m_uaUserIdColumn + "," + m_uaGivenAnswerColumn + "," +m_uaQuestionIdColumn+")" + " values(" + std::to_string(m_user.GetId()) + ",'"
 				+ question.GetGivenTextAnswer() + "'," + std::to_string(question.GetID()) + ");";
 		}
 		else {
 			bool anythingAnswered = false;
 			for (Answer answer : question.GetAnswers()) {
 				if (answer.GetSelected()) {
-					command = command + "insert into " + userAnswerTable + " values(" + std::to_string(m_user.GetId()) + ",'" 
+					command = command + "insert into " + m_uaTable + "(" + m_uaUserIdColumn + "," + m_uaGivenAnswerColumn + "," + m_uaQuestionIdColumn + ")" + " values(" + std::to_string(m_user.GetId()) + ",'"
 						+ answer.GetAnswer() + "'," + std::to_string(question.GetID()) + ");";
 					anythingAnswered = true;
 				}
 			}
 			if (anythingAnswered == false) {
-				command = command + "insert into " + userAnswerTable + " values(" + std::to_string(m_user.GetId()) 
+				command = command + "insert into " + m_uaTable + "(" + m_uaUserIdColumn + "," + m_uaGivenAnswerColumn + "," + m_uaQuestionIdColumn + ")" + " values(" + std::to_string(m_user.GetId())
 					+ ",'" + "" + "'," + std::to_string(question.GetID()) + ");";
 			}
 		}
@@ -345,4 +345,12 @@ void QuestionnaireFramework::SetupAnticheating(const std::wstring &oldTitle)
 	else {
 		m_hook = SetupGUIAnticheat((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", this);
 	}
+}
+
+void QuestionnaireFramework::SetUserAnswerTable(const std::string& uaTable, const std::string& uaUserIdColumn, const std::string& uaGivenAnswerColumn, const std::string& uaQuestionIdColumn)
+{
+	m_uaTable = uaTable;
+	m_uaUserIdColumn = uaUserIdColumn;
+	m_uaGivenAnswerColumn = uaGivenAnswerColumn;
+	m_uaQuestionIdColumn = uaQuestionIdColumn;
 }
