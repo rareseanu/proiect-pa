@@ -1,5 +1,10 @@
 #include <fstream>
 #include <iostream>
+#include <cmath>
+#include <complex>
+#include <iomanip>
+#include <vector>
+#include <limits>
 
 using namespace std;
 
@@ -48,6 +53,13 @@ int main()
                 }
                 cout << endl;
             }
+            else
+            {
+                cout << DAM << ": Error: Number of fields in the " <<
+                    "result is set to zero." << endl;
+            }
+            cout << DAM << ": Fetch the actual data: " << endl;
+        }
     }
     else
     {
