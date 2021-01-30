@@ -12,7 +12,7 @@ DatabaseHandler::DatabaseHandler(const std::string& databaseName, const std::str
 	connectString = connectString + "dbname = " + databaseName + " host = " + databaseHost +" user = " + databaseUser +" password = " + databasePassword;
 	conn = PQconnectdb(connectString.c_str());
 }
-std::vector<std::vector<std::string>> DatabaseHandler::GetTable(const std::string& tableName) {
+const std::vector<std::vector<std::string>> DatabaseHandler::GetTable(const std::string& tableName) {
 
     std::vector<std::vector<std::string>> table;
     std::string sqlCommand = "select * from ";
@@ -30,7 +30,7 @@ std::vector<std::vector<std::string>> DatabaseHandler::GetTable(const std::strin
     return table;
 }
 
-std::vector<std::vector<std::string>> DatabaseHandler::GetTableFromCommand(const std::string& command) {
+const std::vector<std::vector<std::string>> DatabaseHandler::GetTableFromCommand(const std::string& command) {
 
     std::vector<std::vector<std::string>> table;
     std::string sqlCommand = command;

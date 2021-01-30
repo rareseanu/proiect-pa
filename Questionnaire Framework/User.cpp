@@ -11,7 +11,7 @@ int User::GetId() const
 	return m_id;
 }
 
-std::string User::GetName() const
+const std::string User::GetName() const
 {
 	std::stringstream ss;
 	ss << m_firstName << " " << m_lastName;
@@ -19,7 +19,7 @@ std::string User::GetName() const
 	return ss.str();
 }
 
-std::string User::GetFirstName() const
+const std::string& User::GetFirstName() const
 {
 	return m_firstName;
 }
@@ -29,7 +29,7 @@ void User::SetFirstName(std::string firstName)
 	m_firstName = firstName;
 }
 
-std::string User::GetLastName() const
+const std::string& User::GetLastName() const
 {
 	return m_lastName;
 }

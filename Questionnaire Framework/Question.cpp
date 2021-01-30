@@ -25,6 +25,11 @@ void Question::SetText(const std::string& text)
 	m_text = text;
 }
 
+void Question::SetQuestionType(const QuestionType& qType)
+{
+	m_questionType = qType;
+}
+
 const std::vector<Answer>& Question::GetAnswers() const
 {
 	return m_answers;
@@ -40,18 +45,22 @@ const int Question::GetPoints() const
 	return m_points;
 }
 
-float Question::GetAquiredMark()const
+const float Question::GetAquiredMark() const
 {
 	float percentage = 0;
+	float maxPercentage = 0;
 	for (Answer answer : m_answers) {
 		if (answer.GetSelected()) {
 			percentage = percentage + answer.GetPercent();
+		}
+		if (answer.GetPercent() > 0) {
+			maxPercentage += answer.GetPercent();
 		}
 	}
 	if (percentage < 0) {
 		percentage = 0;
 	}
-	return m_points * (percentage / 100);
+	return m_points * (percentage / maxPercentage);
 }
 
 bool Question::VerifyUserAnswer()
@@ -130,19 +139,6 @@ void Question::GiveAnswer(std::string string)
 	}
 }
 
-void Question::PrintSelected() {
-	if (m_answers.size() > 1) {
-		for (const Answer& answer : m_answers) {
-			if (answer.GetSelected())
-				std::cout << answer << " ";
-		}
-	}
-	else {
-		std::cout << m_givenTextAnswer;
-	}
-	std::cout << '\n';
-}
-
 const std::string& Question::GetGivenTextAnswer() const
 {
 	return m_givenTextAnswer;
@@ -163,22 +159,22 @@ void Question::Unflag()
 	m_flagged = false;
 }
 
-bool Question::GetFlag() const
+const bool Question::GetFlag() const
 {
 	return m_flagged;
 }
 
-std::string Question::GetCategory() const
+const std::string& Question::GetCategory() const
 {
 	return m_category;
 }
 
-const Question::QuestionType& Question::GetQuestionType()
+const Question::QuestionType Question::GetQuestionType() const
 {
 	return m_questionType;
 }
 
-Question::QuestionType Question::ConvertStringToQuestionType(const std::string& qType)
+const Question::QuestionType Question::ConvertStringToQuestionType(const std::string& qType)
 {
 	std::string temporary = qType;
 	std::transform(temporary.begin(), temporary.end(), temporary.begin(),
@@ -193,7 +189,7 @@ Question::QuestionType Question::ConvertStringToQuestionType(const std::string& 
 	throw std::string("The question type entered was invalid. Types allowed: Singlechoice, Multichoice, Text.");
 }
 
-std::string Question::ConvertQuestionTypeToString(const QuestionType& qType)
+const std::string Question::ConvertQuestionTypeToString(const QuestionType& qType)
 {
 	if (qType == QuestionType::Singlechoice)
 		return "Singlechoice";
@@ -201,7 +197,7 @@ std::string Question::ConvertQuestionTypeToString(const QuestionType& qType)
 		return "Multichoice";
 	else if (qType == QuestionType::Text)
 		return "Text";
-	return NULL;
+	return "";
 }
 
 std::ostream& operator<<(std::ostream& out, const Question& question)

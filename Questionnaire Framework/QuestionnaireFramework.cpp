@@ -13,18 +13,20 @@ QuestionnaireFramework::QuestionnaireFramework(int defaultGrade, bool anticheati
 }
 
 void QuestionnaireFramework::LoadQuestions() {
-	std::string command = "select "+m_qIdColumn+","+ m_qTextColumn + "," + m_qPointsColumn 
-		+ "," + m_qCategoryColumn + "," + m_qQuestionTypeColumn + " from " + m_qTable +";";
+	std::string command = "select " + m_qIdColumn + "," + m_qTextColumn + "," + m_qPointsColumn
+		+ "," + m_qCategoryColumn + "," + m_qQuestionTypeColumn + " from " + m_qTable + ";";
 	for (auto questionRow : dh->GetTableFromCommand(command)) {
 		int id = std::stoi(questionRow[0]);
 		std::string text = questionRow[1];
 		int points = std::stoi(questionRow[2]);
 		std::string category = questionRow[3];
+		std::transform(category.begin(), category.end(), category.begin(),
+			[](unsigned char c) { return tolower(c); });
 		Question::QuestionType questionType;
 		try {
 			questionType = Question::ConvertStringToQuestionType(questionRow[4]);
 		}
-		catch(std::string error){
+		catch (std::string error) {
 			LOG_ERROR(error);
 			questionType = Question::QuestionType::Multichoice;
 		}
@@ -37,8 +39,8 @@ void QuestionnaireFramework::LoadQuestions() {
 			int id = std::stoi(answerRow[0]);
 			std::string text = answerRow[1];
 			float percentage = std::stof(answerRow[2]);
-			if (std::find_if(answers.begin(), answers.end(), [&text](const Answer& answer) {  
-					return answer.GetAnswer() == text; }) == answers.end()) {
+			if (std::find_if(answers.begin(), answers.end(), [&text](const Answer& answer) {
+				return answer.GetAnswer() == text; }) == answers.end()) {
 				answers.push_back(Answer(id, text, percentage, false));
 			}
 			else {
@@ -49,9 +51,9 @@ void QuestionnaireFramework::LoadQuestions() {
 			LOG_WARN("Question has no answers: " + text);
 		}
 		else {
-			m_questions[category].push_back(Question(id, text, points, category, answers, false,questionType));
+			m_questions[category].push_back(Question(id, text, points, category, answers, false, questionType));
+			++m_totalNumberOfQuestions;
 		}
-		++m_totalNumberOfQuestions;
 	}
 	if (m_totalNumberOfQuestions < m_numberOfQuestionsNeeded) {
 		LOG_WARN("Not enough questions in the question bank.");
@@ -70,12 +72,16 @@ void QuestionnaireFramework::OpenDatabase(const std::string& databaseName, const
 
 const std::vector<Question>& QuestionnaireFramework::GetQuestionsFromCategory(const std::string& category) const
 {
-	auto it = m_questions.find(category);
+	std::string categoryCopy = category;
+	std::transform(categoryCopy.begin(), categoryCopy.end(), categoryCopy.begin(),
+		[](unsigned char c) { return tolower(c); });
+
+	auto it = m_questions.find(categoryCopy);
 	if (it != m_questions.end()) {
-		return  m_questions.find(category)->second;
+		return  m_questions.find(categoryCopy)->second;
 	}
 	else {
-		throw std::string("There are no questions in the given category (" + category + ").");
+		throw std::string("There are no questions in the given category (" + categoryCopy + ").");
 	}
 }
 
@@ -84,7 +90,7 @@ void QuestionnaireFramework::SetNumberOfQuestions(int number)
 	m_numberOfQuestionsNeeded = number;
 }
 
-int QuestionnaireFramework::GetNumberOfQuestions()const
+const int QuestionnaireFramework::GetNumberOfQuestions()const
 {
 	return m_numberOfQuestionsNeeded;
 }
@@ -94,17 +100,17 @@ void QuestionnaireFramework::SetQuizTime(int seconds)
 	m_quizTime = seconds;
 }
 
-int QuestionnaireFramework::GetQuizTime()
+const int QuestionnaireFramework::GetQuizTime() const
 {
 	return m_quizTime;
 }
 
-int QuestionnaireFramework::GetMaximumGrade()
+const int QuestionnaireFramework::GetMaximumGrade() const
 {
 	return m_maximumGrade;
 }
 
-int QuestionnaireFramework::GetDefaultGrade()
+const int QuestionnaireFramework::GetDefaultGrade() const
 {
 	return m_defaultGrade;
 }
@@ -119,7 +125,7 @@ void QuestionnaireFramework::SetCanAnswer(bool canAnswer)
 	m_canAnswer = canAnswer;
 }
 
-bool QuestionnaireFramework::CanAnswer()
+const bool QuestionnaireFramework::CanAnswer() const
 {
 	return m_canAnswer;
 }
@@ -141,7 +147,7 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 		catch (std::string error) {
 			std::cout << error;
 			LOG_ERROR(error);
-			exit(0);
+			return;
 		}
 		// Add random question if the category has more questions than the necessary ammount.
 		if (tempQuestions.size() > remainingNumberOfQuestions) {
@@ -162,7 +168,7 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 		}
 	}
 	// Add randomly chosen questions from the unchosen ones if needed.
-	while (m_selectedQuestions->size() < m_numberOfQuestionsNeeded) {
+	while (m_selectedQuestions->size() < m_numberOfQuestionsNeeded && unchosenQuestions.size() > 0) {
 		int tempRand = rand() % unchosenQuestions.size();
 		m_maximumMark += unchosenQuestions.at(tempRand).GetPoints();
 		m_selectedQuestions->push_back(unchosenQuestions.at(tempRand));
@@ -170,17 +176,17 @@ void QuestionnaireFramework::SelectQuestions(const std::vector<std::string>& cat
 	}
 }
 
-const std::shared_ptr<std::vector<Question>> QuestionnaireFramework::GetSelectedQuestions()const
+const std::shared_ptr<std::vector<Question>>& QuestionnaireFramework::GetSelectedQuestions()const
 {
 	return m_selectedQuestions;
 }
 
-std::shared_ptr<std::vector<Question>> QuestionnaireFramework::GetSelectedQuestions()
+std::shared_ptr<std::vector<Question>>& QuestionnaireFramework::GetSelectedQuestions()
 {
 	return m_selectedQuestions;
 }
 
-int QuestionnaireFramework::GetMaximumMark()const
+const int QuestionnaireFramework::GetMaximumMark() const
 {
 	return m_maximumMark;
 }
@@ -208,7 +214,7 @@ void QuestionnaireFramework::SetUser(const std::string& userTable, const std::st
 	m_user.SetId(id);
 }
 
-User& QuestionnaireFramework::GetUser()
+User& QuestionnaireFramework::GetUser() 
 {
 	return m_user;
 }
@@ -233,7 +239,7 @@ bool QuestionnaireFramework::CheatingDetected()
 	return cheatDetected;
 }
 
-float QuestionnaireFramework::GetFinalGrade() const
+const float QuestionnaireFramework::GetFinalGrade() const
 {
 	return m_user.GetGrade();
 }
@@ -256,7 +262,7 @@ void QuestionnaireFramework::SetQuestionsTable(const std::string& qTable, const 
 	m_qQuestionTypeColumn = qQuestionTypeColumn;
 }
 
-void QuestionnaireFramework::SetAnswersTable(const std::string& aTable, const std::string& aIdColumn, 
+void QuestionnaireFramework::SetAnswersTable(const std::string& aTable, const std::string& aIdColumn,
 	const std::string& aTextColumn, const std::string& aPercentageColumn, const std::string& aQuestionId)
 {
 	m_aTable = aTable;
@@ -288,7 +294,7 @@ void QuestionnaireFramework::SendResult(const std::optional<std::string> &userTa
 	tm convertedTime;
 	localtime_s(&convertedTime, &m_currentTime);
 	std::string command;
-	if(userTable.has_value()) {
+	if (userTable.has_value()) {
 		if (gradeColumn.has_value() && endTimeColumn.has_value()) {
 			command = "update " + userTable.value() + " set " + gradeColumn.value() + "=" + std::to_string(m_user.GetGrade()) + ","
 				+ endTimeColumn.value() + "='" + std::to_string(convertedTime.tm_hour) + ":" + std::to_string(convertedTime.tm_min) + ":"
@@ -305,7 +311,7 @@ void QuestionnaireFramework::SendResult(const std::optional<std::string> &userTa
 		}
 	}
 
-	for (Question question : *m_selectedQuestions) {
+	for (const Question& question : *m_selectedQuestions) {
 		if (question.GetQuestionType() == Question::QuestionType::Text) {
 			command =command+ "insert into " + m_uaTable +"("+ m_uaUserIdColumn + "," + m_uaGivenAnswerColumn + "," +m_uaQuestionIdColumn+")" + " values(" + std::to_string(m_user.GetId()) + ",'"
 				+ question.GetGivenTextAnswer() + "'," + std::to_string(question.GetID()) + ");";
@@ -328,12 +334,12 @@ void QuestionnaireFramework::SendResult(const std::optional<std::string> &userTa
 	dh->RunCommand(command);
 }
 
-const HHOOK& QuestionnaireFramework::GetWindowsHook()
+const HHOOK& QuestionnaireFramework::GetWindowsHook() const
 {
 	return m_hook;
 }
 
-void QuestionnaireFramework::SetupAnticheating(const std::wstring &oldTitle)
+void QuestionnaireFramework::SetupAnticheating(const std::wstring& oldTitle)
 {
 	std::wstring windowTitle = GetUniqueWindowTitle();
 

@@ -10,6 +10,7 @@ public:
 	void Stop();
 	void PrintAllQuestions() const;
 	void PrintQuestionsFromCategory(const std::string& category) const;
+	void PrintSelectedAnswers(const Question& question) const;
 	void PrintSelectedQuestions() const;
 	void PrintTimeLeft() const;
 	void PrintResults() const;

@@ -18,7 +18,7 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int m_
 	m_quiz.SetAnswersTable("answer", "a_id", "text", "percentage", "q_id");
 	m_quiz.SetUserAnswerTable("student_raspuns", "s_id", "raspuns", "q_id");
 	m_quiz.LoadQuestions();
-	m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
+	m_quiz.SelectQuestions(std::vector<std::string> {"SA", "mate"});
 	m_selectedQuestions = m_quiz.GetSelectedQuestions();
 	m_quiz.SetMaximumGrade(100);
 }
@@ -124,7 +124,7 @@ void TerminalQuestionnaire::Start()
 				m_selectedQuestions->at(questionNumber).GiveAnswer(answer);
 
 				std::cout << "\nNew answer: ";
-				m_selectedQuestions->at(questionNumber).PrintSelected();
+				PrintSelectedAnswers(m_selectedQuestions->at(questionNumber));
 			}
 		}
 		catch (...) {
@@ -141,7 +141,6 @@ void TerminalQuestionnaire::Start()
 
 void TerminalQuestionnaire::Stop()
 {
-	//to be replaced with some useful functionality
 	m_quiz.CalculateFinalGrade();
 	LOG_INFO("m_quiz finished. Final grade: " + std::to_string(m_quiz.GetFinalGrade()));
 	m_quiz.SetCanAnswer(false);
@@ -186,18 +185,32 @@ void TerminalQuestionnaire::PrintQuestionsFromCategory(const std::string& catego
 	}
 }
 
+void TerminalQuestionnaire::PrintSelectedAnswers(const Question& question) const {
+	std::vector<Answer> answers = question.GetAnswers();
+	if (answers.size() > 1) {
+		for (const Answer& answer : answers) {
+			if (answer.GetSelected())
+				std::cout << answer << " ";
+		}
+	}
+	else {
+		std::cout << question.GetGivenTextAnswer();
+	}
+	std::cout << '\n';
+}
+
 void TerminalQuestionnaire::PrintSelectedQuestions() const
 {
 	int questionSymbol = 0;
 	
-	for (auto question : *(m_selectedQuestions)) {
+	for (const Question& question : *(m_selectedQuestions)) {
 		std::cout << questionSymbol++ << '.' << question;
 		if (question.GetAnswers().empty()) {
 			std::cout << "Question unanswered!";
 		}
 		else {
 			std::cout << "Your answers: ";
-			question.PrintSelected();
+			PrintSelectedAnswers(question);
 			std::cout << '\n';
 		}
 	}

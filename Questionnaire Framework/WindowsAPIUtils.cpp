@@ -18,7 +18,7 @@ HWND GetHandlerFromTitle(LPCWSTR windowTitle, bool isConsole)
 	return windowHandle;
 }
 
-std::string GetLastErrorString() {
+const std::string GetLastErrorString() {
 	DWORD errorID = GetLastError();
 	LPSTR errorBuffer = nullptr;
 	size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
@@ -39,7 +39,7 @@ void MinimizeOtherApps(HWND questionnaireHandle) {
 	ShowWindow(questionnaireHandle, SW_SHOWMAXIMIZED);
 }
 
-std::wstring GetUniqueWindowTitle() {
+const std::wstring GetUniqueWindowTitle() {
 	DWORD tickCount = GetTickCount64();
 	DWORD processID = GetCurrentProcessId();
 	std::wstring title = std::to_wstring(tickCount);
@@ -47,6 +47,33 @@ std::wstring GetUniqueWindowTitle() {
 	title += std::to_wstring(processID);
 	return title;
 }
+
+//LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
+//	MSLLHOOKSTRUCT* p = (MSLLHOOKSTRUCT*)lParam;
+//	HWND hiWnd = WindowFromPoint(p->pt);
+//	DWORD pid;
+//	DWORD tid = GetWindowThreadProcessId(hiWnd, &pid);
+//	DWORD consolePid;
+//	DWORD tid2 = GetWindowThreadProcessId(GetConsoleWindow(), &pid);
+//	if (nCode >= 0) {
+//		if (pid == consolePid) {
+//			return CallNextHookEx(0, nCode, wParam, lParam);
+//		}
+//	}
+//}
+//
+//void DisableMouseOutsideQuiz(bool isConsole) {
+//	std::thread messageLoop([]() {
+//		while (true) {
+//			MSG msg;
+//			if (GetMessage(&msg, 0, 0, 0)) {
+//				TranslateMessage(&msg);
+//				DispatchMessage(&msg);
+//			}
+//		}
+//		});
+//	messageLoop.detach();
+//}
 
 HHOOK SetupGUIAnticheat(LPCWSTR windowTitle, std::wstring dllName, QuestionnaireFramework* quiz)
 {

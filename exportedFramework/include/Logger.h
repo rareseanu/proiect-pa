@@ -8,11 +8,6 @@
 
 class Logger
 {
-private:
-	std::ofstream m_file;
-	static Logger* instance;
-	__declspec(dllexport) Logger(const std::string& fileName);
-	static bool m_activated;
 public:
 	enum class LoggerLevel {
 		Info,
@@ -33,6 +28,15 @@ public:
 
 	__declspec(dllexport) std::string getCurrentTime();
 	__declspec(dllexport) void log(const LoggerLevel& level, const std::string logMessage);
+
+private:
+	std::ofstream m_file;
+	static Logger* instance;
+	static bool m_activated;
+
+private:
+	__declspec(dllexport) Logger(const std::string& fileName);
+
 };
 
 #define LOG_WARN(message)   Logger::getLogger()->log(Logger::LoggerLevel::Warning, message)

@@ -7,9 +7,11 @@
 class Timer
 {
 public:
-	__declspec(dllexport) void SetTimeout(const std::function<void()>& func,int waitTime);
 	__declspec(dllexport) int GetTimeLeft()const;
 	__declspec(dllexport) bool IsRunning();
+
+	__declspec(dllexport) void SetTimeout(const std::function<void()>& func, int waitTime);
+
 	__declspec(dllexport) void Start();
 	__declspec(dllexport) void Stop();
 private:
