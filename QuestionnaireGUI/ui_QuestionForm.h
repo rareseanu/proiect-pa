@@ -46,7 +46,6 @@ public:
     QLabel *unitbvLogo;
     QLabel *miLogo;
     QLabel *timeLabel;
-    QPushButton *calculatorButton;
     QLabel *questionNumberLabel;
     QPushButton *helpButton;
 
@@ -161,7 +160,7 @@ public:
         categoryLabel->setWordWrap(true);
         layoutWidget2 = new QWidget(centralwidget);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(140, 40, 134, 24));
+        layoutWidget2->setGeometry(QRect(140, 40, 172, 26));
         horizontalLayout_4 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setSizeConstraint(QLayout::SetFixedSize);
@@ -202,15 +201,6 @@ public:
         timeLabel->setFont(font2);
         timeLabel->setLayoutDirection(Qt::LeftToRight);
         timeLabel->setWordWrap(false);
-        calculatorButton = new QPushButton(centralwidget);
-        calculatorButton->setObjectName(QString::fromUtf8("calculatorButton"));
-        calculatorButton->setGeometry(QRect(1175, 10, 39, 50));
-        calculatorButton->setMinimumSize(QSize(39, 50));
-        calculatorButton->setMaximumSize(QSize(39, 50));
-        QIcon icon5;
-        icon5.addFile(QString::fromUtf8("images/calculator.png"), QSize(), QIcon::Normal, QIcon::Off);
-        calculatorButton->setIcon(icon5);
-        calculatorButton->setIconSize(QSize(50, 49));
         questionNumberLabel = new QLabel(centralwidget);
         questionNumberLabel->setObjectName(QString::fromUtf8("questionNumberLabel"));
         questionNumberLabel->setGeometry(QRect(600, 10, 92, 22));
@@ -221,15 +211,14 @@ public:
         helpButton->setGeometry(QRect(1220, 10, 45, 45));
         helpButton->setMinimumSize(QSize(45, 45));
         helpButton->setMaximumSize(QSize(45, 45));
-        QIcon icon6;
-        icon6.addFile(QString::fromUtf8("images/help.png"), QSize(), QIcon::Normal, QIcon::Off);
-        helpButton->setIcon(icon6);
+        QIcon icon5;
+        icon5.addFile(QString::fromUtf8("images/help.png"), QSize(), QIcon::Normal, QIcon::Off);
+        helpButton->setIcon(icon5);
         helpButton->setIconSize(QSize(45, 45));
         QuestionWindow->setCentralWidget(centralwidget);
 
         retranslateUi(QuestionWindow);
         QObject::connect(helpButton, SIGNAL(clicked()), QuestionWindow, SLOT(HelpButtonClicked()));
-        QObject::connect(calculatorButton, SIGNAL(clicked()), QuestionWindow, SLOT(LaunchCalculatorButtonClicked()));
 
         QMetaObject::connectSlotsByName(QuestionWindow);
     } // setupUi
@@ -249,7 +238,6 @@ public:
         unitbvLogo->setText(QString());
         miLogo->setText(QString());
         timeLabel->setText(QCoreApplication::translate("QuestionWindow", "Time left: ?", nullptr));
-        calculatorButton->setText(QString());
         questionNumberLabel->setText(QCoreApplication::translate("QuestionWindow", "Question: 0/?", nullptr));
         helpButton->setText(QString());
     } // retranslateUi

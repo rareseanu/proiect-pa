@@ -30,7 +30,6 @@ public:
     void ShowTimeLeft();
     void ResetAnswerFrame();
     void ShowQuestion(int questionNumber);
-    void LaunchCalculatorButtonClicked();
     Ui::QuestionWindow GetUi();
 
 signals:
@@ -49,7 +48,6 @@ private:
     QuestionnaireFramework m_quiz = QuestionnaireFramework(true, false);
     std::shared_ptr<std::vector<Question>> m_selectedQuestions;
     FraudDialog fraudDialog;
-    bool calculatorOpened;
     std::string startTime;
     std::string stopTime;
 };

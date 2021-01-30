@@ -270,8 +270,8 @@
      <rect>
       <x>140</x>
       <y>40</y>
-      <width>134</width>
-      <height>24</height>
+      <width>172</width>
+      <height>26</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -402,41 +402,6 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="calculatorButton">
-    <property name="geometry">
-     <rect>
-      <x>1175</x>
-      <y>10</y>
-      <width>39</width>
-      <height>50</height>
-     </rect>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>39</width>
-      <height>50</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>39</width>
-      <height>50</height>
-     </size>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="icon">
-     <iconset>
-      <normaloff>images/calculator.png</normaloff>images/calculator.png</iconset>
-    </property>
-    <property name="iconSize">
-     <size>
-      <width>50</width>
-      <height>49</height>
-     </size>
-    </property>
-   </widget>
    <widget class="QLabel" name="questionNumberLabel">
     <property name="geometry">
      <rect>
@@ -510,22 +475,6 @@
     <hint type="destinationlabel">
      <x>1267</x>
      <y>85</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>calculatorButton</sender>
-   <signal>clicked()</signal>
-   <receiver>QuestionWindow</receiver>
-   <slot>LaunchCalculatorButtonClicked()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1206</x>
-     <y>40</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1099</x>
-     <y>64</y>
     </hint>
    </hints>
   </connection>
