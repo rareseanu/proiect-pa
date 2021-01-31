@@ -62,6 +62,15 @@ int main()
                 if (SUCCEEDED(hr) && 0 < colCount)
                 {
                     cout << DAM << ": Retrieve schema info for the given result set: " << endl;
+                    DBORDINAL cColumns;
+                    DBCOLUMNINFO* rgInfo = NULL;
+                    OLECHAR* pStringsBuffer = NULL;
+                    cmd.GetColumnInfo(&cColumns, &rgInfo, &pStringsBuffer);
+                    for (int col = 0; col < (int)colCount; col++)
+                    {
+                        cout << " | " << OLE2T(rgInfo[col].pwszName);
+                    }
+                    cout << endl;
                 }
             }
         }
