@@ -52,6 +52,17 @@ int main()
             {
                 cout << DAM << ": Successfully connected to database. Data source name:\n  "
                     << COLE2T(var.bstrVal) << endl;
+
+                LPCOLESTR query = L"SELECT Customers.[Company], Customers.[First Name] FROM Customers;";
+                cout << DAM << ": SQL query:\n  " << OLE2T(query) << endl;
+
+                CCommand<CDynamicStringAccessor> cmd;
+                hr = cmd.Open(dbSession, query);
+                DBORDINAL colCount = cmd.GetColumnCount();
+                if (SUCCEEDED(hr) && 0 < colCount)
+                {
+                    cout << DAM << ": Retrieve schema info for the given result set: " << endl;
+                }
             }
         }
     }
