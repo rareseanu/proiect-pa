@@ -1,6 +1,5 @@
 #include <windows.h>
 #include <fstream>
-#include "../Questionnaire Framework/Logger.cpp"
 #include <functional>
 
 std::function<void()> *functionToCall;
@@ -13,10 +12,8 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	switch (ul_reason_for_call)
 	{
 	case DLL_PROCESS_ATTACH:
-		LOG_INFO("DLL process attach function called.");
 		break;
 	case DLL_PROCESS_DETACH:
-		LOG_INFO("DLL process detach function called.");
 		break;
 	case DLL_THREAD_ATTACH:
 		break;
@@ -26,34 +23,39 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 	return true;
 }
 
-extern  "C" __declspec(dllexport) void SetQuiz(std::function<void()> *function) {
+extern  "C" __declspec(dllexport) void SetCallbackFunction(std::function<void()> *function) {
 	functionToCall = function;
 }
 
-extern "C" __declspec(dllexport) int HookFunction(int code, WPARAM wParam, LPARAM lParam) {
+const std::string GetLastErrorString() {
+	DWORD errorID = GetLastError();
+	LPSTR errorBuffer = nullptr;
+	size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL, errorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&errorBuffer, 0, NULL);
+	std::string message(errorBuffer, size);
+
+	return message;
+}
+
+extern "C" __declspec(dllexport) LRESULT HookFunction(int code, WPARAM wParam, LPARAM lParam) {
 	LPCWPSTRUCT pt_stMessage = (LPCWPSTRUCT)lParam;
 	if (code >= 0)
 	{
 		TCHAR path[MAX_PATH];
 		DWORD dwRes = GetModuleFileName(NULL, (LPWSTR)path, MAX_PATH);
 		std::wstring modulePath(path);
-		std::wstring fileName(L"logDLL");
-		std::wstring pathDll = modulePath.substr(0, modulePath.find_last_of('\\') + 1) + fileName;
-		DWORD processID;
-		DWORD currentProcessID = GetCurrentProcessId();
-		GetWindowThreadProcessId(pt_stMessage->hwnd, &processID);
-		DWORD errorID = GetLastError();
-		LPSTR errorBuffer = nullptr;
-		size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-			NULL, errorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&errorBuffer, 0, NULL);
-		std::string message(errorBuffer, size);
+		std::wstring fileName(L"dllInfo.txt");
+		std::wstring pathDLLinfo = modulePath.substr(0, modulePath.find_last_of('\\') + 1) + fileName;
 
+		DWORD quizPID = GetCurrentProcessId();
+		std::string error = GetLastErrorString();
+		
 		if (pt_stMessage->message == WM_ACTIVATEAPP && pt_stMessage->wParam == FALSE) {
 
 			std::fstream fileStream;
-			fileStream.open(pathDll, std::fstream::out | std::fstream::app);
-			fileStream << "processID" << processID << '\n';
-			fileStream << processID << " " << GetCurrentProcessId() << '\n';
+			fileStream.open(pathDLLinfo, std::fstream::out | std::fstream::app);
+			fileStream << "Quiz pID: " << quizPID << '\n';
+			fileStream << error << '\n';
 			fileStream.close();
 
 			(*functionToCall)();

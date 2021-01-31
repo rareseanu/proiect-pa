@@ -26,7 +26,7 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int m_
 void TerminalQuestionnaire::Start()
 {
 	m_quiz.SetUser("student", "nume", "time_start");
-	m_quiz.SetupAnticheating(L"Questionnaire");
+	m_quiz.SetupAnticheating("Questionnaire");
 	std::cin.ignore();
 	bool stillHasQuestions = true;
 	int currentQuestion = 0;

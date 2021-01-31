@@ -1,20 +1,20 @@
 #include "WindowsAPIUtils.h"
 #include "QuestionnaireFramework.h"
 
-HWND GetHandlerFromTitle(LPCWSTR windowTitle, bool isConsole)
+HWND GetHandlerFromTitle(LPCSTR windowTitle, bool isConsole)
 {
 	HWND windowHandle;
 	if (isConsole) {
-		windowHandle = FindWindow(L"ConsoleWindowClass", windowTitle);
+		windowHandle = FindWindowA("ConsoleWindowClass", windowTitle);
 	}
 	else {
-		windowHandle = FindWindow(windowTitle, NULL);
+		windowHandle = FindWindowA(NULL, windowTitle);
 	}
 	if (!windowHandle) {
-		std::cout << "No window with the given title.\n";
+		LOG_ERROR("[ANTICHEAT] No window with the given title.");
 		return NULL;
 	}
-	std::wcout << "Window " << windowTitle << " found.\n";
+	LOG_INFO(std::string("[ANTICHEAT] Window ") + windowTitle + "  found.");
 	return windowHandle;
 }
 
@@ -24,7 +24,9 @@ const std::string GetLastErrorString() {
 	size_t size = FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 		NULL, errorID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&errorBuffer, 0, NULL);
 	std::string message(errorBuffer, size);
-
+	if (errorID != 0) {
+		LOG_ERROR(message);
+	}
 	return message;
 }
 
@@ -34,57 +36,60 @@ void MinimizeOtherApps(HWND questionnaireHandle) {
 		SendMessage(hwnd, WM_COMMAND, (WPARAM)419, 0); //minimize all
 		});
 	thread.join();
-	Sleep(500);
+	std::this_thread::sleep_for(std::chrono::milliseconds(500));
 	SetForegroundWindow(questionnaireHandle);
 	ShowWindow(questionnaireHandle, SW_SHOWMAXIMIZED);
+	LOG_INFO("[ANTICHEAT] Minimized all applications and maximized the quiz.");
 }
 
-const std::wstring GetUniqueWindowTitle() {
+const std::string GetUniqueWindowTitle() {
 	DWORD tickCount = GetTickCount64();
 	DWORD processID = GetCurrentProcessId();
-	std::wstring title = std::to_wstring(tickCount);
+	std::string title = std::to_string(tickCount);
 	title.push_back('/');
-	title += std::to_wstring(processID);
+	title += std::to_string(processID);
 	return title;
 }
 
-//LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
-//	MSLLHOOKSTRUCT* p = (MSLLHOOKSTRUCT*)lParam;
-//	HWND hiWnd = WindowFromPoint(p->pt);
-//	DWORD pid;
-//	DWORD tid = GetWindowThreadProcessId(hiWnd, &pid);
-//	DWORD consolePid;
-//	DWORD tid2 = GetWindowThreadProcessId(GetConsoleWindow(), &pid);
-//	if (nCode >= 0) {
-//		if (pid == consolePid) {
-//			return CallNextHookEx(0, nCode, wParam, lParam);
-//		}
-//	}
-//}
-//
-//void DisableMouseOutsideQuiz(bool isConsole) {
-//	std::thread messageLoop([]() {
-//		while (true) {
-//			MSG msg;
-//			if (GetMessage(&msg, 0, 0, 0)) {
-//				TranslateMessage(&msg);
-//				DispatchMessage(&msg);
-//			}
-//		}
-//		});
-//	messageLoop.detach();
-//}
+LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
+	MSLLHOOKSTRUCT* mouseStruct = (MSLLHOOKSTRUCT*)lParam;
+	HWND handler = WindowFromPoint(mouseStruct->pt);
+	DWORD currentMessagePid = 0;
+	DWORD currentMessageTid = GetWindowThreadProcessId(handler, &currentMessagePid);
+	DWORD quizPid = GetCurrentProcessId();
 
-HHOOK SetupGUIAnticheat(LPCWSTR windowTitle, std::wstring dllName, QuestionnaireFramework* quiz)
+	if (nCode >= 0) {
+		if (currentMessagePid == quizPid) {
+			return CallNextHookEx(0, nCode, wParam, lParam);
+		}
+		else if(currentMessagePid != quizPid && (wParam == WM_LBUTTONDOWN || wParam == WM_LBUTTONUP ||
+			wParam == WM_RBUTTONDOWN || wParam == WM_RBUTTONUP)) {
+			int titleLength = GetWindowTextLengthA(handler);
+			std::string title(titleLength, '\0');
+			GetWindowTextA(handler, &title[0], titleLength);
+			LOG_ERROR("[ANTICHEAT] User clicked outside the quiz. App name: " + title);
+		}
+	}
+}
+
+void DisableMouseOutsideQuiz() {
+	std::thread messageLoop([]() {
+		while (true) {
+			MSG msg = { };
+			if (GetMessage(&msg, 0, 0, 0)) {
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+		});
+	messageLoop.detach();
+}
+
+HHOOK SetupGUIAnticheat(LPCSTR windowTitle, std::wstring dllName, QuestionnaireFramework* quiz)
 {
 	HWND windowHandle = GetHandlerFromTitle(windowTitle, false);
 
 	MinimizeOtherApps(windowHandle);
-	char className[MAX_CLASS_NAME];
-	if (!GetClassNameA(windowHandle, className, MAX_CLASS_NAME)) {
-		std::cout << "ClassName not found!\n";
-		return NULL;
-	}
 
 	DWORD processID;
 	DWORD tid = GetWindowThreadProcessId(windowHandle, &processID);
@@ -92,7 +97,7 @@ HHOOK SetupGUIAnticheat(LPCWSTR windowTitle, std::wstring dllName, Questionnaire
 	TCHAR path[MAX_PATH];
 	DWORD dwRes = GetModuleFileName(NULL, (LPWSTR)path, MAX_PATH);
 	if (!dwRes) {
-		std::cout << "Directory not found.\n";
+		LOG_ERROR("[ANTICHEAT] Directory not found.");
 		return NULL;
 	}
 	std::wstring modulePath(path);
@@ -103,17 +108,17 @@ HHOOK SetupGUIAnticheat(LPCWSTR windowTitle, std::wstring dllName, Questionnaire
 
 	HMODULE dll = LoadLibrary(lpFullPath);
 	if (dll == NULL) {
-		std::cout << "DLL not found.\n";
+		LOG_ERROR("[ANTICHEAT] DLL not found.");
 		return NULL;
 	}
 
 	std::function<void()>* getMax = new std::function<void()>(std::bind(&QuestionnaireFramework::SetCheatingDetected, quiz));
-	void(*setQuiz)(std::function<void()>*) = (void(*)(std::function<void()>*))GetProcAddress(dll, "SetQuiz");
-	setQuiz(getMax);
+	void(*setCallbackFunction)(std::function<void()>*) = (void(*)(std::function<void()>*))GetProcAddress(dll, "SetCallbackFunction");
+	setCallbackFunction(getMax);
 
 	HOOKPROC addr = (HOOKPROC)GetProcAddress(dll, "HookFunction");
 	if (addr == NULL) {
-		std::cout << "There was an error while calling HookFunction.\n";
+		LOG_ERROR("[ANTICHEAT] There was an error while getting the HookFunction address.");
 		return NULL;
 	}
 	HHOOK hook = SetWindowsHookEx(WH_CALLWNDPROC, addr, dll, tid);
@@ -121,6 +126,7 @@ HHOOK SetupGUIAnticheat(LPCWSTR windowTitle, std::wstring dllName, Questionnaire
 		FreeLibrary(dll);
 		return NULL;
 	}
+	LOG_INFO("[ANTICHEAT] Successfully installed CallWndProc hook.");
 	return hook;
 }
 
@@ -133,6 +139,7 @@ void SetupConsoleAnticheat(QuestionnaireFramework* quiz)
 		while (true) {
 			if (GetForegroundWindow() != GetConsoleWindow()) {
 				quiz->SetCheatingDetected();
+				LOG_INFO("[ANTICHEAT] Focus lost, cheating detected.");
 				return NULL;
 			}
 		}

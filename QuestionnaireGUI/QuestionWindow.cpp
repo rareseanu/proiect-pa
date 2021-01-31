@@ -48,7 +48,7 @@ void QuestionWindow::closeEvent(QCloseEvent* event)
 void QuestionWindow::StartQuiz()
 {
     hide();
-    m_quiz.SetupAnticheating(L"Qt600dQWindowIcon");
+    m_quiz.SetupAnticheating("Questionnaire");
     show();
     m_quiz.GetUser().SetFirstName(ui.studentNume->text().toStdString());
     m_quiz.GetUser().SetLastName(ui.studentPrenume->text().toStdString());

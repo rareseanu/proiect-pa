@@ -339,17 +339,22 @@ const HHOOK& QuestionnaireFramework::GetWindowsHook() const
 	return m_hook;
 }
 
-void QuestionnaireFramework::SetupAnticheating(const std::wstring& oldTitle)
+void QuestionnaireFramework::SetupAnticheating(const std::string& oldTitle)
 {
-	std::wstring windowTitle = GetUniqueWindowTitle();
+	std::string windowTitle = GetUniqueWindowTitle();
 
 	if (m_isConsole) {
-		SetConsoleTitle((LPCWSTR)windowTitle.c_str());
-		Sleep(1000);
+		SetConsoleTitleA(windowTitle.c_str());
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 		SetupConsoleAnticheat(this);
 	}
 	else {
-		m_hook = SetupGUIAnticheat((LPCWSTR)oldTitle.c_str(), L"WindowsHooking.dll", this);
+		m_hook = SetupGUIAnticheat(oldTitle.c_str(), L"WindowsHooking.dll", this);
+		if (m_hook == 0) {
+			LOG_ERROR("[ANTICHEAT] Error while setting up the DLL.");
+		}
+		HHOOK mouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
+		DisableMouseOutsideQuiz();
 	}
 }
 

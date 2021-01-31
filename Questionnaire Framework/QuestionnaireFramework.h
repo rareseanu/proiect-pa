@@ -58,7 +58,7 @@ public:
 										  const std::optional <std::string>& endTimeColumn = std::nullopt);
 	__declspec(dllexport) void StartTimer();
 	__declspec(dllexport) void StopTimer();
-	__declspec(dllexport) void SetupAnticheating(const std::wstring& oldTitle);
+	__declspec(dllexport) void SetupAnticheating(const std::string& oldTitle);
 
 private:
 	int m_numberOfQuestionsNeeded = 0;
