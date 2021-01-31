@@ -71,6 +71,26 @@ int main()
                         cout << " | " << OLE2T(rgInfo[col].pwszName);
                     }
                     cout << endl;
+
+                    cout << DAM << ": Fetch the actual data: " << endl;
+                    int rowCount = 0;
+                    CRowset<CDynamicStringAccessor>* pRS = (CRowset<CDynamicStringAccessor>*) & cmd;
+
+                    while (pRS->MoveNext() == S_OK)
+                    {
+                        for (int col = 1; col <= (int)colCount; col++)
+                        {
+                            CHAR* szValue = cmd.GetString(col);
+                            cout << " | " << szValue;
+                        }
+                        cout << endl;
+                        rowCount++;
+                    }
+                    cout << DAM << ": Total Row Count: " << rowCount << endl;
+                }
+                else
+                {
+                    cout << DAM << ": Error: Number of fields in the result set is 0." << endl;
                 }
             }
         }
