@@ -41,6 +41,7 @@ public:
     QLabel *actualMarkLabel;
     QLabel *time1Label;
     QLabel *time2Label;
+    QLabel *label_2;
 
     void setupUi(QDialog *SendDialog)
     {
@@ -143,6 +144,11 @@ public:
 
         verticalLayout_3->addLayout(horizontalLayout);
 
+        label_2 = new QLabel(SendDialog);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(0, 0, 171, 71));
+        label_2->setPixmap(QPixmap(QString::fromUtf8("images/UNITBV_FMI.png")));
+        label_2->setScaledContents(true);
 
         retranslateUi(SendDialog);
         QObject::connect(pushButton, &QPushButton::clicked, SendDialog, &QDialog::close);
@@ -165,6 +171,7 @@ public:
         actualMarkLabel->setText(QCoreApplication::translate("SendDialog", "[mark]", nullptr));
         time1Label->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">[time1]</span></p></body></html>", nullptr));
         time2Label->setText(QCoreApplication::translate("SendDialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">[time2]</span></p></body></html>", nullptr));
+        label_2->setText(QString());
     } // retranslateUi
 
 };

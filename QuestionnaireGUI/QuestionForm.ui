@@ -371,6 +371,9 @@
     <property name="pixmap">
      <pixmap>images/miLogo.png</pixmap>
     </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="timeLabel">
     <property name="geometry">

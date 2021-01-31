@@ -146,7 +146,8 @@ public:
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(0, 0, 131, 51));
-        label->setPixmap(QPixmap(QString::fromUtf8("images/UNITBV_MI_logo.png")));
+        label->setPixmap(QPixmap(QString::fromUtf8("images/UNITBV_FMI.png")));
+        label->setScaledContents(true);
         StartWindow->setCentralWidget(centralwidget);
 
         retranslateUi(StartWindow);

@@ -61,6 +61,7 @@
         <font>
          <family>Segoe UI Semibold</family>
          <pointsize>16</pointsize>
+         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -78,6 +79,7 @@
         <font>
          <family>Segoe UI Semibold</family>
          <pointsize>12</pointsize>
+         <weight>75</weight>
          <bold>true</bold>
         </font>
        </property>
@@ -180,7 +182,10 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>images/UNITBV_MI_logo.png</pixmap>
+     <pixmap>images/UNITBV_FMI.png</pixmap>
+    </property>
+    <property name="scaledContents">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
