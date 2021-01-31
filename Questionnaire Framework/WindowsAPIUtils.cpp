@@ -57,32 +57,24 @@ LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 	DWORD currentMessagePid = 0;
 	DWORD currentMessageTid = GetWindowThreadProcessId(handler, &currentMessagePid);
 	DWORD quizPid = GetCurrentProcessId();
+	static bool mouseInApp = false;
 
 	if (nCode >= 0) {
 		if (currentMessagePid == quizPid) {
+			mouseInApp = true;
+			return CallNextHookEx(0, nCode, wParam, lParam);
+		}
+		if (mouseInApp == false && wParam == WM_MOUSEMOVE) {
 			return CallNextHookEx(0, nCode, wParam, lParam);
 		}
 		else if(currentMessagePid != quizPid && (wParam == WM_LBUTTONDOWN || wParam == WM_LBUTTONUP ||
-			wParam == WM_RBUTTONDOWN || wParam == WM_RBUTTONUP)) {
+			wParam == WM_RBUTTONDOWN || wParam == WM_RBUTTONUP) && mouseInApp == false) {
 			int titleLength = GetWindowTextLengthA(handler);
 			std::string title(titleLength, '\0');
 			GetWindowTextA(handler, &title[0], titleLength);
 			LOG_ERROR("[ANTICHEAT] User clicked outside the quiz. App name: " + title);
 		}
 	}
-}
-
-void DisableMouseOutsideQuiz() {
-	std::thread messageLoop([]() {
-		while (true) {
-			MSG msg = { };
-			if (GetMessage(&msg, 0, 0, 0)) {
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
-		}
-		});
-	messageLoop.detach();
 }
 
 HHOOK SetupGUIAnticheat(LPCSTR windowTitle, const std::wstring& dllName, QuestionnaireFramework* quiz)

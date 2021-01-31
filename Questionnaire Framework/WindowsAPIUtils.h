@@ -14,5 +14,4 @@ __declspec(dllexport) HHOOK SetupGUIAnticheat(LPCSTR windowTitle, const std::wst
 __declspec(dllexport) LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam);
 
 __declspec(dllexport) void SetupConsoleAnticheat(QuestionnaireFramework* quiz);
-__declspec(dllexport) void MinimizeOtherApps(HWND questionnaireHandle); 
-__declspec(dllexport) void DisableMouseOutsideQuiz();
+__declspec(dllexport) void MinimizeOtherApps(HWND questionnaireHandle);

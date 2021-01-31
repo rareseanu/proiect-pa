@@ -362,7 +362,6 @@ void QuestionnaireFramework::SetupAnticheating(const std::string& oldTitle)
 		if (m_callWndProc == 0) {
 			LOG_ERROR("[ANTICHEAT] Error while setting up the mouse hook.");
 		}
-		DisableMouseOutsideQuiz();
 	}
 }
 
