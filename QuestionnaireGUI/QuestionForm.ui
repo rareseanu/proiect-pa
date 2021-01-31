@@ -147,6 +147,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="finishButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="minimumSize">
         <size>
          <width>40</width>
@@ -158,6 +164,9 @@
          <width>40</width>
          <height>40</height>
         </size>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
        </property>
        <property name="text">
         <string/>
@@ -171,33 +180,6 @@
          <width>40</width>
          <height>40</height>
         </size>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="layoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>90</y>
-      <width>1241</width>
-      <height>82</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <item>
-      <widget class="QLabel" name="questionLabel">
-       <property name="font">
-        <font>
-         <pointsize>16</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Question</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -379,7 +361,7 @@
     <property name="geometry">
      <rect>
       <x>1000</x>
-      <y>40</y>
+      <y>30</y>
       <width>161</width>
       <height>41</height>
      </rect>
@@ -408,10 +390,10 @@
    <widget class="QLabel" name="questionNumberLabel">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>480</x>
       <y>10</y>
-      <width>92</width>
-      <height>22</height>
+      <width>331</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -429,8 +411,8 @@
    <widget class="QPushButton" name="helpButton">
     <property name="geometry">
      <rect>
-      <x>1220</x>
-      <y>10</y>
+      <x>1217</x>
+      <y>23</y>
       <width>45</width>
       <height>45</height>
      </rect>
@@ -459,6 +441,33 @@
       <width>45</width>
       <height>45</height>
      </size>
+    </property>
+   </widget>
+   <widget class="QLabel" name="questionLabel">
+    <property name="geometry">
+     <rect>
+      <x>21</x>
+      <y>91</y>
+      <width>1241</width>
+      <height>111</height>
+     </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>16</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Question</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

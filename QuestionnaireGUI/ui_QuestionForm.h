@@ -18,7 +18,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -33,13 +32,10 @@ public:
     QPushButton *clearButton;
     QPushButton *nextButton;
     QPushButton *finishButton;
-    QWidget *layoutWidget1;
-    QVBoxLayout *verticalLayout;
-    QLabel *questionLabel;
     QGroupBox *answerChoiceBox;
     QGridLayout *answerChoiceLayout;
     QLabel *categoryLabel;
-    QWidget *layoutWidget2;
+    QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_4;
     QLabel *studentNume;
     QLabel *studentPrenume;
@@ -48,6 +44,7 @@ public:
     QLabel *timeLabel;
     QLabel *questionNumberLabel;
     QPushButton *helpButton;
+    QLabel *questionLabel;
 
     void setupUi(QMainWindow *QuestionWindow)
     {
@@ -109,8 +106,14 @@ public:
 
         finishButton = new QPushButton(layoutWidget);
         finishButton->setObjectName(QString::fromUtf8("finishButton"));
+        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(finishButton->sizePolicy().hasHeightForWidth());
+        finishButton->setSizePolicy(sizePolicy1);
         finishButton->setMinimumSize(QSize(40, 40));
         finishButton->setMaximumSize(QSize(40, 40));
+        finishButton->setAutoFillBackground(false);
         QIcon icon4;
         icon4.addFile(QString::fromUtf8("images/finishButton.png"), QSize(), QIcon::Normal, QIcon::Off);
         finishButton->setIcon(icon4);
@@ -118,27 +121,12 @@ public:
 
         horizontalLayout->addWidget(finishButton);
 
-        layoutWidget1 = new QWidget(centralwidget);
-        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(20, 90, 1241, 82));
-        verticalLayout = new QVBoxLayout(layoutWidget1);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        questionLabel = new QLabel(layoutWidget1);
-        questionLabel->setObjectName(QString::fromUtf8("questionLabel"));
-        QFont font;
-        font.setPointSize(16);
-        questionLabel->setFont(font);
-        questionLabel->setAlignment(Qt::AlignCenter);
-
-        verticalLayout->addWidget(questionLabel);
-
         answerChoiceBox = new QGroupBox(centralwidget);
         answerChoiceBox->setObjectName(QString::fromUtf8("answerChoiceBox"));
         answerChoiceBox->setGeometry(QRect(20, 200, 1241, 441));
-        QFont font1;
-        font1.setPointSize(13);
-        answerChoiceBox->setFont(font1);
+        QFont font;
+        font.setPointSize(13);
+        answerChoiceBox->setFont(font);
         answerChoiceBox->setLayoutDirection(Qt::LeftToRight);
         answerChoiceBox->setAlignment(Qt::AlignCenter);
         answerChoiceBox->setCheckable(false);
@@ -148,38 +136,35 @@ public:
         categoryLabel = new QLabel(centralwidget);
         categoryLabel->setObjectName(QString::fromUtf8("categoryLabel"));
         categoryLabel->setGeometry(QRect(550, 40, 191, 31));
-        QSizePolicy sizePolicy1(QSizePolicy::Fixed, QSizePolicy::Fixed);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
         sizePolicy1.setHeightForWidth(categoryLabel->sizePolicy().hasHeightForWidth());
         categoryLabel->setSizePolicy(sizePolicy1);
-        QFont font2;
-        font2.setPointSize(12);
-        categoryLabel->setFont(font2);
+        QFont font1;
+        font1.setPointSize(12);
+        categoryLabel->setFont(font1);
         categoryLabel->setAlignment(Qt::AlignCenter);
         categoryLabel->setWordWrap(true);
-        layoutWidget2 = new QWidget(centralwidget);
-        layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(140, 40, 172, 26));
-        horizontalLayout_4 = new QHBoxLayout(layoutWidget2);
+        layoutWidget1 = new QWidget(centralwidget);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(140, 40, 172, 26));
+        horizontalLayout_4 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setSizeConstraint(QLayout::SetFixedSize);
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
-        studentNume = new QLabel(layoutWidget2);
+        studentNume = new QLabel(layoutWidget1);
         studentNume->setObjectName(QString::fromUtf8("studentNume"));
         sizePolicy1.setHeightForWidth(studentNume->sizePolicy().hasHeightForWidth());
         studentNume->setSizePolicy(sizePolicy1);
         studentNume->setMaximumSize(QSize(150, 16777215));
-        studentNume->setFont(font2);
+        studentNume->setFont(font1);
 
         horizontalLayout_4->addWidget(studentNume, 0, Qt::AlignVCenter);
 
-        studentPrenume = new QLabel(layoutWidget2);
+        studentPrenume = new QLabel(layoutWidget1);
         studentPrenume->setObjectName(QString::fromUtf8("studentPrenume"));
         sizePolicy1.setHeightForWidth(studentPrenume->sizePolicy().hasHeightForWidth());
         studentPrenume->setSizePolicy(sizePolicy1);
         studentPrenume->setMaximumSize(QSize(150, 16777215));
-        studentPrenume->setFont(font2);
+        studentPrenume->setFont(font1);
 
         horizontalLayout_4->addWidget(studentPrenume, 0, Qt::AlignVCenter);
 
@@ -196,26 +181,35 @@ public:
         miLogo->setScaledContents(true);
         timeLabel = new QLabel(centralwidget);
         timeLabel->setObjectName(QString::fromUtf8("timeLabel"));
-        timeLabel->setGeometry(QRect(1000, 40, 161, 41));
+        timeLabel->setGeometry(QRect(1000, 30, 161, 41));
         sizePolicy1.setHeightForWidth(timeLabel->sizePolicy().hasHeightForWidth());
         timeLabel->setSizePolicy(sizePolicy1);
-        timeLabel->setFont(font2);
+        timeLabel->setFont(font1);
         timeLabel->setLayoutDirection(Qt::LeftToRight);
         timeLabel->setWordWrap(false);
         questionNumberLabel = new QLabel(centralwidget);
         questionNumberLabel->setObjectName(QString::fromUtf8("questionNumberLabel"));
-        questionNumberLabel->setGeometry(QRect(600, 10, 92, 22));
-        questionNumberLabel->setFont(font2);
+        questionNumberLabel->setGeometry(QRect(480, 10, 331, 31));
+        questionNumberLabel->setFont(font1);
         questionNumberLabel->setAlignment(Qt::AlignCenter);
         helpButton = new QPushButton(centralwidget);
         helpButton->setObjectName(QString::fromUtf8("helpButton"));
-        helpButton->setGeometry(QRect(1220, 10, 45, 45));
+        helpButton->setGeometry(QRect(1217, 23, 45, 45));
         helpButton->setMinimumSize(QSize(45, 45));
         helpButton->setMaximumSize(QSize(45, 45));
         QIcon icon5;
         icon5.addFile(QString::fromUtf8("images/help.png"), QSize(), QIcon::Normal, QIcon::Off);
         helpButton->setIcon(icon5);
         helpButton->setIconSize(QSize(45, 45));
+        questionLabel = new QLabel(centralwidget);
+        questionLabel->setObjectName(QString::fromUtf8("questionLabel"));
+        questionLabel->setGeometry(QRect(21, 91, 1241, 111));
+        sizePolicy1.setHeightForWidth(questionLabel->sizePolicy().hasHeightForWidth());
+        questionLabel->setSizePolicy(sizePolicy1);
+        QFont font2;
+        font2.setPointSize(16);
+        questionLabel->setFont(font2);
+        questionLabel->setAlignment(Qt::AlignCenter);
         QuestionWindow->setCentralWidget(centralwidget);
 
         retranslateUi(QuestionWindow);
@@ -231,7 +225,6 @@ public:
         clearButton->setText(QString());
         nextButton->setText(QString());
         finishButton->setText(QString());
-        questionLabel->setText(QCoreApplication::translate("QuestionWindow", "Question", nullptr));
         answerChoiceBox->setTitle(QCoreApplication::translate("QuestionWindow", "Choices", nullptr));
         categoryLabel->setText(QCoreApplication::translate("QuestionWindow", "Category:", nullptr));
         studentNume->setText(QCoreApplication::translate("QuestionWindow", "[Nume]", nullptr));
@@ -241,6 +234,7 @@ public:
         timeLabel->setText(QCoreApplication::translate("QuestionWindow", "Time left: ?", nullptr));
         questionNumberLabel->setText(QCoreApplication::translate("QuestionWindow", "Question: 0/?", nullptr));
         helpButton->setText(QString());
+        questionLabel->setText(QCoreApplication::translate("QuestionWindow", "Question", nullptr));
     } // retranslateUi
 
 };

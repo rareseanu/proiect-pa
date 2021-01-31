@@ -45,7 +45,7 @@ private:
     QTextEdit* textAnswer = NULL;
     int currentQuestion = 0;
     QTimer timer;
-    QuestionnaireFramework m_quiz = QuestionnaireFramework(10,true, false);
+    QuestionnaireFramework m_quiz = QuestionnaireFramework(1,true, false);
     std::shared_ptr<std::vector<Question>> m_selectedQuestions;
     FraudDialog fraudDialog;
     std::string startTime;

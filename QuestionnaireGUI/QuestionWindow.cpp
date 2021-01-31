@@ -12,7 +12,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     startWindow.setFocus();
     m_quiz.SetQuizTime(300);
     m_quiz.SetNumberOfQuestions(10);
-    m_quiz.SetMaximumGrade(100);
+    m_quiz.SetMaximumGrade(10);
     try {
         m_quiz.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
     }
@@ -122,12 +122,20 @@ void QuestionWindow::CreateAnswerFrame(Question question)
         char answerSymbol = 'a';
         int i = 0;
         for (Answer answer : question.GetAnswers()) {
-            QRadioButton* answerRadioButton = new QRadioButton(ui.answerChoiceBox);
+            QPushButton* answerCheckBox = new QPushButton(ui.answerChoiceBox);
+            answerCheckBox->setMaximumSize(9999, 9999);
+            answerCheckBox->setMinimumSize(0, 0);
+            QSizePolicy sizePolicy;
+            sizePolicy.setHorizontalPolicy(QSizePolicy::Minimum);
+            sizePolicy.setVerticalPolicy(QSizePolicy::Minimum);
+            answerCheckBox->setSizePolicy(sizePolicy);
+            answerCheckBox->setCheckable(true);
+            answerCheckBox->setAutoExclusive(true);
             std::string answerObjectName(1, (char)answerSymbol++);
-            answerRadioButton->setObjectName(QString::fromStdString(answerObjectName));
-            answerRadioButton->setText(QString::fromStdString(answer.GetAnswer()));
-            ((QGridLayout*)ui.answerChoiceBox->layout())->addWidget(answerRadioButton,i/(int)sqrt(question.GetAnswers().size()),i%(int)sqrt(question.GetAnswers().size()),Qt::AlignCenter);
-            answerButtons.push_back(answerRadioButton);
+            answerCheckBox->setObjectName(QString::fromStdString(answerObjectName));
+            answerCheckBox->setText(QString::fromStdString(answer.GetAnswer()));
+            ui.answerChoiceLayout->addWidget(answerCheckBox, i / (int)sqrt(question.GetAnswers().size()), i % (int)sqrt(question.GetAnswers().size()));
+            answerButtons.push_back(answerCheckBox);
             ++i;
         }
     }
@@ -135,11 +143,18 @@ void QuestionWindow::CreateAnswerFrame(Question question)
         char answerSymbol = 'a';
         int i = 0;
         for (Answer answer : question.GetAnswers()) {
-            QCheckBox* answerCheckBox = new QCheckBox(ui.answerChoiceBox);
+            QPushButton* answerCheckBox = new QPushButton(ui.answerChoiceBox);
+            answerCheckBox->setMaximumSize(9999, 9999);
+            answerCheckBox->setMinimumSize(0, 0);
+            QSizePolicy sizePolicy;
+            sizePolicy.setHorizontalPolicy(QSizePolicy::Minimum);
+            sizePolicy.setVerticalPolicy(QSizePolicy::Minimum);
+            answerCheckBox->setSizePolicy(sizePolicy);
+            answerCheckBox->setCheckable(true);
             std::string answerObjectName(1, (char)answerSymbol++);
             answerCheckBox->setObjectName(QString::fromStdString(answerObjectName));
             answerCheckBox->setText(QString::fromStdString(answer.GetAnswer()));
-            ((QGridLayout*)ui.answerChoiceBox->layout())->addWidget(answerCheckBox, i / (int)sqrt(question.GetAnswers().size()), i % (int)sqrt(question.GetAnswers().size()), Qt::AlignCenter);
+            ui.answerChoiceLayout->addWidget(answerCheckBox, i / (int)sqrt(question.GetAnswers().size()), i % (int)sqrt(question.GetAnswers().size()));
             answerButtons.push_back(answerCheckBox);
             ++i;
         }
