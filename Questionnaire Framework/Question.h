@@ -33,7 +33,6 @@ public:
 	__declspec(dllexport) void SetText(const std::string& question);
 	__declspec(dllexport) void SetQuestionType(const QuestionType& qType);
 	__declspec(dllexport) void SetAnswers(const std::vector<Answer>& answers);
-	__declspec(dllexport) bool VerifyUserAnswer();
 
 	__declspec(dllexport) void GiveAnswer(std::string string);
 

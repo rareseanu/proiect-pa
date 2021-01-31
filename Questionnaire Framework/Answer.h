@@ -14,7 +14,7 @@ public:
 	__declspec(dllexport) const std::string& GetAnswer() const;
 	__declspec(dllexport) const float GetPercent() const;
 	__declspec(dllexport) const bool GetSelected() const;
-	__declspec(dllexport) const int GetId();
+	__declspec(dllexport) const int GetId() const;
 
 	friend __declspec(dllexport) std::ostream& operator<<(std::ostream& out, const Answer& answer);
 

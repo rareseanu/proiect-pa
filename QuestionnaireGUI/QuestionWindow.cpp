@@ -10,8 +10,8 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     ui.setupUi(this);
     startWindow.show();
     startWindow.setFocus();
-    m_quiz.SetQuizTime(30);
-    m_quiz.SetNumberOfQuestions(4);
+    m_quiz.SetQuizTime(300);
+    m_quiz.SetNumberOfQuestions(10);
     m_quiz.SetMaximumGrade(100);
     try {
         m_quiz.OpenDatabase("yufioaba", "ruby.db.elephantsql.com", "5432", "yufioaba", "ZGnmR5rJdvvkXXove7sqUQGNB5-lHNoO");
@@ -25,7 +25,7 @@ QuestionWindow::QuestionWindow(QWidget* parent)
     m_quiz.SetAnswersTable("answer", "a_id", "text", "percentage", "q_id");
     m_quiz.SetUserAnswerTable("student_raspuns", "s_id", "raspuns", "q_id");
     m_quiz.LoadQuestions();
-    m_quiz.SelectQuestions(std::vector<std::string> {"SA", "Mate"});
+    m_quiz.SelectQuestions(std::vector<std::string> {"Baze de date"});
     m_selectedQuestions = m_quiz.GetSelectedQuestions();
     ui.backButton->setEnabled(false);
     connect(this, &QuestionWindow::WindowClosed, this, &QuestionWindow::FinishButtonClicked);
@@ -79,8 +79,11 @@ void QuestionWindow::StopQuiz()
     }
     m_quiz.SendResult("student", "nota", "time_end");
     m_quiz.StopTimer();
-    if (m_quiz.GetWindowsHook() != NULL) {
-       UnhookWindowsHookEx(m_quiz.GetWindowsHook());
+    if (m_quiz.GetCallWndHook() != NULL) {
+        UnhookWindowsHookEx(m_quiz.GetCallWndHook());
+    }
+    if(m_quiz.GetMouseHook() != NULL) {
+       UnhookWindowsHookEx(m_quiz.GetMouseHook());
     }
     this->hide();
     this->destroy();

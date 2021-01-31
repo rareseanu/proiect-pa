@@ -29,7 +29,7 @@ const std::string& Answer::GetAnswer() const
 	return m_text;
 }
 
-const int Answer::GetId()
+const int Answer::GetId() const
 {
 	return m_id;
 }

@@ -49,7 +49,7 @@ const float Question::GetAquiredMark() const
 {
 	float percentage = 0;
 	float maxPercentage = 0;
-	for (Answer answer : m_answers) {
+	for (const Answer& answer : m_answers) {
 		if (answer.GetSelected()) {
 			percentage = percentage + answer.GetPercent();
 		}
@@ -61,39 +61,6 @@ const float Question::GetAquiredMark() const
 		percentage = 0;
 	}
 	return m_points * (percentage / maxPercentage);
-}
-
-bool Question::VerifyUserAnswer()
-{
-	std::vector<bool> shouldBeTrue;
-	for (auto currentAnswer : m_answers)
-	{
-		for (int indexUserAnswer = 0; indexUserAnswer < m_userAnswer.size(); indexUserAnswer++)
-		{
-			if (m_userAnswer[indexUserAnswer].GetId() == currentAnswer.GetId())
-			{
-				shouldBeTrue[currentAnswer.GetId()] = true;
-
-				if (currentAnswer.GetPercent() > 0)
-				{
-					m_correctlyAnswered[m_userAnswer[indexUserAnswer].GetId()] = true;
-				}
-				else
-				{
-					m_correctlyAnswered[m_userAnswer[indexUserAnswer].GetId()] = false;
-				}
-			}
-		}
-	}
-
-	bool fullyCorrect = true;
-	for (int index = 0; index < m_answers.size(); index++)
-	{
-		if (shouldBeTrue[index] == true && m_correctlyAnswered[index] == false)
-			fullyCorrect = false;
-	}
-
-	return fullyCorrect;
 }
 
 void Question::GiveAnswer(std::string string)
@@ -207,7 +174,7 @@ std::ostream& operator<<(std::ostream& out, const Question& question)
 		out << "(FLAGGED) ";
 	out << question.m_text << '\n';
 	if (question.GetAnswers().size() > 1) {
-		for (auto& a : question.GetAnswers()) {
+		for (const Answer& a : question.GetAnswers()) {
 			out << "\t" << (char)answerSymbol++ << ". " << a << '\n';
 		}
 	}

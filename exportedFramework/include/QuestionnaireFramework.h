@@ -22,7 +22,8 @@ public:
 	__declspec(dllexport) std::shared_ptr <std::vector<Question>>& GetSelectedQuestions();
 	__declspec(dllexport) const std::unordered_map<std::string, std::vector<Question>>& GetAllQuestions() const;
 	__declspec(dllexport) const Timer& GetTimer() const;
-	__declspec(dllexport) const HHOOK& GetWindowsHook() const;
+	__declspec(dllexport) const HHOOK& GetCallWndHook() const;
+	__declspec(dllexport) const HHOOK& GetMouseHook() const;
 	__declspec(dllexport) const int GetMaximumMark()const;
 	__declspec(dllexport) const int GetQuizTime() const;
 	__declspec(dllexport) const int GetMaximumGrade() const;
@@ -92,5 +93,6 @@ private:
 	std::unordered_map<std::string, std::vector<Question>> m_questions;
 	std::unique_ptr<DatabaseHandler> dh = NULL;
 	std::shared_ptr<std::vector<Question>> m_selectedQuestions = std::make_shared<std::vector<Question>>();
-	HHOOK m_hook = NULL;
+	HHOOK m_callWndProc = NULL;
+	HHOOK m_mouseProc = NULL;
 };

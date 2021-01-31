@@ -24,7 +24,7 @@ const std::string& User::GetFirstName() const
 	return m_firstName;
 }
 
-void User::SetFirstName(std::string firstName)
+void User::SetFirstName(const std::string& firstName)
 {
 	m_firstName = firstName;
 }
@@ -34,7 +34,7 @@ const std::string& User::GetLastName() const
 	return m_lastName;
 }
 
-void User::SetLastName(std::string lastName)
+void User::SetLastName(const std::string& lastName)
 {
 	m_lastName = lastName;
 }

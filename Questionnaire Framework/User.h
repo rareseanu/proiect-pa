@@ -12,8 +12,8 @@ public:
 	__declspec(dllexport) const std::string& GetFirstName() const;
 	__declspec(dllexport) const std::string& GetLastName() const;
 
-	__declspec(dllexport) void SetFirstName(std::string firstName);
-	__declspec(dllexport) void SetLastName(std::string lastName);
+	__declspec(dllexport) void SetFirstName(const std::string& firstName);
+	__declspec(dllexport) void SetLastName(const std::string& lastName);
 	__declspec(dllexport) void SetGrade(float);
 	__declspec(dllexport) void SetId(int id);
 

@@ -10,7 +10,7 @@ __declspec(dllexport) HWND GetHandlerFromTitle(LPCSTR windowTitle, bool isConsol
 __declspec(dllexport) const std::string GetLastErrorString();
 __declspec(dllexport) const std::string GetUniqueWindowTitle();
 
-__declspec(dllexport) HHOOK SetupGUIAnticheat(LPCSTR windowTitle, std::wstring dllName, QuestionnaireFramework* quiz);
+__declspec(dllexport) HHOOK SetupGUIAnticheat(LPCSTR windowTitle, const std::wstring& dllName, QuestionnaireFramework* quiz);
 __declspec(dllexport) LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam);
 
 __declspec(dllexport) void SetupConsoleAnticheat(QuestionnaireFramework* quiz);

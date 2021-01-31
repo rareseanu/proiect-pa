@@ -85,7 +85,7 @@ void DisableMouseOutsideQuiz() {
 	messageLoop.detach();
 }
 
-HHOOK SetupGUIAnticheat(LPCSTR windowTitle, std::wstring dllName, QuestionnaireFramework* quiz)
+HHOOK SetupGUIAnticheat(LPCSTR windowTitle, const std::wstring& dllName, QuestionnaireFramework* quiz)
 {
 	HWND windowHandle = GetHandlerFromTitle(windowTitle, false);
 

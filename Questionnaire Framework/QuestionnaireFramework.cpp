@@ -334,9 +334,14 @@ void QuestionnaireFramework::SendResult(const std::optional<std::string> &userTa
 	dh->RunCommand(command);
 }
 
-const HHOOK& QuestionnaireFramework::GetWindowsHook() const
+const HHOOK& QuestionnaireFramework::GetCallWndHook() const
 {
-	return m_hook;
+	return m_callWndProc;
+}
+
+const HHOOK& QuestionnaireFramework::GetMouseHook() const
+{
+	return m_mouseProc;
 }
 
 void QuestionnaireFramework::SetupAnticheating(const std::string& oldTitle)
@@ -349,11 +354,14 @@ void QuestionnaireFramework::SetupAnticheating(const std::string& oldTitle)
 		SetupConsoleAnticheat(this);
 	}
 	else {
-		m_hook = SetupGUIAnticheat(oldTitle.c_str(), L"WindowsHooking.dll", this);
-		if (m_hook == 0) {
+		m_callWndProc = SetupGUIAnticheat(oldTitle.c_str(), L"WindowsHooking.dll", this);
+		if (m_callWndProc == 0) {
 			LOG_ERROR("[ANTICHEAT] Error while setting up the DLL.");
 		}
-		HHOOK mouseHook = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
+		m_mouseProc = SetWindowsHookEx(WH_MOUSE_LL, MouseHookProc, NULL, 0);
+		if (m_callWndProc == 0) {
+			LOG_ERROR("[ANTICHEAT] Error while setting up the mouse hook.");
+		}
 		DisableMouseOutsideQuiz();
 	}
 }
