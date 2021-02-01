@@ -43,7 +43,7 @@ public:
 	friend __declspec(dllexport) std::ostream& operator<<(std::ostream& out, const Question& question);
 
 private:
-	QuestionType m_questionType;
+	QuestionType m_questionType = QuestionType::Multichoice;
 	std::string m_text;
 	std::string m_givenTextAnswer;
 	std::string m_category;

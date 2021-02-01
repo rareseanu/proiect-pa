@@ -43,7 +43,7 @@ void MinimizeOtherApps(HWND questionnaireHandle) {
 }
 
 const std::string GetUniqueWindowTitle() {
-	DWORD tickCount = GetTickCount64();
+	ULONGLONG tickCount = GetTickCount64();
 	DWORD processID = GetCurrentProcessId();
 	std::string title = std::to_string(tickCount);
 	title.push_back('/');
@@ -62,10 +62,10 @@ LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 	if (nCode >= 0) {
 		if (currentMessagePid == quizPid) {
 			mouseInApp = true;
-			return CallNextHookEx(0, nCode, wParam, lParam);
+			return(CallNextHookEx(NULL, nCode, wParam, lParam));
 		}
 		if (mouseInApp == false && wParam == WM_MOUSEMOVE) {
-			return CallNextHookEx(0, nCode, wParam, lParam);
+			return(CallNextHookEx(NULL, nCode, wParam, lParam));
 		}
 		else if(currentMessagePid != quizPid && (wParam == WM_LBUTTONDOWN || wParam == WM_LBUTTONUP ||
 			wParam == WM_RBUTTONDOWN || wParam == WM_RBUTTONUP) && mouseInApp == false) {
@@ -75,6 +75,7 @@ LRESULT CALLBACK MouseHookProc(int nCode, WPARAM wParam, LPARAM lParam) {
 			LOG_ERROR("[ANTICHEAT] User clicked outside the quiz. App name: " + title);
 		}
 	}
+	return -1;
 }
 
 HHOOK SetupGUIAnticheat(LPCSTR windowTitle, const std::wstring& dllName, QuestionnaireFramework* quiz)

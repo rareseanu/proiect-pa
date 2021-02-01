@@ -19,8 +19,8 @@ public:
 	friend __declspec(dllexport) std::ostream& operator<<(std::ostream& out, const Answer& answer);
 
 private:
-	int m_id;
+	int m_id = 0;
 	std::string m_text;
-	float m_percentage;
-	bool m_selected;
+	float m_percentage = 0;
+	bool m_selected = false;
 };

@@ -13,14 +13,14 @@ TerminalQuestionnaire::TerminalQuestionnaire(int numberOfQuestionsNeeded, int m_
 		LOG_ERROR(error);
 		exit(0);
 	}
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	m_quiz.SetQuestionsTable("question", "q_id", "text", "points", "category", "type");
 	m_quiz.SetAnswersTable("answer", "a_id", "text", "percentage", "q_id");
 	m_quiz.SetUserAnswerTable("student_raspuns", "s_id", "raspuns", "q_id");
 	m_quiz.LoadQuestions();
-	m_quiz.SelectQuestions(std::vector<std::string> {"SA", "mate"});
+	m_quiz.SelectQuestions(std::vector<std::string> {"Baze de date"});
 	m_selectedQuestions = m_quiz.GetSelectedQuestions();
-	m_quiz.SetMaximumGrade(100);
+	m_quiz.SetMaximumGrade(10);
 }
 
 void TerminalQuestionnaire::Start()
@@ -64,7 +64,7 @@ void TerminalQuestionnaire::Start()
 			else if (string == "\\s") {
 				m_selectedQuestions->push_back(m_selectedQuestions->at(i));
 				for (int index = i; index < m_selectedQuestions->size() - 1; index++) {
-					m_selectedQuestions->at(index) = m_selectedQuestions->at(index + 1);
+					m_selectedQuestions->at(index) = m_selectedQuestions->at((size_t)index + 1);
 				}
 				m_selectedQuestions->pop_back();
 
@@ -145,14 +145,14 @@ void TerminalQuestionnaire::Stop()
 	LOG_INFO("m_quiz finished. Final grade: " + std::to_string(m_quiz.GetFinalGrade()));
 	m_quiz.SetCanAnswer(false);
 	if (m_quiz.CheatingDetected()) {
-		m_quiz.GetUser().SetGrade(m_quiz.GetDefaultGrade());
+		m_quiz.GetUser().SetGrade((float) m_quiz.GetDefaultGrade());
 	}
 	PrintResults();
 	std::cout << "User: " << m_quiz.GetUser().GetName() << '\n';
 	std::cout << "\nFinal grade:" << m_quiz.GetFinalGrade();
 	m_quiz.SendResult("student", "nota", "time_end");
-	if (m_quiz.GetWindowsHook() != NULL) {
-		UnhookWindowsHookEx(m_quiz.GetWindowsHook());
+	if (m_quiz.GetCallWndHook() != NULL) {
+		UnhookWindowsHookEx(m_quiz.GetCallWndHook());
 	}
 	system("pause");
 	exit(0);

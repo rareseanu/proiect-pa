@@ -71,8 +71,8 @@ void Question::GiveAnswer(std::string string)
 				answer.SetSelected(false);
 			}
 			for (const char& chr : string) {
-				if (chr - 'a' < m_answers.size() && chr - 'a' >= 0) {
-					m_answers[chr - 'a'].SetSelected(true);
+				if ((size_t)chr - 'a' < m_answers.size() && chr - 'a' >= 0) {
+					m_answers[(size_t)chr - 'a'].SetSelected(true);
 				}
 			}
 			break;
@@ -97,8 +97,8 @@ void Question::GiveAnswer(std::string string)
 				answer.SetSelected(false);
 			}
 			if (string.size() == 1) {
-				if (string[0] - 'a' < m_answers.size() && string[0] - 'a' >= 0) {
-					m_answers[string[0] - 'a'].SetSelected(true);
+				if ((size_t)string[0] - 'a' < m_answers.size() && string[0] - 'a' >= 0) {
+					m_answers[(size_t)string[0] - 'a'].SetSelected(true);
 				}
 				break;
 			}

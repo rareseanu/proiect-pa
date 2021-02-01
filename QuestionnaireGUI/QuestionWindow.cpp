@@ -53,7 +53,6 @@ void QuestionWindow::StartQuiz()
     m_quiz.GetUser().SetFirstName(ui.studentNume->text().toStdString());
     m_quiz.GetUser().SetLastName(ui.studentPrenume->text().toStdString());
     m_quiz.SetUser("student", "nume", "time_start");
-    bool stillHasQuestions = true;
     m_quiz.SetTimerFunction(std::bind(&QuestionWindow::ForceStop, this));
     m_quiz.StartTimer();   
     connect(&timer, &QTimer::timeout, this, &QuestionWindow::ShowTimeLeft);
@@ -63,8 +62,7 @@ void QuestionWindow::StartQuiz()
     std::stringstream stream;
     stream << std::setfill('0') << std::setw(2) << std::to_string(ptm.tm_hour) << ":" 
             << std::setw(2) << std::to_string(ptm.tm_min) << ":" 
-            << std::setw(2) << std::to_string(ptm.tm_sec);
-    std::setfill(' ');
+            << std::setw(2) << std::to_string(ptm.tm_sec) << std::setfill(' ');
     startTime = stream.str();
     ShowQuestion(currentQuestion);
 }
@@ -97,8 +95,7 @@ void QuestionWindow::StopQuiz()
     std::stringstream stream;
     stream << std::setfill('0') << std::setw(2) << std::to_string(ptm.tm_hour) << ":" 
             << std::setw(2) << std::to_string(ptm.tm_min) << ":" 
-            << std::setw(2) << std::to_string(ptm.tm_sec);
-    std::setfill(' ');
+            << std::setw(2) << std::to_string(ptm.tm_sec) << std::setfill(' ');
     stopTime = stream.str();
     sendDialogUi.time2Label->setText(QString::fromStdString(stopTime));
 
@@ -269,8 +266,7 @@ void QuestionWindow::ShowTimeLeft()
     std::stringstream stringStream;
     stringStream << "Time left: " << std::setw(2) << std::setfill('0') << hours
         << ":" << std::setw(2) << minutes
-        << ":" << std::setw(2) << seconds << '\n';
-    std::setfill(' ');
+        << ":" << std::setw(2) << seconds << '\n' << std::setfill(' ');
     ui.timeLabel->setText(QString::fromStdString(stringStream.str()));
     if (m_quiz.CheatingDetected()) {
         ForceStop();

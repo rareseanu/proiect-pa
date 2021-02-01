@@ -35,9 +35,9 @@ namespace QuestionnaireFrameworkTests
 
 		TEST_METHOD(CheckAcquiredMark)
 		{
-			Answer answer1(0, "Answer1", 33.3, false);
-			Answer answer2(1, "Answer2", 33.3, false);
-			Answer answer3(2, "Answer3", 33.3, false);
+			Answer answer1(0, "Answer1", 33.3f, false);
+			Answer answer2(1, "Answer2", 33.3f, false);
+			Answer answer3(2, "Answer3", 33.3f, false);
 			Answer answer4(3, "Answer4", -100, false);
 			std::vector<Answer> answers{ answer1, answer2, answer3, answer4};
 			Question question(0, "Question", 100, "Category", answers, false, Question::QuestionType::Multichoice);

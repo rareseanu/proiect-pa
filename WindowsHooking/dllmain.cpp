@@ -63,4 +63,5 @@ extern "C" __declspec(dllexport) LRESULT HookFunction(int code, WPARAM wParam, L
 
 		return(CallNextHookEx(NULL, code, wParam, lParam));
 	}
+	return -1;
 }
